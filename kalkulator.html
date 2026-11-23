@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalkulator magazynu i dotacji – Sluxer (makieta)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="notes-toggle" onclick="document.body.classList.toggle('show-notes')">Pokaż / ukryj uwagi z audytu</button>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="index.html"><img class="logo" src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/sluxer-logo.png.webp" alt="Sluxer"></a>
+    <ul>
+      <li><a href="index.html#produkty">Magazyny</a></li>
+      <li><a href="ems.html">Sluxer EMS</a></li>
+      <li><a href="index.html#dotacja">Dotacja 2026</a></li>
+      <li><a href="index.html#firma">Dla firm</a></li>
+      <li><a href="instalator.html">Dla instalatorów</a></li>
+    </ul>
+    <div class="right">
+      <a class="phone" href="tel:+48500600900"><svg><use href="icons.svg#i-phone"/></svg>+48 500 600 900</a>
+    </div>
+    <button class="burger" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<section class="page-hero" style="padding-bottom:40px">
+  <div class="bgimg blurred"><img src="https://images.unsplash.com/photo-1781344334963-264f725d668b?w=1600&q=60&auto=format&fit=crop" alt=""></div>
+  <div class="glow g-teal" style="width:700px;height:600px;right:-250px;top:0"></div>
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">Strona główna</a> / Kalkulator</div>
+    <div class="note"><b>Audyt, s. 9, 12 i 33:</b> osobny kalkulator zamiast formularza kontaktowego. Pytania o PV, falownik, rozliczenie i kod pocztowy kwalifikują leady (A/B/C). Wynik pokazuje koszt po dotacji.</div>
+    <span class="badge-pl rv"><span class="pl-flag"></span>Polski produkt<span class="sep"></span><span class="sub">Objęty dotacją PME 2026</span></span>
+    <h1 class="rv d1" style="margin-top:20px">Policz magazyn <span class="grad">i swoją dotację</span></h1>
+    <p class="lead rv d2">4 krótkie pytania. Pokażemy pojemność, kwotę dotacji, koszt netto i przybliżoną oszczędność.</p>
+  </div>
+</section>
+
+<section style="padding-top:20px">
+  <div class="wrap calc-wrap">
+    <form class="calc wizard rv" id="wizard" onsubmit="event.preventDefault()">
+      <div class="progress"><i></i><i></i><i></i><i></i><i></i></div>
+
+      <div class="wstep">
+        <h3>1. Dla kogo jest magazyn?</h3>
+        <div class="big-opts">
+          <label><input type="radio" name="kto" value="dom" checked><svg><use href="icons.svg#i-home"/></svg><b>Dom</b><span>z fotowoltaiką lub planowaną</span></label>
+          <label><input type="radio" name="kto" value="firma"><svg><use href="icons.svg#i-bolt"/></svg><b>Firma</b><span>magazyn komercyjny</span></label>
+          <label><input type="radio" name="kto" value="gosp"><svg><use href="icons.svg#i-sun"/></svg><b>Gospodarstwo</b><span>dom + budynki</span></label>
+        </div>
+      </div>
+
+      <div class="wstep">
+        <h3>2. Twoja instalacja</h3>
+        <fieldset><legend>Czy masz fotowoltaikę?</legend>
+          <div class="opts"><label><input type="radio" name="pv" checked>Tak, mam</label><label><input type="radio" name="pv">Planuję</label><label><input type="radio" name="pv">Nie mam</label></div>
+        </fieldset>
+        <div class="two">
+          <div><label class="l" for="kwp">Moc instalacji (kWp)</label><input id="kwp" type="text" placeholder="np. 8"></div>
+          <div><label class="l" for="fal">Falownik</label><select id="fal"><option>Deye</option><option>Hoymiles</option><option>Growatt</option><option>SMA</option><option>Sungrow</option><option>Solis</option><option>Inny / nie wiem</option></select></div>
+        </div>
+        <p class="fine">Nie znasz modelu? Wyślij później zdjęcie tabliczki znamionowej, a powiemy w 2 minuty.</p>
+      </div>
+
+      <div class="wstep">
+        <h3>3. Rozliczenie i dotacja</h3>
+        <fieldset><legend>Jak się rozliczasz?</legend>
+          <div class="opts"><label><input type="radio" name="roz" checked>Net-billing</label><label><input type="radio" name="roz">Net-metering</label><label><input type="radio" name="roz">Nie wiem</label></div>
+        </fieldset>
+        <fieldset><legend>Miesięczny rachunek za prąd</legend>
+          <div class="opts"><label><input type="radio" name="rach">do 200 zł</label><label><input type="radio" name="rach" checked>200–400 zł</label><label><input type="radio" name="rach">powyżej 400 zł</label></div>
+        </fieldset>
+        <fieldset><legend>Czy chcesz skorzystać z dotacji PME?</legend>
+          <div class="opts"><label><input type="radio" name="dot" checked>Tak, pomóżcie mi</label><label><input type="radio" name="dot">Złożę sam</label><label><input type="radio" name="dot">Nie</label></div>
+        </fieldset>
+      </div>
+
+      <div class="wstep">
+        <h3>4. Gdzie i kiedy zadzwonić?</h3>
+        <div class="two">
+          <div><label class="l" for="kod">Kod pocztowy</label><input id="kod" type="text" placeholder="00-000"></div>
+          <div><label class="l" for="tel">Telefon</label><input id="tel" type="tel" placeholder="500 600 900"></div>
+        </div>
+        <fieldset style="margin-top:20px"><legend>Kiedy możemy zadzwonić?</legend>
+          <div class="opts"><label><input type="radio" name="pora" checked>Rano</label><label><input type="radio" name="pora">Po południu</label><label><input type="radio" name="pora">Wieczorem</label></div>
+        </fieldset>
+        <p class="fine">Dzwonimy raz, o wybranej porze. Dane przetwarzamy zgodnie z <a href="../manuals/privacy-policy/index.html" style="color:var(--mint)">polityką prywatności</a>.</p>
+      </div>
+
+      <div class="wstep">
+        <div class="result">
+          <div class="eyebrow" style="justify-content:center">Twój wynik</div>
+          <h3 style="font-size:24px">Polecamy: Sluxer Home 16 + EMS</h3>
+          <div class="amount grad">− <span class="todo">[X]</span> zł dotacji</div>
+          <div class="rows">
+            <div><b><span class="todo">[X]</span> zł</b><span>koszt po dotacji</span></div>
+            <div><b><span class="todo">[X]</span> zł</b><span>oszczędność rocznie</span></div>
+            <div><b><span class="todo">[X]</span> lat</b><span>zwrot (wariant ostrożny)</span></div>
+          </div>
+          <p class="fine">Makieta: wynik będzie liczony z odpowiedzi. Doradca zadzwoni w ciągu <span class="todo">[X] h</span> o wybranej porze.</p>
+          <a class="btn btn-primary" href="index.html#produkty" style="margin-top:10px">Zobacz polecany magazyn <svg><use href="icons.svg#i-arrow"/></svg></a>
+        </div>
+      </div>
+
+      <div class="wnav">
+        <button type="button" class="btn btn-ghost" id="wBack">← Wstecz</button>
+        <button type="button" class="btn btn-primary" id="wNext">Dalej <svg><use href="icons.svg#i-arrow"/></svg></button>
+      </div>
+    </form>
+
+    <div>
+      <div class="eyebrow rv">Co dalej</div>
+      <h2 class="rv d1" style="font-size:clamp(26px,3vw,38px)">Bez akwizytora. <span class="grad">Bez presji.</span></h2>
+      <ul class="side-list rv d2">
+        <li><svg><use href="icons.svg#i-phone"/></svg><span>Jedna rozmowa z doradcą o wybranej porze, w ciągu <span class="todo">[X] h</span></span></li>
+        <li><svg><use href="icons.svg#i-doc"/></svg><span>Oferta na piśmie: konfiguracja, dotacja, koszt netto, rata, gwarancja</span></li>
+        <li><svg><use href="icons.svg#i-coin"/></svg><span>Pomoc z wnioskiem o dotację PME</span></li>
+        <li><svg><use href="icons.svg#i-wrench"/></svg><span>Montaż przez instalatora z Twojej okolicy, do <span class="todo">[X]</span> dni</span></li>
+        <li><svg><use href="icons.svg#i-shield"/></svg><span>Jeśli magazyn się nie opłaca, mówimy to wprost</span></li>
+      </ul>
+      <div class="advisor rv d3">
+        <div class="img"><img src="https://images.unsplash.com/photo-1714974528703-e5ad41abc259?w=900&q=80&auto=format&fit=crop" alt="Doradca Sluxer"></div>
+        <div class="bd"><b><span class="todo">[Imię Nazwisko]</span></b> · <span style="color:var(--muted)">Twój doradca Sluxer</span>
+          <ul><li><a href="tel:+48500600900">+48 500 600 900</a> · pn–pt <span class="todo">[godziny]</span></li><li>biuro@sluxer.com</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="padding-top:60px">
+  <div class="wrap cols">
+    <div><img class="logo" src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/sluxer-logo.png.webp" alt="Sluxer"><div class="made"><span class="pl-flag"></span>Polska marka · polski serwis</div></div>
+    <div><h4>Produkty</h4><ul><li><a href="index.html#produkty">Magazyny domowe</a></li><li><a href="index.html#firma">Dla firm</a></li><li><a href="ems.html">Sluxer EMS</a></li></ul></div>
+    <div><h4>Wsparcie</h4><ul><li><a href="../manuals/index.html">Instrukcje</a></li><li><a href="../manuals/compatibility/index.html">Zgodność falowników</a></li></ul></div>
+    <div><h4>Kontakt</h4><ul><li>+48 500 600 900</li><li>biuro@sluxer.com</li><li><a href="instalator.html">Dla instalatorów</a></li></ul></div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

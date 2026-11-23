@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sluxer – polski magazyn energii z dotacją (makieta v7)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050F16; --bg-2:#08161F; --card:rgba(255,255,255,.04); --card-2:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
+  --txt:#E8F1F4; --muted:#93A9B5;
+  --turq:#4FDBD4; --turq-2:#2CB8B4; --mint:#7DF0E4; --navy:#03211F; --orange:#EC6A32;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Poppins,system-ui,"Segoe UI",sans-serif;background:var(--bg);color:var(--txt);line-height:1.55;font-size:16px;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+h1,h2,h3{margin:0 0 .45em;line-height:1.08;letter-spacing:-.02em;font-weight:700}
+h2{font-size:clamp(30px,3.8vw,48px)}
+h3{font-size:20px}
+p{margin:0 0 1em}
+.grad{background:linear-gradient(100deg,var(--mint),var(--turq) 40%,var(--turq-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.dot{color:var(--orange);-webkit-text-fill-color:var(--orange)}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--turq);margin-bottom:16px}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--orange);border-radius:2px}
+.lead{font-size:18px;color:var(--muted);max-width:600px}
+section{padding:110px 0;position:relative}
+.center{text-align:center}.center .lead{margin-left:auto;margin-right:auto}.center .eyebrow{justify-content:center}
+.glow{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;opacity:.45;z-index:0}
+.todo{background:rgba(255,197,107,.15);color:#FFC56B;border:1px dashed rgba(255,197,107,.5);border-radius:3px;padding:0 6px;font-weight:600;white-space:nowrap;-webkit-text-fill-color:#FFC56B}
+.note{display:none;margin:0 0 20px;padding:12px 16px;border-left:4px solid #FFC56B;background:rgba(255,197,107,.1);color:#FFE2B0;font-size:13.5px;border-radius:0 3px 3px 0;text-align:left;max-width:760px}
+.center .note{margin-left:auto;margin-right:auto}
+body.show-notes .note{display:block}
+.notes-toggle{position:fixed;right:16px;bottom:16px;z-index:90;background:rgba(8,22,31,.9);color:#AFC1CA;border:1px solid var(--line-2);border-radius:3px;padding:8px 12px;font:500 12px Poppins,sans-serif;cursor:pointer}
+
+.pl-ico{display:inline-block;width:26px;height:24px;flex:none;vertical-align:middle}
+
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border-radius:3px;font-weight:600;text-decoration:none;font-size:16px;border:1.5px solid transparent;cursor:pointer;font-family:inherit;transition:transform .3s var(--ease),box-shadow .3s,background .3s,border-color .3s,color .3s;white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,var(--mint),var(--turq-2));color:var(--navy);box-shadow:0 10px 30px rgba(79,219,212,.22)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(79,219,212,.38)}
+.btn-ghost{border-color:var(--line-2);color:var(--txt);background:rgba(255,255,255,.03)}
+.btn-ghost:hover{border-color:var(--turq);color:var(--mint);transform:translateY(-2px)}
+.btn svg{width:18px;height:18px}
+
+header{position:sticky;top:0;z-index:60;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+header.scrolled{background:rgba(5,15,22,.82);backdrop-filter:blur(16px);border-color:var(--line)}
+.nav{display:flex;align-items:center;gap:26px;height:76px}
+.nav .logo{height:34px;width:auto;filter:brightness(0) invert(1)}
+.nav ul{display:flex;gap:4px;list-style:none;margin:0 0 0 10px;padding:0;font-size:15px;font-weight:500}
+.nav ul a{text-decoration:none;padding:8px 12px;border-radius:3px;color:#C9D8DF;transition:.2s}
+.nav ul a:hover{background:var(--card-2);color:#fff}
+.nav .right{margin-left:auto;display:flex;align-items:center;gap:18px}
+.nav .phone{display:flex;align-items:center;gap:8px;font-weight:600;text-decoration:none;white-space:nowrap}
+.nav .phone svg{width:18px;height:18px;color:var(--turq)}
+
+.hero{min-height:calc(100vh - 76px);display:flex;align-items:center;overflow:hidden;margin-top:-76px;padding:140px 0 90px}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.5;transform:scale(1.06);animation:kb 24s ease-in-out infinite alternate}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,rgba(5,15,22,.9) 38%,rgba(5,15,22,.35) 72%,rgba(5,15,22,.6) 100%),linear-gradient(0deg,var(--bg) 0%,transparent 35%)}
+@keyframes kb{to{transform:scale(1.16) translate(-2%,-1%)}}
+.hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;width:100%}
+.made-pl{display:inline-flex;align-items:center;gap:12px;padding:8px 16px 8px 10px;border-radius:3px;background:rgba(255,255,255,.06);border:1px solid var(--line-2);font-size:14px;font-weight:600;backdrop-filter:blur(8px)}
+.made-pl small{color:var(--muted);font-weight:500;font-size:13.5px}
+.hero h1{font-size:clamp(42px,5.4vw,76px);font-weight:800;letter-spacing:-.035em;line-height:1;margin:22px 0 0}
+.hero .lead{font-size:19px;color:#B5C7D0;margin-top:22px}
+.price-teaser{display:flex;align-items:center;gap:18px;margin:28px 0 30px;padding:16px 20px;border-radius:3px;background:rgba(8,22,31,.6);border:1px solid var(--line-2);backdrop-filter:blur(10px);max-width:520px}
+.price-teaser .lbl{font-size:13px;color:var(--muted);line-height:1.35}
+.price-teaser .val{font-size:30px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.price-teaser .sub{font-size:12.5px;color:var(--orange);font-weight:600}
+.ctas{display:flex;gap:14px;flex-wrap:wrap}
+.hero-visual{position:relative;height:600px}
+.hero-visual .unit{position:absolute;height:540px;right:70px;bottom:10px;filter:drop-shadow(0 40px 60px rgba(0,0,0,.6));animation:float 7s ease-in-out infinite}
+.hero-visual .ring{position:absolute;right:20px;bottom:-40px;width:460px;height:120px;border-radius:50%;background:radial-gradient(closest-side,rgba(79,219,212,.35),transparent);filter:blur(10px)}
+@keyframes float{50%{transform:translateY(-12px)}}
+.badge-float{position:absolute;left:0;top:70px;display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:3px;background:rgba(8,22,31,.75);border:1px solid var(--line-2);backdrop-filter:blur(16px);box-shadow:0 30px 60px rgba(0,0,0,.4);animation:float 9s ease-in-out -3s infinite}
+.badge-float .pl-ico{width:52px;height:48px}
+.badge-float b{display:block;font-size:16px}
+.badge-float span{font-size:13px;color:var(--muted)}
+.badge-float.b2{top:auto;bottom:70px;left:-20px;animation-delay:-6s}
+.badge-float.b2 .ic{width:48px;height:48px;border-radius:3px;background:rgba(79,219,212,.12);display:flex;align-items:center;justify-content:center}
+.badge-float.b2 svg{width:26px;height:26px;color:var(--turq)}
+
+.trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2)}
+.trust .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.trust .it{display:flex;align-items:center;gap:14px;padding:22px 16px;font-size:13.5px;color:var(--muted);border-right:1px solid var(--line)}
+.trust .it:last-child{border-right:0}
+.trust svg{width:30px;height:30px;color:var(--turq);flex:none}
+.trust b{display:block;color:#fff;font-size:15px}
+
+.brands{padding:34px 0 28px;border-bottom:1px solid var(--line);text-align:center}
+.brands-label{font-size:12.5px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin-bottom:6px}
+.marquee{overflow:hidden;padding:16px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+.marquee .track{display:flex;gap:72px;width:max-content;animation:marquee 32s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.marquee span{font-size:26px;font-weight:700;color:#5E7684;white-space:nowrap;letter-spacing:.01em;transition:color .3s}
+.marquee span:hover{color:#fff}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.brands-link{font-size:14px;font-weight:600;color:var(--turq);text-decoration:none}
+.brands-link:hover{color:var(--mint)}
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:50px;text-align:left}
+.pcard{position:relative;background:#fff;color:#0B1E2D;border-radius:3px;padding:24px;display:flex;flex-direction:column;transition:transform .45s var(--ease),box-shadow .45s}
+.pcard:hover{transform:translateY(-8px);box-shadow:0 40px 70px -20px rgba(0,0,0,.6)}
+.pcard .stage{height:260px;border-radius:3px;background:radial-gradient(circle at 50% 85%,#D9F5F3 0%,#EEF4F6 45%,#F6F9FA 100%);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;margin-bottom:18px}
+.pcard .stage img{max-height:235px;width:auto;margin-bottom:16px;transition:transform .7s var(--ease)}
+.pcard:hover .stage img{transform:scale(1.08) translateY(-6px)}
+.pcard .tag{position:absolute;top:16px;left:16px;font-size:12px;font-weight:600;background:#0B1E2D;color:var(--mint);padding:5px 11px;border-radius:3px}
+.pcard .pl{position:absolute;top:14px;right:14px;display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;background:#0B1E2D;color:#fff;padding:4px 10px 4px 6px;border-radius:3px}
+.pcard .pl .pl-ico{width:20px;height:18px}
+.pcard h3{font-size:22px;margin-bottom:2px}
+.pcard .sub{color:#5C6E7B;font-size:14px;margin-bottom:14px}
+.pcard .price{margin-top:auto;border-top:1px solid #E6EEF1;padding-top:14px}
+.pcard .old{font-size:13px;color:#6B7C88}
+.pcard .new{font-size:14px}
+.pcard .new b{font-size:28px;letter-spacing:-.02em}
+.pcard .after{display:inline-block;margin-left:6px;font-size:12px;font-weight:600;color:#fff;background:var(--orange);padding:2px 8px;border-radius:3px;vertical-align:4px}
+.pcard .todo{color:#7A5B00;-webkit-text-fill-color:#7A5B00;background:#FFF1C9;border-color:#E9C46A}
+.pcard .btn{margin-top:16px;justify-content:center;background:#0B1E2D;color:#fff}
+.pcard .btn:hover{background:#0E7C78}
+
+.subsidy{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.sub-card{border-radius:3px;padding:36px;background:linear-gradient(135deg,rgba(14,124,120,.5),rgba(11,62,87,.5));border:1px solid rgba(125,240,228,.3);position:relative;overflow:hidden}
+.sub-card::before{content:"";position:absolute;width:320px;height:320px;right:-100px;top:-140px;border-radius:50%;background:radial-gradient(closest-side,rgba(125,240,228,.3),transparent)}
+.sub-card>*{position:relative}
+.sub-card .k{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#BFEDEA;font-weight:600}
+.sub-card .amount{font-size:64px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin:6px 0}
+.checks{list-style:none;padding:0;margin:22px 0 0}
+.checks li{display:flex;gap:12px;padding:8px 0;color:#DCEFF0}
+.checks li::before{content:"";flex:none;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.15) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.3l2.6 2.5L12 5.4' fill='none' stroke='%237DF0E4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+.steps3 div{background:var(--card);border:1px solid var(--line);border-radius:3px;padding:18px}
+.steps3 b{display:block;font-size:28px;color:var(--orange);line-height:1;margin-bottom:8px}
+.steps3 span{font-size:14px;color:var(--muted)}
+
+/* EMS */
+.ems-top{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+.ems-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.ems-chips span{font-size:13px;color:#CFE0E6;background:var(--card);border:1px solid var(--line);border-radius:3px;padding:7px 13px}
+.film{position:relative;border-radius:3px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 50px 100px rgba(0,0,0,.5);aspect-ratio:16/10;background:#000}
+.film img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.film:hover img{transform:scale(1.04)}
+.film iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.film .play{position:absolute;left:50%;top:50%;width:92px;height:92px;margin:-46px 0 0 -46px;border-radius:50%;border:0;cursor:pointer;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);box-shadow:0 0 0 1px rgba(255,255,255,.3);transition:transform .35s var(--ease),background .35s}
+.film .play::before{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(255,255,255,.25);animation:ring 2.4s ease-out infinite}
+@keyframes ring{from{transform:scale(.85);opacity:1}to{transform:scale(1.35);opacity:0}}
+.film .play span{position:absolute;left:50%;top:50%;margin:-14px 0 0 -9px;border-left:26px solid #fff;border-top:15px solid transparent;border-bottom:15px solid transparent}
+.film .play:hover{transform:scale(1.08);background:var(--turq)}
+.film .play:hover span{border-left-color:var(--navy)}
+.film-cap{position:absolute;left:18px;bottom:18px;padding:10px 14px;border-radius:3px;background:rgba(5,15,22,.7);border:1px solid var(--line-2);backdrop-filter:blur(10px)}
+.film-cap b{display:block;font-size:15px}.film-cap span{font-size:12.5px;color:var(--muted)}
+.flow{position:relative;margin-top:90px;display:grid;grid-template-columns:1fr 280px 1fr;align-items:center;gap:24px}
+.flow .col{display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+.col-h{font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.src{background:rgba(8,22,31,.88);border:1px solid var(--line);border-left:3px solid var(--turq);border-radius:3px;padding:12px 16px;transition:.35s var(--ease)}
+.src.out{border-left-color:var(--orange)}
+.src:hover{border-color:rgba(79,219,212,.5);transform:translateX(4px)}
+.src b{display:block;font-size:15px}
+.src span{font-size:13px;color:var(--muted)}
+.core{position:relative;z-index:1;height:400px;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.core img{height:320px;width:auto;position:relative;z-index:2;filter:drop-shadow(0 30px 40px rgba(0,0,0,.6))}
+.core .halo{position:absolute;top:50%;left:50%;width:260px;height:260px;margin:-150px 0 0 -130px;border-radius:50%;border:1px solid rgba(79,219,212,.35);animation:halo 3.5s ease-out infinite}
+.core .halo:nth-child(2){animation-delay:1.2s}.core .halo:nth-child(3){animation-delay:2.4s}
+@keyframes halo{from{transform:scale(.5);opacity:1}to{transform:scale(1.3);opacity:0}}
+.core-lbl{position:relative;z-index:2;text-align:center;font-weight:700;margin-top:6px}
+.core-lbl span{font-weight:500;font-size:13px;color:var(--turq)}
+.flow svg.lines{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.flow .lines path{fill:none;stroke:rgba(79,219,212,.4);stroke-width:1.5;stroke-dasharray:6 8;animation:dash 1.6s linear infinite}
+.flow .lines path.out{stroke:rgba(236,106,50,.45)}
+@keyframes dash{to{stroke-dashoffset:-28}}
+.ems-loop{display:grid;grid-template-columns:1.2fr .8fr;gap:50px;align-items:center;margin-top:90px}
+.video-frame{border-radius:3px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 40px 80px rgba(0,0,0,.45)}
+.video-frame video{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+@media (max-width:1100px){.ems-top,.ems-loop{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.flow svg.lines{display:none}.core{height:320px}}
+
+.pl-sec{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+.pl-visual{position:relative;height:500px;border-radius:3px;overflow:hidden;border:1px solid var(--line);background:radial-gradient(circle at 50% 60%,#11303F,#08161F 70%)}
+.pl-visual .map{position:absolute;inset:40px;opacity:.14;background:url(img/polska.svg) center/contain no-repeat;filter:grayscale(1) brightness(2)}
+.pl-visual .unit{position:absolute;left:50%;bottom:30px;height:400px;transform:translateX(-50%);filter:drop-shadow(0 30px 40px rgba(0,0,0,.6));transition:transform .8s var(--ease)}
+.pl-visual:hover .unit{transform:translateX(-50%) scale(1.04)}
+.pl-visual .stamp{position:absolute;left:22px;top:22px;display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:3px;background:rgba(5,15,22,.7);border:1px solid var(--line-2);backdrop-filter:blur(10px)}
+.pl-visual .stamp .pl-ico{width:44px;height:40px}
+.pl-visual .stamp b{display:block}
+.pl-visual .stamp span{font-size:12.5px;color:var(--muted)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:3px;padding:18px;transition:.35s var(--ease)}
+.fact:hover{border-color:rgba(79,219,212,.4);transform:translateY(-3px)}
+.fact b{display:block;font-size:16px;margin-bottom:2px}
+.fact span{font-size:14px;color:var(--muted)}
+
+.team{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:50px}
+.member{background:var(--card);border:1px solid var(--line);border-radius:3px;overflow:hidden;transition:transform .45s var(--ease),border-color .3s;text-align:left}
+.member:hover{transform:translateY(-6px);border-color:rgba(79,219,212,.4)}
+.member .ph{height:220px;background:linear-gradient(160deg,#143A4D,#0A1B26);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--muted);font-size:13px}
+.member .ph .ini{width:84px;height:84px;border-radius:50%;background:rgba(79,219,212,.12);border:1px solid rgba(79,219,212,.3);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:var(--mint)}
+.member .bd{padding:18px}
+.member b{display:block;font-size:16px}
+.member .role{font-size:13.5px;color:var(--turq);font-weight:600}
+.member .ct{margin-top:10px;font-size:13.5px;color:var(--muted)}
+.member .ct a{color:#CFE0E6;text-decoration:none}
+
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start}
+.ways{display:grid;gap:12px;margin-top:26px}
+.way{display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:3px;background:var(--card);border:1px solid var(--line);text-decoration:none;transition:.35s var(--ease)}
+.way:hover{border-color:rgba(79,219,212,.5);background:var(--card-2);transform:translateX(4px)}
+.way .ic{width:48px;height:48px;border-radius:3px;background:rgba(79,219,212,.12);display:flex;align-items:center;justify-content:center;flex:none}
+.way .ic svg{width:24px;height:24px;color:var(--turq)}
+.way b{display:block;font-size:18px}
+.way span{font-size:13.5px;color:var(--muted)}
+form.cb{background:rgba(255,255,255,.04);border:1px solid var(--line-2);border-radius:3px;padding:30px}
+form.cb h3{font-size:22px}
+form.cb label{display:block;font-weight:600;font-size:14px;margin:14px 0 8px}
+form.cb input,form.cb select{width:100%;padding:13px 15px;border:1.5px solid var(--line-2);border-radius:3px;font:15px Poppins,sans-serif;background:rgba(0,0,0,.25);color:#fff}
+form.cb select option{color:#000}
+form.cb input:focus,form.cb select:focus{outline:none;border-color:var(--turq);box-shadow:0 0 0 4px rgba(79,219,212,.15)}
+form.cb .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+form.cb .btn{width:100%;justify-content:center;margin-top:20px}
+form.cb .fine{font-size:12.5px;color:var(--muted);margin:12px 0 0}
+
+footer{background:#030A0F;color:var(--muted);padding:56px 0 40px;font-size:14px;border-top:1px solid var(--line)}
+footer .cols{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start}
+footer .logo{height:30px;width:auto;filter:brightness(0) invert(1);margin-bottom:12px}
+footer a{text-decoration:none}
+
+.rv{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+@media (max-width:1100px){
+  .nav ul{display:none}
+  .hero .grid,.subsidy,.pl-sec,.contact{grid-template-columns:1fr}
+  .hero-visual{height:520px}
+  .products{grid-template-columns:1fr 1fr}
+  .team{grid-template-columns:1fr 1fr}
+  .trust .wrap{grid-template-columns:1fr 1fr}
+  .trust .it:nth-child(2){border-right:0}
+}
+@media (max-width:680px){
+  .wrap{padding:0 16px}
+  section{padding:80px 0}
+  .nav .phone span{display:none}
+  .nav .right .btn{display:none}
+  .hero-visual{height:430px}
+  .hero-visual .unit{height:380px;right:20px}
+  .badge-float{transform:scale(.85);transform-origin:left top}
+  .products,.team,.facts,.steps3,form.cb .two{grid-template-columns:1fr}
+  .trust .it{border-right:0;border-bottom:1px solid var(--line)}
+  .price-teaser .val{font-size:24px}
+}
+/* ===== HERO – SLAJDY (v7) ===== */
+.sl{position:relative;height:100vh;min-height:760px;max-height:1000px;margin-top:-78px;overflow:hidden;background:#050F16}
+.sl-s{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity 1.6s cubic-bezier(.45,0,.2,1),visibility 0s linear 1.6s}
+.sl-s.on{opacity:1;visibility:visible;transition:opacity 1.6s cubic-bezier(.45,0,.2,1),visibility 0s}
+.sl-tlo{position:absolute;inset:0}
+.sl-tlo img{width:100%;height:100%;object-fit:cover;object-position:62% 50%;transform:scale(1.08);transition:transform 7s cubic-bezier(.2,.6,.2,1)}
+.sl-s.on .sl-tlo img{transform:scale(1)}
+.sl-tlo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,15,22,.97) 0%,rgba(5,15,22,.9) 34%,rgba(5,15,22,.45) 56%,rgba(5,15,22,.05) 76%),linear-gradient(0deg,rgba(5,15,22,.9) 0%,rgba(5,15,22,0) 32%)}
+.sl-siatka{position:relative;z-index:1;height:100%;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:30px;padding-top:78px}
+.sl-tresc>*{opacity:0;transform:translateY(22px);filter:blur(8px);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1),filter .7s}
+.sl-s.on .sl-tresc>*{opacity:1;transform:none;filter:none}
+.sl-s.on .sl-tresc>*:nth-child(1){transition-delay:.15s}.sl-s.on .sl-tresc>*:nth-child(2){transition-delay:.25s}
+.sl-s.on .sl-tresc>*:nth-child(3){transition-delay:.35s}.sl-s.on .sl-tresc>*:nth-child(4){transition-delay:.45s}
+.sl-s.on .sl-tresc>*:nth-child(5){transition-delay:.55s}.sl-s.on .sl-tresc>*:nth-child(6){transition-delay:.65s}
+.sl-nad{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--turq)}
+.sl-nad .pl-ico{width:30px;height:28px}
+.sl h1{font-size:clamp(44px,5vw,74px);font-weight:800;letter-spacing:-.035em;line-height:1.02;margin-top:16px}
+.sl-lead{font-size:20px;line-height:1.55;color:#C2D2DA;margin-top:20px;max-width:560px}
+.sl-chipy{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.sl-chipy span{padding:9px 16px;border-radius:3px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);font-size:15px;color:#DCE7EC}
+.sl-chipy b{color:#fff}
+.sl-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.sl-wiz{position:relative;height:100%;display:flex;align-items:center;justify-content:center}
+.sl-wiz img{opacity:0;transform:translateX(50px) scale(.96);transition:opacity 1s cubic-bezier(.2,.8,.2,1) .2s,transform 1.2s cubic-bezier(.2,.8,.2,1) .2s}
+.sl-s.on .sl-wiz img{opacity:1;transform:none}
+.sl-wiz-ems img{height:min(72vh,680px);filter:drop-shadow(0 40px 50px rgba(0,0,0,.6))}
+.sl-wiz-mag img{height:min(68vh,640px);filter:drop-shadow(0 40px 60px rgba(0,0,0,.65))}
+.sl-ster{position:absolute;left:0;right:0;bottom:34px;z-index:3;display:flex;align-items:flex-end;justify-content:space-between;gap:30px}
+.sl-paski{display:flex;gap:14px;flex:1;max-width:760px}
+.sl-paski button{flex:1;background:none;border:0;cursor:pointer;text-align:left;color:#9AB0BC;font:600 14px Poppins,sans-serif;padding:0}
+.sl-paski i{display:block;height:3px;border-radius:2px;background:rgba(255,255,255,.22);overflow:hidden;margin-bottom:10px;position:relative}
+.sl-paski i::after{content:"";position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:0 50%}
+.sl-paski button.on{color:#fff}
+.sl-paski button.on i::after{animation:sl-pasek var(--sl-czas,5s) linear forwards}
+.sl-paski button.byl i::after{transform:scaleX(1)}
+.sl:hover .sl-paski button.on i::after,.sl.stop .sl-paski button.on i::after{animation-play-state:paused}
+@keyframes sl-pasek{to{transform:scaleX(1)}}
+.sl-strz{display:flex;gap:10px}
+.sl-strz button{width:48px;height:48px;border-radius:2px;border:1px solid rgba(255,255,255,.22);background:rgba(5,15,22,.5);color:#fff;font-size:26px;line-height:1;cursor:pointer;transition:background .3s,border-color .3s}
+.sl-strz button:hover{background:var(--turq);border-color:var(--turq);color:#03211F}
+@media (max-width:900px){
+  .sl{height:auto;min-height:0;max-height:none}
+  .sl-s{position:relative;display:none}.sl-s.on{display:block}
+  .sl-siatka{grid-template-columns:1fr;padding:120px 24px 130px}
+  .sl-wiz{height:280px}.sl-wiz-ems img,.sl-wiz-mag img{height:280px}
+  .sl-paski span{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .sl-tlo img,.sl-tresc>*,.sl-wiz img{transition:none!important;transform:none!important;filter:none!important}
+}
+
+
+/* zdjęcia hero (Higgsfield) – nakładki dopasowane do kadru */
+.sl-t1::after{background:linear-gradient(90deg,rgba(5,12,18,.78) 0%,rgba(5,12,18,.45) 40%,rgba(5,12,18,0) 62%),linear-gradient(0deg,rgba(5,12,18,.85) 0%,rgba(5,12,18,0) 28%)!important}
+.sl-t1 img{object-position:70% 50%}
+.sl-t2::after{background:linear-gradient(90deg,rgba(5,15,22,.88) 0%,rgba(5,15,22,.62) 36%,rgba(5,15,22,.12) 60%,rgba(5,15,22,0) 75%),linear-gradient(0deg,rgba(5,15,22,.85) 0%,rgba(5,15,22,0) 30%)!important}
+.sl-t2 img{object-position:75% 50%}
+.sl-t3::after{background:linear-gradient(90deg,rgba(247,246,243,.96) 0%,rgba(247,246,243,.85) 34%,rgba(247,246,243,.25) 56%,rgba(247,246,243,0) 70%)!important}
+.sl-t3 img{object-position:94% 50%}
+body.hero-jasny header:not(.scrolled) .logo{filter:none}
+body.hero-jasny header:not(.scrolled) .nav ul a{color:#0E1A22}
+body.hero-jasny header:not(.scrolled) .nav .phone{color:#0E1A22}
+header .logo,.nav ul a,.nav .phone{transition:color .5s,filter .5s}
+
+.sl-jasny h1{color:#0E1A22}
+.sl-jasny .grad{background:none;-webkit-text-fill-color:#097068;color:#097068}
+.sl-jasny .sl-nad{color:#097068}
+.sl-jasny .sl-lead{color:#3C4A55}
+.sl-jasny .btn-primary{background:#0E1A22;color:#fff;box-shadow:0 10px 30px rgba(14,26,34,.25)}
+.sl-jasny .btn-ghost{border-color:#0E1A22;color:#0E1A22;background:transparent}
+.sl.jasny .sl-paski button{color:#5A6872}.sl.jasny .sl-paski button.on{color:#0E1A22}
+.sl.jasny .sl-paski i{background:rgba(14,26,34,.18)}.sl.jasny .sl-paski i::after{background:#0E1A22}
+.sl.jasny .sl-strz button{border-color:rgba(14,26,34,.25);background:rgba(255,255,255,.7);color:#0E1A22}
+
+/* slajd 1: EMS – najechanie = przybliżenie + rozsunięcie części (klip przewijany myszką) */
+.sl-t1{transform:translateX(1%) scale(.8);transform-origin:96% 55%}
+.sl-tlo video{width:100%;height:100%;object-fit:cover;object-position:100% 50%;transform:scale(1.08);transition:transform 7s cubic-bezier(.2,.6,.2,1)}
+.sl-s.on .sl-tlo video{transform:scale(1)}
+.sl-s.on.ems-hover .sl-tlo video{transform:scale(1.04);transition:transform 1.8s cubic-bezier(.25,.8,.25,1)}
+.ems-strefa{position:absolute;z-index:2;display:block;cursor:pointer;border-radius:3px;outline-offset:6px}
+.ems-podp{position:absolute;left:50%;bottom:6%;transform:translate(-50%,12px);opacity:0;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;padding:10px 18px;border-radius:3px;background:rgba(5,15,22,.72);border:1px solid rgba(79,219,212,.45);color:#E8F1F4;font-size:15px;font-weight:600;backdrop-filter:blur(8px);transition:opacity .4s,transform .4s cubic-bezier(.2,.8,.2,1)}
+.ems-podp svg{width:16px;height:16px;color:var(--turq)}
+.ems-hover .ems-podp,.ems-strefa:focus-visible .ems-podp{opacity:1;transform:translate(-50%,0)}
+@media (max-width:900px){.ems-strefa{display:none}}
+
+/* ===== SEKCJA EMS v7: anatomia + jeden dzień ===== */
+.ana{display:grid;grid-template-columns:.85fr 1.15fr;gap:40px;align-items:center;margin-top:46px}
+.ana-lista{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.ana-lista li{display:flex;gap:16px;align-items:flex-start;padding:16px 18px;border-radius:3px;border:1px solid transparent;cursor:default;transition:background .35s,border-color .35s,opacity .5s,transform .5s;opacity:0;transform:translateX(-16px)}
+.ana.in .ana-lista li{opacity:1;transform:none}
+.ana-lista li b{display:block;font-size:18px;color:#fff;margin-bottom:4px}
+.ana-lista li span:not(.nr){display:block;color:var(--muted);font-size:15px;line-height:1.55}
+.ana-lista .nr{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 14px Poppins,sans-serif;background:rgba(79,219,212,.12);color:var(--turq);border:1px solid rgba(79,219,212,.4);transition:background .35s,color .35s}
+.ana-lista li.ak{background:rgba(255,255,255,.04);border-color:rgba(79,219,212,.35)}
+.ana-lista li.ak .nr{background:var(--turq);color:#03211F}
+.ana-foto{position:relative;aspect-ratio:1/1;border-radius:3px;overflow:hidden;background:#0B1217;box-shadow:0 40px 80px rgba(0,0,0,.45)}
+.ana-foto img{width:100%;height:100%;object-fit:cover;object-position:88% 50%;transform:scale(1.04);transition:transform 1.6s cubic-bezier(.2,.8,.2,1)}
+.ana.in .ana-foto img{transform:scale(1)}
+.pkt{position:absolute;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:2px solid #fff;background:rgba(5,15,22,.75);color:#fff;font:700 14px Poppins,sans-serif;cursor:pointer;transform:scale(0);transition:transform .45s cubic-bezier(.3,1.6,.5,1),background .3s,box-shadow .3s}
+.pkt::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(79,219,212,.6);opacity:0;transition:opacity .3s}
+.ana.in .pkt{transform:scale(1)}
+.pkt.ak{background:var(--turq);color:#03211F;box-shadow:0 0 0 6px rgba(79,219,212,.18)}
+.pkt.ak::after{opacity:1;animation:pkt-fala 1.6s ease-out infinite}
+@keyframes pkt-fala{from{transform:scale(.8);opacity:1}to{transform:scale(1.7);opacity:0}}
+.ana-normy{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:22px;color:var(--muted);font-size:14.5px}
+.ana-normy b{color:#DCE7EC}
+.dz-tyt{font-size:clamp(26px,3vw,40px);font-weight:800;letter-spacing:-.025em;margin:90px 0 26px}
+.dz{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.dz-k{border-radius:3px;background:rgba(255,255,255,.035);border:1px solid var(--line);overflow:hidden;padding-bottom:22px;transition:border-color .4s,transform .4s}
+.dz-k:hover{border-color:rgba(79,219,212,.4);transform:translateY(-4px)}
+.dz-f{position:relative;aspect-ratio:4/3;overflow:hidden;margin-bottom:18px}
+.dz-f img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.dz-k:hover .dz-f img{transform:scale(1.05)}
+.dz-g{position:absolute;left:14px;top:14px;padding:6px 12px;border-radius:3px;background:rgba(5,15,22,.78);color:#fff;font:500 18px "IBM Plex Mono",ui-monospace,monospace;backdrop-filter:blur(6px)}
+.dz-g.dr{color:#FFB48A}
+.dz-k b{display:block;padding:0 22px;font-size:19px;color:#fff;line-height:1.3}
+.dz-k p{padding:8px 22px 0;color:var(--muted);font-size:15px;line-height:1.6}
+@media (max-width:900px){.ana,.dz{grid-template-columns:1fr}.ana-foto{order:-1}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" d="M3 7l9 6 9-6"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M14.5 9.5c-.5-1-1.5-1.5-2.5-1.5-1.4 0-2.5.8-2.5 2s1.1 1.7 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1 0-2-.5-2.5-1.5M12 6.5V8M12 16v1.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M12 7v5l3 2"/></symbol>
+</defs></svg>
+
+<button class="notes-toggle" onclick="document.body.classList.toggle('show-notes')">Uwagi z audytu</button>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="#"><img class="logo" src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/sluxer-logo.png.webp" alt="Sluxer"></a>
+    <ul>
+      <li><a href="#ceny">Ceny</a></li>
+      <li><a href="#dotacja">Dotacja</a></li>
+      <li><a href="#ems">Jak działa EMS</a></li>
+      <li><a href="#polski">Polski produkt</a></li>
+      <li><a href="#zespol">Zespół</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <div class="right">
+      <a class="phone" href="tel:+48500600900"><svg><use href="#i-phone"/></svg><span>+48 500 600 900</span></a>
+      <a class="btn btn-primary" href="#kontakt" style="padding:11px 18px;font-size:14.5px">Zapytaj o cenę</a>
+    </div>
+  </div>
+</header>
+
+<!-- 1. HERO – slajdy co 5 s (wzór: minisforumpc.eu) -->
+<section class="sl" id="slajdy" aria-roledescription="karuzela" aria-label="Najważniejsze o Sluxer">
+
+  <!-- Slajd 1: Sluxer EMS -->
+  <article class="sl-s on" aria-label="Slajd 1 z 2: Sluxer EMS">
+    <div class="sl-tlo sl-t1"><video id="ems-wideo" src="img/foto/hero-ems-rozklad-v2.mp4" poster="img/foto/hero-ems-v2-klatka0.jpg" muted playsinline preload="auto" aria-label="Sterownik Sluxer EMS"></video></div>
+    <a class="ems-strefa" id="ems-strefa" href="#ems" aria-label="Zobacz, co potrafi Sluxer EMS"><span class="ems-podp">Zobacz, co potrafi <svg><use href="#i-arrow"/></svg></span></a>
+    <div class="wrap sl-siatka">
+      <div class="sl-tresc">
+        <span class="sl-nad">Sluxer EMS</span>
+        <h1>Sam decyduje,<br><span class="grad">gdzie płynie Twój prąd</span><span class="dot">.</span></h1>
+        <p class="sl-lead">W południe ładuje magazyn, wieczorem zasila dom i pilnuje salda co 15 minut.</p>
+        <div class="sl-chipy"><span><b>353</b> taryfy</span><span><b>LoRa</b> do 3 km</span><span>działa <b>bez internetu</b></span></div>
+        <div class="sl-ctas"><a class="btn btn-primary" href="ems.html">Zobacz, jak działa <svg><use href="#i-arrow"/></svg></a><a class="btn btn-ghost" href="#kontakt">Sprawdź cenę</a></div>
+      </div>
+      <div></div>
+    </div>
+  </article>
+
+  <!-- Slajd 2: dotacja + polski producent + pomoc w Polsce -->
+  <article class="sl-s" aria-label="Slajd 2 z 2: Polski producent i dotacja">
+    <div class="sl-tlo sl-t2"><img src="img/foto/hero-dom.jpg" alt="Dom z fotowoltaiką o zmierzchu, para odpoczywa na tarasie"></div>
+    <div class="wrap sl-siatka">
+      <div class="sl-tresc">
+        <span class="sl-nad"><img class="pl-ico" src="img/polska.svg" alt="">Polski producent</span>
+        <h1>Wszystko w Polsce.<br><span class="grad">Z dotacją 30%</span><span class="dot">.</span></h1>
+        <p class="sl-lead">Projektujemy i produkujemy w Polsce. Serwis i dział pomocy też są tutaj – rozmawiasz z nami, po polsku.</p>
+        <div class="sl-chipy"><span><b>PME2:</b> 30% kosztu, maks. 800 zł/kWh</span><span>wniosek <b>po montażu</b> – pomagamy</span></div>
+        <div class="sl-ctas"><a class="btn btn-primary" href="kalkulator.html">Sprawdź swoją dotację <svg><use href="#i-arrow"/></svg></a><a class="btn btn-ghost" href="#kontakt">Porozmawiaj z nami</a></div>
+      </div>
+      <div></div>
+    </div>
+  </article>
+
+  <div class="sl-ster wrap">
+    <div class="sl-paski" role="tablist">
+      <button role="tab" aria-label="Slajd 1: Sluxer EMS"><i></i><span>Sluxer EMS</span></button>
+      <button role="tab" aria-label="Slajd 2: Polski producent i dotacja"><i></i><span>Polski producent · dotacja</span></button>
+    </div>
+    <div class="sl-strz"><button class="sl-wstecz" aria-label="Poprzedni slajd">‹</button><button class="sl-dalej" aria-label="Następny slajd">›</button></div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="wrap">
+    <div class="it"><img class="pl-ico" src="img/polska.svg" alt="" style="width:34px;height:32px"><span><b>Polski produkt</b>produkcja i serwis w Polsce</span></div>
+    <div class="it"><svg><use href="#i-coin"/></svg><span><b>Dotacja PME2</b>30% kosztu, maks. 800 zł/kWh</span></div>
+    <div class="it"><svg><use href="#i-shield"/></svg><span><b>10 lat gwarancji</b>lub 3650 cykli, min. 70%</span></div>
+    <div class="it"><svg><use href="#i-clock"/></svg><span><b>Oddzwaniamy w <span class="todo">[X] h</span></b>bez akwizytora</span></div>
+  </div>
+</div>
+
+<!-- Pasek falowników -->
+<div class="brands">
+  <div class="note" style="margin:0 auto 16px;max-width:1144px"><b>Audyt, s. 26 i 31:</b> „loga falowników” w pasku zaufania. Lista z dokumentu zgodności w folderze manuals. Docelowo oficjalne logotypy, jeśli producenci się zgodzą.</div>
+  <div class="brands-label">Współpracujemy z falownikami 23 marek</div>
+  <div class="marquee"><div class="track">
+    <span>Deye</span><span>Hoymiles</span><span>Growatt</span><span>Victron</span><span>GoodWe</span><span>SMA</span><span>Sungrow</span><span>Solis</span><span>SOFAR</span><span>Solax</span><span>Afore</span><span>Livoltek</span><span>Luxpowertek</span><span>Solplanet</span><span>INVT</span><span>SRNE</span><span>Sorotec</span><span>MUST</span><span>ECOBSS</span><span>Anenji</span><span>Qoltec</span><span>Voltronic Power</span><span>MPP Solar</span>
+    <span>Deye</span><span>Hoymiles</span><span>Growatt</span><span>Victron</span><span>GoodWe</span><span>SMA</span><span>Sungrow</span><span>Solis</span><span>SOFAR</span><span>Solax</span><span>Afore</span><span>Livoltek</span><span>Luxpowertek</span><span>Solplanet</span><span>INVT</span><span>SRNE</span><span>Sorotec</span><span>MUST</span><span>ECOBSS</span><span>Anenji</span><span>Qoltec</span><span>Voltronic Power</span><span>MPP Solar</span>
+  </div></div>
+  <a class="brands-link" href="../manuals/compatibility/index.html">Sprawdź pełną listę zgodnych modeli →</a>
+</div>
+
+<!-- 2. CENY -->
+<section id="ceny">
+  <div class="wrap center">
+    <div class="note"><b>Audyt, s. 9 i 14 (krytyczne):</b> brak cen. Nexbe wygrywa jawnymi cenami z montażem i „po dotacji”.</div>
+    <div class="eyebrow rv">Ceny</div>
+    <h2 class="rv d1">Jasne ceny. <span class="grad">Z montażem i po dotacji</span><span class="dot">.</span></h2>
+    <p class="lead rv d2">Bez ukrytych kosztów. Dokładną kwotę policzymy dla Twojego domu.</p>
+    <div class="products">
+      <div class="pcard rv"><span class="tag">15 kWh</span><span class="pl"><img class="pl-ico" src="img/polska.svg" alt="">Polski produkt</span>
+        <div class="stage"><img src="img/magazyn-pionowy.png" alt="Sluxer Home 15"></div>
+        <h3>Sluxer Home 15</h3><p class="sub">14,95 kWh, dom z PV do ok. 4 kWp</p>
+        <div class="price"><div class="old">przed dotacją <s><span class="todo">[—]</span> zł</s></div><div class="new">od <b><span class="todo">[—]</span> zł</b><span class="after">po dotacji</span></div></div>
+        <a class="btn" href="#kontakt">Zapytaj o ten magazyn</a></div>
+      <div class="pcard rv d1"><span class="tag">16 kWh · najczęściej wybierany</span><span class="pl"><img class="pl-ico" src="img/polska.svg" alt="">Polski produkt</span>
+        <div class="stage"><img src="img/magazyn-pionowy.png" alt="Sluxer Home 16"></div>
+        <h3>Sluxer Home 16</h3><p class="sub">Typowy dom z PV 6–10 kWp</p>
+        <div class="price"><div class="old">przed dotacją <s><span class="todo">[—]</span> zł</s></div><div class="new">od <b><span class="todo">[—]</span> zł</b><span class="after">po dotacji</span></div></div>
+        <a class="btn" href="#kontakt">Zapytaj o ten magazyn</a></div>
+      <div class="pcard rv d2"><span class="tag">30 kWh</span><span class="pl"><img class="pl-ico" src="img/polska.svg" alt="">Polski produkt</span>
+        <div class="stage"><img src="img/magazyn-szeroki.png" alt="Sluxer Home 30"></div>
+        <h3>Sluxer Home 30</h3><p class="sub">Duży dom, pompa ciepła, auto elektryczne</p>
+        <div class="price"><div class="old">przed dotacją <s><span class="todo">[—]</span> zł</s></div><div class="new">od <b><span class="todo">[—]</span> zł</b><span class="after">po dotacji</span></div></div>
+        <a class="btn" href="#kontakt">Zapytaj o ten magazyn</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. DOTACJA -->
+<section id="dotacja" style="background:var(--bg-2);overflow:hidden">
+  <div class="glow" style="width:500px;height:500px;background:#0B3E57;left:-180px;bottom:-150px"></div>
+  <div class="wrap subsidy">
+    <div>
+      <div class="note"><b>Audyt, s. 10 i 28:</b> brak treści o dotacji w dniu startu naboru – szukający idą do konkurencji. Konkretnie: kwota, warunki, pomoc z wnioskiem.</div>
+      <div class="eyebrow rv">Dotacja PME2</div>
+      <h2 class="rv d1">Spełnia warunki dotacji PME2*. <span class="grad">Pomagamy ją dostać</span><span class="dot">.</span></h2>
+      <p class="lead rv d2">Magazyn Sluxer z systemem EMS spełnia wymagania programu „Przydomowe Magazyny Energii cz. 2” (wg deklaracji producenta). Nie musisz przebudowywać istniejącej instalacji fotowoltaicznej.</p>
+      <div class="steps3 rv d3">
+        <div><b>1</b><span>Liczymy dotację dla Twojej instalacji</span></div>
+        <div><b>2</b><span>Montaż i zgłoszenie do operatora sieci</span></div>
+        <div><b>3</b><span>Pomagamy złożyć wniosek – po montażu</span></div>
+      </div>
+    </div>
+    <div class="sub-card rv d1">
+      <div class="k">Twoja dotacja</div>
+      <div class="amount">30% kosztu</div>
+      <div style="color:#DCEFF0">magazynu z montażem, maks. 800 zł za każdą kWh</div>
+      <ul class="checks">
+        <li>EMS z analizą pogody i cen energii – wymóg programu</li>
+        <li>Cyberbezpieczeństwo: NIS2, CRA, RED DA, ETSI EN 303 645</li>
+        <li>Warunek: fotowoltaika przyłączona do sieci, magazyn min. 10 kWh</li>
+        <li>Nabór: 20.10.2026 – 01.10.2027 lub do wyczerpania puli</li>
+      </ul>
+      <a class="btn btn-primary" href="#kontakt" style="margin-top:22px;background:#fff;color:#0B1E2D">Sprawdź swoją dotację <svg><use href="#i-arrow"/></svg></a>
+      <p style="font-size:12px;color:#BFD8DA;margin:14px 0 0">* wg deklaracji producenta. O przyznaniu dotacji decyduje NFOŚiGW.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3b. JAK DZIAŁA EMS (treść i film ze strony ems-zmiany) -->
+<section id="ems" style="overflow:hidden">
+  <div class="wrap">
+    <div class="note"><b>Audyt, s. 24:</b> „Nie rozumiem EMS” – dlatego najpierw pokazujemy urządzenie i 5 rzeczy, które robi, potem jeden dzień z życia domu, na końcu schemat i film.</div>
+    <div class="eyebrow rv">Sluxer EMS</div>
+    <h2 class="rv d1">Co potrafi <span class="grad">Sluxer EMS</span><span class="dot">.</span></h2>
+    <p class="lead rv d2" style="max-width:720px">Małe urządzenie w rozdzielnicy, które pilnuje, żeby energia z Twoich paneli trafiała tam, gdzie jest w danej chwili najwięcej warta.</p>
+
+    <!-- A. Anatomia: punkty na częściach + lista -->
+    <div class="ana" id="ana">
+      <ol class="ana-lista">
+        <li data-p="1"><span class="nr">1</span><div><b>LoRa 433 MHz – bez kabla</b><span>Łączy się z magazynem bezprzewodowo: do 3 km w terenie otwartym, ok. 200–500 m w zabudowie. Magazyn może stać w garażu.</span></div></li>
+        <li data-p="2"><span class="nr">2</span><div><b>Chmura, lokalnie albo bez internetu</b><span>Trzy tryby pracy. Dane mogą zostać w domu, a bez internetu EMS pracuje lokalnie według Twoich ustawień.</span></div></li>
+        <li data-p="3"><span class="nr">3</span><div><b>Decyzje z 5 źródeł danych</b><span>Pogoda, prognoza produkcji i zużycia, bilans domu i ceny – w tym 353 taryfy z listy URE. Sam wybiera, co i kiedy ładować.</span></div></li>
+        <li data-p="4"><span class="nr">4</span><div><b>Saldo 0,00 kWh co 15 minut</b><span>Operator rozlicza każdy kwadrans. EMS liczy sumę 3 faz tak jak on i wyrównuje pobór magazynem.</span></div></li>
+        <li data-p="5"><span class="nr">5</span><div><b>Montaż na szynie DIN</b><span>Obok licznika, w rozdzielnicy. Bez kucia ścian i bez przebudowy instalacji.</span></div></li>
+      </ol>
+      <div class="ana-foto">
+        <img src="img/foto/ems-anatomia.jpg" alt="Sluxer EMS z odsuniętą obudową – widoczna płytka, anteny i zaczep DIN">
+        <button class="pkt" data-p="1" style="left:43.8%;top:12%" aria-label="1: LoRa">1</button>
+        <button class="pkt" data-p="2" style="left:61.4%;top:16.5%" aria-label="2: tryby pracy">2</button>
+        <button class="pkt" data-p="3" style="left:77.4%;top:44%" aria-label="3: decyzje">3</button>
+        <button class="pkt" data-p="4" style="left:77.4%;top:60%" aria-label="4: saldo kwadransa">4</button>
+        <button class="pkt" data-p="5" style="left:89.5%;top:31%" aria-label="5: szyna DIN">5</button>
+      </div>
+    </div>
+    <div class="ana-normy rv"><span>Cyberbezpieczeństwo: <b>NIS2 · CRA · RED DA · ETSI EN 303 645</b></span><span>Spełnia wymogi programu PME2 – wg deklaracji producenta</span></div>
+
+    <!-- B. Jeden dzień -->
+    <h3 class="dz-tyt rv">Jeden dzień z <span class="grad">Sluxer EMS</span><span class="dot">.</span></h3>
+    <div class="dz">
+      <article class="dz-k rv"><div class="dz-f"><img src="img/foto/dzien-poludnie.jpg" alt="Dach z panelami fotowoltaicznymi w południowym słońcu"><span class="dz-g">12:00</span></div>
+        <b>Słońce ładuje magazyn</b><p>Zamiast oddawać nadwyżkę do sieci za grosze, EMS odkłada ją na później – do magazynu, bojlera albo auta.</p></article>
+      <article class="dz-k rv d1"><div class="dz-f"><img src="img/foto/dzien-wieczor.jpg" alt="Rodzina gotuje wieczorem kolację w kuchni"><span class="dz-g dr">18:30</span></div>
+        <b>Najdroższa godzina? Dom bierze z magazynu</b><p>Gotujesz, pracuje piekarnik i pralka – a energia płynie z Twojego magazynu, nie z drogiej sieci.</p></article>
+      <article class="dz-k rv d2"><div class="dz-f"><img src="img/foto/dzien-noc.jpg" alt="Samochód elektryczny ładuje się nocą w garażu"><span class="dz-g">23:00</span></div>
+        <b>Nocą, gdy prąd tanieje</b><p>Przy cenach dynamicznych EMS może doładować magazyn lub auto wtedy, gdy prąd jest najtańszy.</p></article>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="flow">
+      <svg class="lines" viewBox="0 0 1000 420" preserveAspectRatio="none">
+        <path d="M330 50 C 420 50, 420 210, 500 210"/><path d="M330 130 C 420 130, 430 210, 500 210"/><path d="M330 210 L 500 210"/><path d="M330 290 C 420 290, 430 210, 500 210"/><path d="M330 370 C 420 370, 420 210, 500 210"/>
+        <path class="out" d="M500 210 C 580 210, 580 70, 670 70"/><path class="out" d="M500 210 C 580 210, 590 160, 670 160"/><path class="out" d="M500 210 C 580 210, 590 255, 670 255"/><path class="out" d="M500 210 C 580 210, 580 345, 670 345"/>
+      </svg>
+      <div class="col">
+        <div class="col-h">Dane, które analizuje</div>
+        <div class="src rv"><b>Prognoza zużycia</b><span>uczy się nawyków domowników</span></div>
+        <div class="src rv d1"><b>Odczyt pogody</b><span>zachmurzenie na najbliższe dni</span></div>
+        <div class="src rv d2"><b>Prognoza produkcji</b><span>ile da Twój dach jutro</span></div>
+        <div class="src rv d1"><b>Nadwyżki i niedobory</b><span>bilans domu na bieżąco</span></div>
+        <div class="src rv d2"><b>Ceny giełdowe</b><span>RCE i 353 taryfy z URE</span></div>
+      </div>
+      <div class="core rv d1">
+        <div class="halo"></div><div class="halo"></div><div class="halo"></div>
+        <img src="https://sluxer2.brandperspective.pl/wp-content/themes/brand-perspective-sluxer/assets/img/ems3/ems-urzadzenie.webp" alt="Sluxer EMS">
+        <div class="core-lbl">Sluxer EMS<br><span>decyduje sam</span></div>
+      </div>
+      <div class="col">
+        <div class="col-h">Decyzje, które podejmuje</div>
+        <div class="src out rv"><b>Ładuje magazyn</b><span>gdy świeci słońce lub prąd jest tani</span></div>
+        <div class="src out rv d1"><b>Grzeje wodę i ładuje auto</b><span>z nadwyżki z dachu</span></div>
+        <div class="src out rv d2"><b>Zasila dom wieczorem</b><span>gdy prąd z sieci jest najdroższy</span></div>
+        <div class="src out rv d3"><b>Sprzedaje nadwyżkę</b><span>gdy w sieci płacą najwięcej</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap ems-top" style="margin-top:20px">
+    <div>
+      <h3 class="rv" style="font-size:clamp(24px,2.6vw,34px)">Zobacz w działaniu<span class="dot">.</span></h3>
+      <p class="rv d1" style="color:var(--muted);margin-top:12px">Krótki film o tym, jak Sluxer EMS zarządza energią w domu.</p>
+      <div class="ems-chips rv d2"><span>Spełnia wymogi PME2*</span><span>LoRa: do 3 km w terenie otwartym</span></div>
+    </div>
+    <div class="film rv d2" id="film">
+      <img src="https://sluxer2.brandperspective.pl/wp-content/themes/brand-perspective-sluxer/assets/img/ems2-wideo-kadr.webp" alt="Sterownik Sluxer EMS z dwiema antenami">
+      <button type="button" class="play" aria-label="Odtwórz film" data-src="https://player.vimeo.com/video/1234370011?h=65c8a55a84&autoplay=1&title=0&byline=0&portrait=0&dnt=1"><span></span></button>
+      <div class="film-cap"><b>Sluxer EMS</b><span>System zarządzania energią · film</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. POLSKI PRODUKT -->
+<section id="polski">
+  <div class="wrap pl-sec">
+    <div class="pl-visual rv">
+      <div class="map"></div>
+      <img class="unit" src="img/magazyn-pionowy.png" alt="Magazyn Sluxer">
+      <div class="stamp"><img class="pl-ico" src="img/polska.svg" alt=""><div><b>Made in Poland</b><span>produkcja: <span class="todo">[miasto zakładu]</span></span></div></div>
+    </div>
+    <div>
+      <div class="note"><b>Audyt, s. 3 i 10:</b> „Wyprodukowane w Polsce” przy gwarancie z Szanghaju to ryzyko zarzutu wprowadzania w błąd. Przed publikacją potwierdzić, gdzie powstaje magazyn i EMS oraz kto jest gwarantem (pytanie 11).</div>
+      <div class="eyebrow rv">Polski produkt</div>
+      <h2 class="rv d1">Robimy je sami. <span class="grad">W Polsce</span><span class="dot">.</span></h2>
+      <p class="lead rv d2">Sluxer to polska firma z Warszawy. Magazyny energii projektujemy i produkujemy w Polsce, montujemy przez sieć instalatorów w całej Polsce i serwisujemy na miejscu. Aplikacja i wsparcie są po polsku.</p>
+      <div class="facts">
+        <div class="fact rv"><b>Produkcja w Polsce</b><span><span class="todo">[miasto zakładu]</span></span></div>
+        <div class="fact rv d1"><b>Serwis w Polsce</b><span>części i technicy na miejscu</span></div>
+        <div class="fact rv d2"><b>Polska firma</b><span>Warszawa, KRS 0001177532</span></div>
+        <div class="fact rv d3"><b>10 lat gwarancji</b><span>lub 3650 cykli, min. 70% pojemności</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. ZESPÓŁ -->
+<section id="zespol" style="background:var(--bg-2)">
+  <div class="wrap center">
+    <div class="note"><b>Audyt, s. 3, 9 i 14:</b> „zero ludzi” na stronie; Nexbe pokazuje prezesa z nazwiskiem, Zeronest 5 osób z telefonami. Uzupełnić prawdziwymi zdjęciami i danymi zespołu.</div>
+    <div class="eyebrow rv">Zespół</div>
+    <h2 class="rv d1">Za Sluxerem stoją ludzie<span class="dot">.</span></h2>
+    <p class="lead rv d2">Znasz nas z imienia i nazwiska. Dzwonisz do konkretnej osoby, nie do call center.</p>
+    <div class="team">
+      <div class="member rv"><div class="ph"><div class="ini">AB</div>[zdjęcie]</div><div class="bd"><b><span class="todo">[Imię Nazwisko]</span></b><div class="role">Prezes zarządu</div><div class="ct">Odpowiada za firmę i jakość</div></div></div>
+      <div class="member rv d1"><div class="ph"><div class="ini">CD</div>[zdjęcie]</div><div class="bd"><b><span class="todo">[Imię Nazwisko]</span></b><div class="role">Doradca klienta</div><div class="ct"><span class="todo">[telefon]</span></div></div></div>
+      <div class="member rv d2"><div class="ph"><div class="ini">EF</div>[zdjęcie]</div><div class="bd"><b><span class="todo">[Imię Nazwisko]</span></b><div class="role">Kierownik produkcji</div><div class="ct">Nadzoruje każdy magazyn</div></div></div>
+      <div class="member rv d3"><div class="ph"><div class="ini">GH</div>[zdjęcie]</div><div class="bd"><b><span class="todo">[Imię Nazwisko]</span></b><div class="role">Serwis techniczny</div><div class="ct"><span class="todo">[e-mail serwisu]</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. KONTAKT -->
+<section id="kontakt" style="overflow:hidden">
+  <div class="glow" style="width:600px;height:600px;background:#0E6E6A;right:-220px;top:0"></div>
+  <div class="wrap contact">
+    <div>
+      <div class="note"><b>Audyt, s. 9, 23 i 33:</b> formularz kwalifikujący (PV, kod pocztowy), zasady kontaktu „bez akwizytora”, szybki telefon, widoczny adres firmy.</div>
+      <div class="eyebrow rv">Kontakt</div>
+      <h2 class="rv d1">Porozmawiajmy. <span class="grad">Tak, jak Ci wygodnie</span><span class="dot">.</span></h2>
+      <p class="lead rv d2">Zadzwoń, napisz albo zostaw numer. Oddzwonimy raz, o wybranej porze, bez nachodzenia.</p>
+      <div class="ways">
+        <a class="way rv" href="tel:+48500600900"><div class="ic"><svg><use href="#i-phone"/></svg></div><div><b>+48 500 600 900</b><span>pn–pt <span class="todo">[8:00–18:00]</span></span></div></a>
+        <a class="way rv d1" href="mailto:biuro@sluxer.com"><div class="ic"><svg><use href="#i-mail"/></svg></div><div><b>biuro@sluxer.com</b><span>odpowiadamy w ciągu <span class="todo">[X] h</span></span></div></a>
+        <div class="way rv d2"><div class="ic"><svg><use href="#i-pin"/></svg></div><div><b>ul. Piaseczyńska 54</b><span>00-765 Warszawa · zapraszamy do biura</span></div></div>
+      </div>
+    </div>
+    <form class="cb rv d1" onsubmit="event.preventDefault();this.querySelector('button').firstChild.textContent='Dziękujemy, oddzwonimy '">
+      <h3>Zamów bezpłatną wycenę</h3>
+      <p style="color:var(--muted);font-size:14.5px;margin:0">Policzymy cenę i dotację dla Twojego domu.</p>
+      <div class="two">
+        <div><label for="imie">Imię</label><input id="imie" type="text"></div>
+        <div><label for="tel">Telefon</label><input id="tel" type="tel" placeholder="500 600 900"></div>
+      </div>
+      <div class="two">
+        <div><label for="kod">Kod pocztowy</label><input id="kod" type="text" placeholder="00-000"></div>
+        <div><label for="pv">Fotowoltaika</label><select id="pv"><option>Mam PV</option><option>Planuję PV</option><option>Nie mam PV</option></select></div>
+      </div>
+      <label for="pora">Kiedy oddzwonić?</label>
+      <select id="pora"><option>Rano</option><option>Po południu</option><option>Wieczorem</option></select>
+      <button class="btn btn-primary" type="submit">Oddzwońcie do mnie <svg><use href="#i-arrow"/></svg></button>
+      <p class="fine">Dzwonimy raz, o wybranej porze. Nie przekazujemy danych dalej.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap cols">
+    <div>
+      <img class="logo" src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/sluxer-logo.png.webp" alt="Sluxer">
+      <div style="display:flex;align-items:center;gap:10px;color:#fff;font-weight:600"><img class="pl-ico" src="img/polska.svg" alt="">Polski produkt · produkcja w Polsce</div>
+    </div>
+    <div>Sluxer Polska sp. z o.o.<br>KRS 0001177532 · NIP <span class="todo">[—]</span><br>ul. Piaseczyńska 54, 00-765 Warszawa</div>
+    <div>+48 500 600 900<br>biuro@sluxer.com<br><a href="../manuals/privacy-policy/index.html">Polityka prywatności</a></div>
+  </div>
+</footer>
+
+<script>
+const hdr=document.getElementById('hdr');
+addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>30),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// film z Vimeo – ładuje się dopiero po kliknięciu
+const play=document.querySelector('#film .play');
+if(play)play.addEventListener('click',()=>{const f=document.createElement('iframe');f.src=play.dataset.src;f.allow='autoplay; fullscreen; picture-in-picture';f.allowFullscreen=true;f.title='Sluxer EMS – film';document.getElementById('film').appendChild(f);play.remove();});
+</script>
+<script>// ===== HERO – slajdy co 5 s =====
+(function(){
+  const sl = document.getElementById('slajdy'); if (!sl) return;
+  const slajdy = [...sl.querySelectorAll('.sl-s')], paski = [...sl.querySelectorAll('.sl-paski button')];
+  let akt = 0;
+  function idz(n){
+    akt = (n + slajdy.length) % slajdy.length;
+    slajdy.forEach((s,i) => s.classList.toggle('on', i === akt)); sl.classList.toggle('jasny', slajdy[akt].classList.contains('sl-jasny')); document.body.classList.toggle('hero-jasny', slajdy[akt].classList.contains('sl-jasny'));
+    paski.forEach((p,i) => { p.classList.remove('on'); p.classList.toggle('byl', i < akt); p.setAttribute('aria-selected', i === akt); });
+    void paski[akt].offsetWidth; paski[akt].classList.add('on');
+  }
+  paski.forEach((p,i) => {
+    p.addEventListener('click', () => idz(i));
+    p.querySelector('i').addEventListener('animationend', () => { if (paski[akt] === p) idz(akt + 1); });
+  });
+  sl.querySelector('.sl-dalej').addEventListener('click', () => idz(akt + 1));
+  sl.querySelector('.sl-wstecz').addEventListener('click', () => idz(akt - 1));
+  sl.addEventListener('focusin', () => sl.classList.add('stop'));
+  sl.addEventListener('focusout', () => sl.classList.remove('stop'));
+  idz(0);
+})();
+</script>
+<script>
+// ===== EMS: najechanie = rozsunięcie części =====
+(function(){
+  const v = document.getElementById('ems-wideo'), str = document.getElementById('ems-strefa');
+  if (!v || !str) return;
+  const slajd = str.closest('.sl-s');
+  // wideo w pamięci = przewijanie działa na każdym serwerze
+  fetch(v.currentSrc || v.src).then(r => r.blob()).then(b => { v.src = URL.createObjectURL(b); }).catch(() => {});
+  const ZR = { w: 1920, h: 1080, ox: .70, oy: .5, x0: .48, x1: .99, y0: .02, y1: .98, cx: .75, cy: .5 };
+  function ustaw(){
+    const W = v.offsetWidth, H = v.offsetHeight, k = Math.max(W / ZR.w, H / ZR.h);
+    const vw = ZR.w * k, vh = ZR.h * k, ox = (W - vw) * 1.0, oy = (H - vh) * ZR.oy;
+    v.style.transformOrigin = (ox + vw * ZR.cx) + 'px ' + (oy + vh * ZR.cy) + 'px';
+    const r = v.getBoundingClientRect(), rs = slajd.getBoundingClientRect(), sk = r.width / W;
+    const L = r.left - rs.left + (ox + vw * ZR.x0) * sk, T = r.top - rs.top + (oy + vh * ZR.y0) * sk;
+    Object.assign(str.style, { left: L + 'px', top: Math.max(80, T) + 'px', width: (vw * (ZR.x1 - ZR.x0) * sk) + 'px', height: (vh * (ZR.y1 - ZR.y0) * sk - 60) + 'px' });
+  }
+  addEventListener('resize', ustaw); addEventListener('load', ustaw); ustaw();
+  let cel = 0, raf = null, poz = 0, ost = 0;
+  function krok(teraz){
+    const dt = ost ? Math.min(0.05, (teraz - ost) / 1000) : 0.016; ost = teraz;
+    const T = (v.duration || 5) - 0.04, docel = cel * T, d = docel - poz;
+    if (Math.abs(d) < 0.008) { poz = docel; v.currentTime = poz; raf = null; ost = 0; return; }
+    poz += d * (1 - Math.exp(-dt * 2.6));
+    v.currentTime = poz;
+    raf = requestAnimationFrame(krok);
+  }
+  function idz(n){ cel = n; slajd.classList.toggle('ems-hover', n === 1); if (!raf) raf = requestAnimationFrame(krok); }
+  str.addEventListener('mouseenter', () => idz(1));
+  str.addEventListener('mouseleave', () => idz(0));
+  str.addEventListener('focus', () => idz(1));
+  str.addEventListener('blur', () => idz(0));
+})();
+</script>
+<script>
+// ===== EMS: anatomia – punkty i lista =====
+(function(){
+  const ana = document.getElementById('ana'); if (!ana) return;
+  const li = [...ana.querySelectorAll('.ana-lista li')], pk = [...ana.querySelectorAll('.pkt')];
+  li.forEach((e,i) => e.style.transitionDelay = (0.1 + i*0.12) + 's, ' + (0.1 + i*0.12) + 's, ' + (0.1 + i*0.12) + 's, ' + (0.1 + i*0.12) + 's');
+  pk.forEach((e,i) => e.style.transitionDelay = (0.5 + i*0.18) + 's');
+  let auto = 0, timer = null, reczny = false;
+  function pokaz(n){ li.forEach(e => e.classList.toggle('ak', e.dataset.p == n)); pk.forEach(e => e.classList.toggle('ak', e.dataset.p == n)); }
+  function start(){ if (timer) return; timer = setInterval(() => { if (!reczny) { auto = auto % 5 + 1; pokaz(auto); } }, 2600); }
+  [...li, ...pk].forEach(e => {
+    e.addEventListener('mouseenter', () => { reczny = true; pokaz(e.dataset.p); });
+    e.addEventListener('mouseleave', () => { reczny = false; });
+    e.addEventListener('click', () => { reczny = true; pokaz(e.dataset.p); });
+  });
+  new IntersectionObserver((es, o) => es.forEach(x => { if (x.isIntersecting) { ana.classList.add('in'); setTimeout(() => { auto = 1; pokaz(1); start(); li.forEach(e => e.style.transitionDelay = '0s'); pk.forEach(e => e.style.transitionDelay = '0s'); }, 1600); o.disconnect(); } }), { threshold: .3 }).observe(ana);
+})();
+</script>
+</body>
+</html>

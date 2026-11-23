@@ -1,0 +1,33 @@
+[
+  {
+    "created_at": "2026-11-23T08:20:40.75894Z",
+    "display_name": "GPT Image 2.6",
+    "id": "34d023c0-b8ca-4b17-b5e0-419389efb444",
+    "job_type": "gpt_image_2_6",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3MCwqu1jbLfcYbNKhrXInBTOxck/hf_20261123_082040_34d023c0-b8ca-4b17-b5e0-419389efb444_min.webp",
+    "params": {
+      "aspect_ratio": "16:9",
+      "height": 1520,
+      "medias": [
+        {
+          "data": {
+            "id": "8822ac13-0724-4f39-964b-43ae1784193f",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3MCwqu1jbLfcYbNKhrXInBTOxck/8822ac13-0724-4f39-964b-43ae1784193f_resize.jpg"
+          },
+          "role": "image"
+        }
+      ],
+      "model": "aurora-img-alpha",
+      "output_format": "png",
+      "prompt": "Same scene during steady rain: dark stormy grey clouds, visible rain streaks, wet glossy terrace and driveway with puddles, wet grass, gloomy cool light, a few interior lights on. Keep the exact same house, camera angle, composition, trees, lawn, terrace and every architectural detail identical; only change the weather and lighting. Photorealistic, no people, no text.",
+      "quality": "low",
+      "reference_elements": [],
+      "remove_bg": false,
+      "resolution": "2k",
+      "width": 2688
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3MCwqu1jbLfcYbNKhrXInBTOxck/hf_20261123_082040_34d023c0-b8ca-4b17-b5e0-419389efb444.png",
+    "status": "completed"
+  }
+]

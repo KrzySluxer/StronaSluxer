@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 104 98">
+  <defs>
+    <clipPath id="pl"><path id="kontur" d="M1 16 L2 15.7 L15 11.5 L27.5 5 L34.5 2 L42.3 1 L47 4.8 L44.5 6.4 L45.5 8.8 L55 7.2 L87 8.6 L94 14.4 L98 27 L95 37 L91 43 L95.5 52 L100 64 L95 72 L86 84.8 L85 92.8 L79 91 L71 88 L62 89.6 L57 91 L49 87 L45 82 L38 79 L35 76 L27 75 L23 70 L21 68 L15 66 L9 64 L7 61 L6 54 L5 46 L4.5 37 L0.5 33 L3 25.6 Z"/></clipPath>
+  </defs>
+  <g clip-path="url(#pl)">
+    <rect x="-2" y="-2" width="104" height="49" fill="#FFFFFF"/>
+    <rect x="-2" y="47" width="104" height="49" fill="#DC143C"/>
+  </g>
+  <use href="#kontur" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round" opacity=".9"/>
+</svg>

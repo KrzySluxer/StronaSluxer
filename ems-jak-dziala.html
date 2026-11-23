@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jak działa Sluxer EMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000;--txt:#F2F6F8;--muted:rgba(232,241,244,.62);
+  --glass:rgba(255,255,255,.07);--glass-on:rgba(255,255,255,.16);--edge:rgba(255,255,255,.16);
+  --turq:#4FDBD4;--orange:#EC6A32;--ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--txt);font-family:Poppins,system-ui,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ---------- tła pełnoekranowe (jedno na kafelek) ---------- */
+.bgs{position:fixed;inset:0;z-index:0;background:#000}
+.bg{position:absolute;inset:0;opacity:0;transform:scale(1.06);transition:opacity 1.4s var(--ease),transform 6s linear}
+.bg.on{opacity:1;transform:scale(1)}
+.bg video,.bg img{width:100%;height:100%;object-fit:cover;display:block}
+/* zastępcze tła do czasu renderów */
+.bg[data-ph="0"]{background:radial-gradient(70% 60% at 70% 20%,#3B5466 0%,#14222C 45%,#04080B 100%)}
+.bg[data-ph="1"]{background:radial-gradient(60% 60% at 30% 70%,#4A3420 0%,#1A130C 45%,#050403 100%)}
+.bg[data-ph="2"]{background:radial-gradient(70% 60% at 60% 10%,#5C5030 0%,#1E1A10 45%,#060504 100%)}
+.bg[data-ph="3"]{background:radial-gradient(60% 60% at 50% 60%,#163A3A 0%,#0A1717 45%,#030606 100%)}
+.bg[data-ph="4"]{background:radial-gradient(70% 60% at 40% 30%,#26223E 0%,#0E0C18 45%,#040306 100%)}
+.bg .ph{position:absolute;right:3vw;bottom:24px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+
+/* filmowe wykończenie: winieta + ziarno */
+.grade{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 50%,transparent 45%,rgba(0,0,0,.65) 100%),
+             linear-gradient(180deg,rgba(0,0,0,.55) 0%,transparent 22%,transparent 62%,rgba(0,0,0,.75) 100%)}
+.grain{position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain .9s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+
+/* ---------- szklane kafelki ---------- */
+.tiles{position:relative;z-index:3;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:26px 3vw 0}
+.tile{all:unset;cursor:pointer;position:relative;display:flex;align-items:center;gap:14px;padding:14px 16px;min-height:66px;
+  background:var(--glass);border:1px solid var(--edge);border-radius:3px;
+  backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+  transition:background .5s var(--ease),border-color .5s,transform .5s var(--ease)}
+.tile:hover{background:rgba(255,255,255,.11)}
+.tile svg{flex:none;width:28px;height:28px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .5s}
+.tile span{font-size:13px;line-height:1.3;color:var(--muted);transition:color .5s}
+.tile .prog{position:absolute;left:-1px;right:-1px;bottom:-1px;height:2px;overflow:hidden;border-radius:0 0 3px 3px}
+.tile .prog i{display:block;height:100%;width:0;background:var(--turq);box-shadow:0 0 12px rgba(79,219,212,.8)}
+.tile.on{background:var(--glass-on);border-color:rgba(255,255,255,.32);transform:translateY(-2px)}
+.tile.on svg{stroke:var(--turq)}
+.tile.on span{color:var(--txt)}
+
+/* ---------- EMS + opis ---------- */
+.stage{position:relative;z-index:2;height:calc(100vh - 92px)}
+.ems{position:absolute;right:5vw;top:50%;height:56vh;transform:translateY(-46%)}
+.chart-slot{position:absolute;left:30%;right:24%;top:14%;bottom:30%;border:1px dashed rgba(255,255,255,.12);border-radius:3px;display:grid;place-items:center;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.ems img,.ems video{height:100%;width:auto;display:block;filter:drop-shadow(0 50px 70px rgba(0,0,0,.85));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(-9px)}50%{transform:translateY(9px)}}
+
+.caption{position:absolute;left:3vw;bottom:7vh;max-width:460px}
+.caption .k{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--turq)}
+.caption h2{font-size:clamp(28px,3vw,48px);font-weight:500;letter-spacing:-.02em;line-height:1.08;margin:12px 0 12px;text-shadow:0 2px 30px rgba(0,0,0,.6)}
+.caption p{color:var(--muted);font-size:15px;line-height:1.6}
+.swap{animation:swap .9s var(--ease)}
+@keyframes swap{from{opacity:0;transform:translateY(14px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+
+@media (max-width:900px){
+  body{overflow:auto}
+  .tiles{display:flex;overflow-x:auto;padding:14px 16px 0}
+  .tile{flex:0 0 170px}
+  .ems{height:52vh;top:42%}
+  .caption{left:16px;right:16px;bottom:24px}
+}
+</style>
+</head>
+<body>
+<div class="bgs" id="bgs"></div>
+<div class="grade"></div>
+<div class="grain"></div>
+
+<nav class="tiles" id="tiles" aria-label="Kroki działania EMS"></nav>
+
+<main class="stage">
+  <div class="chart-slot">Miejsce na wykres i animację kafelka</div>
+  <div class="ems"><img src="img/ems-bialy.png" alt="Sluxer EMS" id="emsImg"></div>
+  <div class="caption" id="caption" aria-live="polite"></div>
+</main>
+
+<script>
+(()=>{
+/* ikony liniowe */
+const I={
+ sun:'<circle cx="12" cy="10" r="3.6"/><path d="M12 2.5v1.6M12 16v1.6M4.5 10h1.6M17.9 10h1.6M6.7 4.7l1.1 1.1M16.2 14.2l1.1 1.1M6.7 15.3l1.1-1.1M16.2 5.8l1.1-1.1"/><path d="M7 21.5h10" opacity=".6"/>',
+ home:'<path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/>',
+ panel:'<path d="M4 15 7 6h13l-3 9z"/><path d="M5.5 10.5h13M10.5 6l-2 9M15.5 6l-2 9"/><path d="M11 15v4M8 19h6"/>',
+ scale:'<path d="M12 4v16M6 20h12"/><path d="M4 8h16"/><path d="M4 8l-2.5 6h5zM20 8l-2.5 6h5z"/>',
+ chart:'<path d="M3.5 20h17"/><path d="M5 16l4.5-5 3.5 3 6-7"/><path d="M15 7h4v4"/>'
+};
+/* kafelki – treść każdego rozpracujemy na podstawie kartek */
+const STEPS=[
+ {t:'Prognoza pogody',               i:'sun',  h:'Prognoza pogody',               p:'EMS sprawdza pogodę i sam dopasowuje ustawienia.', bg:''},
+ {t:'Analiza zużycia',               i:'home', h:'Analiza zużycia',               p:'EMS wie, ile prądu zużywa Twój dom i kiedy.', bg:''},
+ {t:'Prognoza produkcji',            i:'panel',h:'Prognoza produkcji',            p:'EMS przewiduje, ile energii da dach.', bg:''},
+ {t:'Prognoza niedoborów i nadwyżek',i:'scale',h:'Niedobory i nadwyżki',          p:'EMS liczy, kiedy energii zabraknie, a kiedy będzie jej za dużo.', bg:''},
+ {t:'Ceny na giełdzie',              i:'chart',h:'Ceny na giełdzie',              p:'EMS śledzi ceny prądu godzina po godzinie.', bg:''}
+];
+const AUTO=4000, CLICK=5000;
+
+const tilesEl=document.getElementById('tiles'),bgs=document.getElementById('bgs'),cap=document.getElementById('caption');
+const bgEls=STEPS.map((s,i)=>{
+  const d=document.createElement('div');d.className='bg';d.dataset.ph=i;
+  // gdy będzie render: s.bg = 'img/tla/pogoda.mp4'
+  d.innerHTML=s.bg?`<video src="${s.bg}" muted loop playsinline preload="auto"></video>`:`<div class="ph">Tło: render w przygotowaniu</div>`;
+  bgs.appendChild(d);return d;
+});
+const tiles=STEPS.map((s,i)=>{
+  const b=document.createElement('button');b.className='tile';
+  b.innerHTML=`<svg viewBox="0 0 24 24">${I[s.i]}</svg><span>${s.t}</span><div class="prog"><i></i></div>`;
+  b.onclick=()=>go(i,CLICK);tilesEl.appendChild(b);return b;
+});
+
+let idx=-1,start=0,dur=AUTO;
+function go(i,d){
+  if(idx>=0){const v=bgEls[idx].querySelector('video');if(v)setTimeout(()=>v.pause(),1400)}
+  idx=i;dur=d;start=performance.now();
+  tiles.forEach((t,k)=>{t.classList.toggle('on',k===i);t.querySelector('.prog i').style.width='0'});
+  bgEls.forEach((b,k)=>b.classList.toggle('on',k===i));
+  const v=bgEls[i].querySelector('video');if(v){v.currentTime=0;v.play().catch(()=>{})}
+  const s=STEPS[i];
+  cap.innerHTML=`<div class="k">0${i+1} / 05</div><h2>${s.h}</h2><p>${s.p}</p>`;
+  cap.classList.remove('swap');void cap.offsetWidth;cap.classList.add('swap');
+}
+function tick(now){
+  const p=Math.min(1,(now-start)/dur);
+  tiles[idx].querySelector('.prog i').style.width=(p*100)+'%';
+  if(p>=1)go((idx+1)%STEPS.length,AUTO);
+  requestAnimationFrame(tick);
+}
+go(0,AUTO);requestAnimationFrame(tick);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)start=performance.now()});
+})();
+</script>
+</body>
+</html>

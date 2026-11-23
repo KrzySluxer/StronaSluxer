@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sluxer – kierunki oprawy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:Poppins,sans-serif;background:#111;color:#fff;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+  .mono{font-family:"IBM Plex Mono",monospace}
+
+  /* ---------- pasek wyboru ---------- */
+  #wybor{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;padding:12px 24px;background:#0B0F12;border-bottom:1px solid #222}
+  #wybor .t{font-weight:700;font-size:14px;color:#9aa;margin-right:10px}
+  #wybor button{font:600 14px Poppins;padding:9px 16px;border-radius:10px;border:1px solid #2b3338;background:#151b1f;color:#cfd8dc;cursor:pointer}
+  #wybor button.on{background:#fff;color:#0E1A22;border-color:#fff}
+  #wybor .rek{font-size:11px;font-weight:700;background:#EC6A32;color:#fff;border-radius:6px;padding:2px 6px;margin-left:6px}
+  .kier{display:none}.kier.on{display:block}
+
+  /* opis kierunku (wspólny) */
+  .opis{padding:72px 0 40px}
+  .opis .lit{font:700 13px Poppins;letter-spacing:.14em;text-transform:uppercase;opacity:.65}
+  .opis h2{font-size:44px;font-weight:800;letter-spacing:-.02em;margin:10px 0 14px}
+  .opis p{font-size:18px;line-height:1.6;max-width:760px;opacity:.85}
+  .siatka{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;padding:20px 0 90px}
+  .pole{border-radius:18px;padding:28px}
+  .pole h4{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin-bottom:18px}
+  .kolory{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .kolory div{height:92px;border-radius:12px;display:flex;align-items:flex-end;padding:8px 10px;font:600 12px "IBM Plex Mono",monospace}
+  .typ .d{font-size:56px;font-weight:800;letter-spacing:-.03em;line-height:1.05}
+  .typ .z{font-size:18px;line-height:1.6;margin-top:12px;opacity:.85}
+  .typ .m{margin-top:14px;font:500 15px "IBM Plex Mono",monospace;opacity:.7}
+  .elem{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border-radius:12px;font:600 16px Poppins;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,background .3s}
+  .btn:hover{transform:translateY(-2px)}
+  .zasady{grid-column:1/-1}
+  .zasady ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 28px}
+  .zasady li{font-size:16px;line-height:1.5;padding-left:22px;position:relative;opacity:.9}
+  .zasady li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.5}
+
+  /* wspólne animacje wejścia */
+  .rv{opacity:0;transform:translateY(18px);filter:blur(6px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1),filter .8s}
+  .rv.in{opacity:1;transform:none;filter:none}
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+  .slowa .w{display:inline-block;opacity:0;filter:blur(8px);transition:opacity .35s,filter .35s}
+  .slowa.in .w{opacity:1;filter:none}
+
+  /* ================= A: NOC ================= */
+  #A{background:#050F16;color:#E8F1F4}
+  #A .hero{position:relative;min-height:760px;display:flex;align-items:center;overflow:hidden}
+  #A .hero .tlo{position:absolute;inset:0}
+  #A .hero .tlo img{width:100%;height:100%;object-fit:cover;object-position:62% 50%;transform:scale(1.06);transition:transform 2.4s cubic-bezier(.2,.8,.2,1)}
+  #A .hero.in .tlo img{transform:scale(1)}
+  #A .hero .tlo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#050F16 0%,rgba(5,15,22,.88) 34%,rgba(5,15,22,.25) 62%,rgba(5,15,22,0) 80%),linear-gradient(0deg,#050F16 0%,rgba(5,15,22,0) 30%)}
+  #A .hero .tresc{position:relative;max-width:620px}
+  #A h1{font-size:68px;font-weight:800;letter-spacing:-.03em;line-height:1.04}
+  #A h1 .t{color:#4FDBD4}
+  .kropka{color:#EC6A32}
+  #A .lead{font-size:20px;line-height:1.6;color:#9AB0BC;margin:22px 0 30px}
+  #A .cena{display:flex;gap:30px;align-items:flex-end;margin-bottom:30px}
+  #A .cena .v{font-size:44px;font-weight:800}
+  #A .cena .s{font-size:15px;color:#9AB0BC}
+  #A .btn-p{background:#4FDBD4;color:#03211F}
+  #A .btn-g{border-color:rgba(255,255,255,.18);color:#E8F1F4}
+  #A .pasek{display:flex;gap:34px;margin-top:38px;color:#9AB0BC;font-size:15px}
+  #A .pasek b{display:block;color:#E8F1F4;font-size:16px}
+  #A .pole{background:#0A1822;border:1px solid rgba(255,255,255,.08)}
+  #A .karta{width:250px;border-radius:16px;background:#0D1E29;border:1px solid rgba(255,255,255,.08);padding:16px;transition:transform .4s,border-color .4s}
+  #A .karta:hover{transform:translateY(-4px);border-color:#4FDBD4}
+  #A .karta img{height:150px;margin:0 auto 10px;object-fit:contain}
+  #A .karta b{font-size:18px}#A .karta span{display:block;color:#9AB0BC;font-size:14px}
+
+  /* ================= B: PAPIER ================= */
+  #B{background:#F2F0EB;color:#0E1A22}
+  #B .hero{display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;gap:20px;min-height:760px}
+  #B h1{font-size:64px;font-weight:800;letter-spacing:-.03em;line-height:1.05}
+  #B h1 .t{color:#097068}
+  #B .lead{font-size:20px;line-height:1.6;color:#3C4A55;margin:22px 0 30px}
+  #B .btn-p{background:#0E1A22;color:#fff}
+  #B .btn-g{border-color:#0E1A22;color:#0E1A22}
+  #B .rozklad{position:relative;aspect-ratio:16/9}
+  #B .rozklad img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;filter:contrast(1.08) brightness(1.06)}
+  #B .rozklad svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  #B .rozklad polyline{fill:none;stroke:#0E1A22;stroke-width:2.2;stroke-dasharray:var(--L);stroke-dashoffset:var(--L);transition:stroke-dashoffset .6s cubic-bezier(.65,0,.35,1)}
+  #B .rozklad .pt{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#0E1A22;box-shadow:0 0 0 3px #F2F0EB;transform:scale(0);transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+  #B .rozklad .et{position:absolute;padding:6px 12px;border-radius:8px;background:#0E1A22;color:#fff;font-size:13px;font-weight:600;white-space:nowrap;opacity:0;transform:translateY(6px);transition:opacity .4s,transform .4s}
+  #B .rozklad .et b{color:#4FDBD4}
+  #B .rozklad.in .pt{transform:scale(1)}
+  #B .rozklad.in polyline{stroke-dashoffset:0}
+  #B .rozklad.in .et{opacity:1;transform:none}
+  #B .pole{background:#fff;border:1px solid #E1DCD2}
+  #B .karta{width:250px;border-radius:16px;background:#F7F5F0;border:1px solid #E1DCD2;padding:16px;transition:transform .4s,box-shadow .4s}
+  #B .karta:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(14,26,34,.12)}
+  #B .karta img{height:150px;margin:0 auto 10px;object-fit:contain}
+  #B .karta b{font-size:18px}#B .karta span{display:block;color:#5A6872;font-size:14px}
+  #B .liczba{font-size:56px;font-weight:800;letter-spacing:-.03em}
+  #B .liczba small{font-size:18px;font-weight:600;color:#5A6872;margin-left:6px}
+
+  /* ================= C: DZIEŃ I NOC ================= */
+  #C{--p:0;background:#EAF2F5;color:#0E1A22;transition:background .2s}
+  #C .scena{height:340vh;position:relative}
+  #C .lepka{position:sticky;top:57px;height:calc(100vh - 57px);overflow:hidden}
+  #C .lepka img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  #C .lepka .cien{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,14,22,.72) 0%,rgba(6,14,22,.35) 38%,rgba(6,14,22,0) 62%)}
+  #C .tekst{position:absolute;left:max(32px,calc(50% - 588px));top:50%;transform:translateY(-50%);max-width:560px;color:#fff}
+  #C .zeg{display:inline-flex;align-items:center;gap:12px;padding:8px 16px;border-radius:10px;background:rgba(11,21,30,.75);font:500 28px "IBM Plex Mono",monospace}
+  #C .zeg i{width:12px;height:12px;border-radius:50%;background:#FFC56B}
+  #C .etap{position:absolute;left:0;top:70px;width:560px;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+  #C .etap.on{opacity:1;transform:none}
+  #C .etap h1,#C .etap h3{font-size:62px;font-weight:800;letter-spacing:-.03em;line-height:1.05;text-shadow:0 6px 30px rgba(0,0,0,.4)}
+  #C .etap p{font-size:20px;line-height:1.55;margin-top:16px;color:#E3ECF0;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+  #C .t{color:#7DF0E4}
+  #C .dr{color:#FF9A66}
+  #C .os{position:absolute;left:max(32px,calc(50% - 588px));right:max(32px,calc(50% - 588px));bottom:40px;height:4px;border-radius:2px;background:rgba(255,255,255,.25)}
+  #C .os b{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:#fff;width:calc(var(--p)*100%)}
+  #C .os span{position:absolute;top:14px;font:500 14px "IBM Plex Mono",monospace;color:#fff;transform:translateX(-50%)}
+  #C .btns{display:flex;gap:12px;margin-top:28px}
+  #C .btn-p{background:#4FDBD4;color:#03211F}
+  #C .btn-g{border-color:rgba(255,255,255,.4);color:#fff}
+  #C .po{background:#0B1724;color:#E8F1F4}
+  #C .pole{background:#102231;border:1px solid rgba(255,255,255,.08)}
+  #C .jasne{background:#F2F0EB;color:#0E1A22}
+  #C .jasne .pole{background:#fff;border:1px solid #E1DCD2}
+  #C .karta{width:250px;border-radius:16px;background:#F7F5F0;border:1px solid #E1DCD2;padding:16px;color:#0E1A22}
+  #C .karta img{height:150px;margin:0 auto 10px;object-fit:contain}
+  #C .karta b{font-size:18px}#C .karta span{display:block;color:#5A6872;font-size:14px}
+
+  .pl{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+  .pl img{width:30px;height:28px}
+</style>
+</head>
+<body>
+
+<div id="wybor">
+  <span class="t">Oprawa strony Sluxer – wybierz kierunek:</span>
+  <button data-k="A">A · Noc</button>
+  <button data-k="B">B · Papier</button>
+  <button data-k="C">C · Dzień i noc<span class="rek">polecam</span></button>
+</div>
+
+<!-- ======================================================= A -->
+<section id="A" class="kier">
+  <div class="hero rv">
+    <div class="tlo"><img src="img/oprawa/noc-przeplyw.jpg" alt="Dom wieczorem zasilany z magazynu Sluxer"></div>
+    <div class="wrap" style="width:100%">
+      <div class="tresc">
+        <h1 class="slowa"><span class="w">Prąd</span> <span class="w">z</span> <span class="w">Twojego</span> <span class="w">dachu.</span><br><span class="w t">Także</span> <span class="w t">po</span> <span class="w t">zmroku</span><span class="w kropka">.</span></h1>
+        <p class="lead rv d2">Magazyn energii z EMS, który sam decyduje, kiedy ładować, a kiedy oddać energię domowi. Projektujemy i produkujemy w Polsce.</p>
+        <div class="cena rv d3"><div><div class="v">od [X] zł</div><div class="s">po dotacji PME2</div></div><div><div class="v">30%</div><div class="s">kosztu, maks. 800 zł/kWh</div></div></div>
+        <div class="elem rv d4"><a class="btn btn-p" href="#">Sprawdź cenę dla swojego domu →</a><a class="btn btn-g" href="#">Zadzwoń</a></div>
+        <div class="pasek rv d4"><span class="pl"><img src="img/polska.svg" alt="">Polski produkt</span><span><b>23 marki</b>falowników</span><span><b>10 lat</b>gwarancji</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="opis"><div class="lit">Kierunek A</div><h2>Noc – rozwinięcie obecnej strony</h2>
+      <p>Ciemny granat i turkus, jak wersja 2 i strona ems-zmiany, która podobała Ci się najbardziej. Zmieniają się obrazy: zamiast zdjęć stockowych nasz własny dom 3D wieczorem, zasilany z magazynu. To ten sam świat, co w filmach. Strona i wideo wyglądają jak jedna marka.</p></div>
+    <div class="siatka">
+      <div class="pole"><h4>Kolory</h4><div class="kolory">
+        <div style="background:#050F16;border:1px solid #223">#050F16</div><div style="background:#0D1E29">#0D1E29</div><div style="background:#4FDBD4;color:#03211F">#4FDBD4</div><div style="background:#E8F1F4;color:#0E1A22">#E8F1F4</div><div style="background:#EC6A32">#EC6A32 akcent</div></div></div>
+      <div class="pole typ"><h4>Typografia</h4><div class="d">Także po zmroku<span class="kropka">.</span></div><div class="z">Poppins 800 do haseł, 400–500 do tekstu.</div><div class="m">IBM Plex Mono – godziny, kWh, ceny</div></div>
+      <div class="pole"><h4>Elementy</h4><div class="elem"><a class="btn btn-p" href="#">Główny przycisk</a><a class="btn btn-g" href="#">Drugi</a>
+        <div class="karta"><img src="img/oprawa/home16.png" alt="Sluxer Home 16"><b>Home 16</b><span>od [X] zł po dotacji</span></div></div></div>
+      <div class="pole zasady"><h4>Ruch i zasady</h4><ul>
+        <li>Hero: obraz powoli „dojeżdża” (2,4 s), hasło wchodzi słowo po słowie z rozmyciem.</li>
+        <li>Sekcje wjeżdżają przy przewijaniu: 18 px w górę + ostrość, jedno po drugim.</li>
+        <li>Przycisk: turkus z granatowym tekstem – kontrast zgodny z audytem (≥4,5:1).</li>
+        <li>Plus: znany, bezpieczny kierunek. Minus: ciemne strony słabiej „sprzedają” jasność i ciepło domu.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= B -->
+<section id="B" class="kier">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <h1 class="slowa"><span class="w">Mały</span> <span class="w">sterownik.</span><br><span class="w t">Sześć</span> <span class="w t">rzeczy</span> <span class="w t">naraz</span><span class="w kropka">.</span></h1>
+        <p class="lead rv d2">Sluxer EMS sam decyduje, gdzie płynie energia z Twoich paneli – do magazynu, auta czy domu – i pilnuje rachunku co 15 minut.</p>
+        <div class="elem rv d3"><a class="btn btn-p" href="#">Zobacz, jak działa →</a><a class="btn btn-g" href="#">Policz dotację</a></div>
+        <div class="rv d4" style="margin-top:34px;display:flex;gap:34px;align-items:flex-end">
+          <div class="liczba" data-licz="353">0<small>taryfy</small></div>
+          <span class="pl"><img src="img/polska.svg" alt="">Polski produkt</span>
+        </div>
+      </div>
+      <div class="rozklad" id="B-rozklad">
+        <img src="img/oprawa/ems-rozklad.png" alt="Sluxer EMS rozłożony na części">
+        <svg viewBox="0 0 1920 1080" preserveAspectRatio="none">
+          <polyline points="858,190 760,120 640,120" /><polyline points="955,395 1040,140 1180,140" />
+          <polyline points="995,680 1060,960 1180,960" /><polyline points="470,745 360,940 260,940" />
+          <polyline points="1255,770 1360,820 1440,820" /><polyline points="1235,365 1360,330 1440,330" />
+        </svg>
+        <i class="pt" style="left:44.7%;top:17.6%"></i><i class="pt" style="left:49.7%;top:36.6%"></i><i class="pt" style="left:51.8%;top:63%"></i>
+        <i class="pt" style="left:24.5%;top:69%"></i><i class="pt" style="left:65.4%;top:71.3%"></i><i class="pt" style="left:64.3%;top:33.8%"></i>
+        <span class="et" style="right:66.8%;top:8%"><b>LoRa 433 MHz</b> · do 3 km</span>
+        <span class="et" style="left:61.5%;top:9%"><b>5 źródeł</b> danych</span>
+        <span class="et" style="left:61.5%;top:85%"><b>0,00 kWh</b> co 15 min</span>
+        <span class="et" style="right:86.5%;top:83%;right:auto;left:1%"><b>3 tryby</b> pracy</span>
+        <span class="et" style="left:75%;top:72%"><b>Szyna DIN</b></span>
+        <span class="et" style="left:75%;top:27%"><b>NIS2 · CRA</b> · RED DA</span>
+      </div>
+    </div>
+    <div class="opis"><div class="lit">Kierunek B</div><h2>Papier – jasno, technicznie, jak Apple</h2>
+      <p>Ciepła biel, czarny tusz i ciemny turkus, jak jasne plansze w filmie. Produkt jest bohaterem: rozłożony na części, a etykiety przypinają się do elementów przy przewijaniu. Najlepiej tłumaczy technologię i wygląda „premium”, ale wymaga bardzo dobrych zdjęć produktów na jasnym tle.</p></div>
+    <div class="siatka">
+      <div class="pole"><h4>Kolory</h4><div class="kolory">
+        <div style="background:#F2F0EB;border:1px solid #DDD;color:#0E1A22">#F2F0EB</div><div style="background:#FFFFFF;border:1px solid #DDD;color:#0E1A22">#FFFFFF</div><div style="background:#0E1A22">#0E1A22</div><div style="background:#097068">#097068</div><div style="background:#EC6A32">#EC6A32 akcent</div></div></div>
+      <div class="pole typ"><h4>Typografia</h4><div class="d">Sześć rzeczy naraz<span class="kropka">.</span></div><div class="z">Poppins 800 na hasła, duże liczby jako bohaterowie sekcji.</div><div class="m">IBM Plex Mono – dane techniczne</div></div>
+      <div class="pole"><h4>Elementy</h4><div class="elem"><a class="btn btn-p" href="#">Główny przycisk</a><a class="btn btn-g" href="#">Drugi</a>
+        <div class="karta"><img src="img/oprawa/home16.png" alt="Sluxer Home 16"><b>Home 16</b><span>od [X] zł po dotacji</span></div></div></div>
+      <div class="pole zasady"><h4>Ruch i zasady</h4><ul>
+        <li>Rozłożony EMS: kropka → kreska → etykieta, po kolei, gdy sekcja wjedzie w ekran.</li>
+        <li>Liczby liczą się od zera (353 taryfy, 0,00 kWh) – ruch niesie informację.</li>
+        <li>Czarny przycisk z białym tekstem – najwyższy kontrast, bez problemu z audytu.</li>
+        <li>Plus: najbardziej „premium” i informacyjny. Minus: mniej emocji, mniej „domu i ludzi”.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= C -->
+<section id="C" class="kier">
+  <div class="scena" id="C-scena">
+    <div class="lepka">
+      <img id="C-i1" src="img/oprawa/poludnie-przeplyw.jpg" alt="Dom w południe – panele ładują magazyn">
+      <img id="C-i2" src="img/oprawa/zachod-przeplyw.jpg" alt="Dom o zachodzie słońca – dom bierze energię z magazynu" style="opacity:0">
+      <img id="C-i3" src="img/oprawa/noc-przeplyw.jpg" alt="Dom w nocy zasilany z magazynu" style="opacity:0">
+      <div class="cien"></div>
+      <div class="tekst">
+        <div class="zeg"><i></i><span id="C-godz">12:00</span></div>
+        <div class="etap on" data-e="0"><h1>Energia z południa<span class="kropka">.</span><br><span class="t">Na cały wieczór.</span></h1><p>W południe Twoje panele dają najwięcej. Sluxer EMS odkłada tę energię do magazynu – zamiast oddawać ją do sieci za grosze.</p>
+          <div class="btns"><a class="btn btn-p" href="#">Sprawdź cenę dla swojego domu →</a><a class="btn btn-g" href="#">Zadzwoń</a></div></div>
+        <div class="etap" data-e="1"><h3>18:30. Prąd jest <span class="dr">najdroższy</span>.</h3><p>Wtedy, gdy wracasz do domu, gotujesz i ładujesz auto, energia z sieci kosztuje najwięcej.</p></div>
+        <div class="etap" data-e="2"><h3>Dom bierze energię <span class="t">z magazynu</span>.</h3><p>Bez kucia ścian – magazyn może stać w garażu, EMS łączy się z nim bezprzewodowo. Działa nawet bez internetu.</p></div>
+      </div>
+      <div class="os"><b></b><span style="left:0">12:00</span><span style="left:50%">18:30</span><span style="left:100%">22:00</span></div>
+    </div>
+  </div>
+  <div class="po">
+    <div class="wrap">
+      <div class="opis"><div class="lit">Kierunek C – polecam</div><h2>Dzień i noc – strona opowiada jedną dobę</h2>
+        <p>Przewijanie to upływ czasu: góra strony to południe, im niżej, tym później, a tło przechodzi z jasnego w noc. Widz w kilka sekund rozumie, po co jest magazyn – zanim przeczyta jakąkolwiek specyfikację. To ta sama historia, co w filmie, więc strona i wideo wzajemnie się wzmacniają. Dalsze sekcje (ceny, dotacja, dane) są już spokojne i jasne.</p></div>
+      <div class="siatka">
+        <div class="pole"><h4>Kolory – zmieniają się z porą dnia</h4><div class="kolory">
+          <div style="background:#EAF2F5;color:#0E1A22">#EAF2F5 dzień</div><div style="background:#F0A56E;color:#0E1A22">#F0A56E zachód</div><div style="background:#0B1724;border:1px solid #234">#0B1724 noc</div><div style="background:#4FDBD4;color:#03211F">#4FDBD4</div><div style="background:#EC6A32">#EC6A32 akcent</div></div></div>
+        <div class="pole typ"><h4>Typografia</h4><div class="d">Na cały wieczór<span class="kropka">.</span></div><div class="z">Poppins 800 na hasła, zegar w IBM Plex Mono jako stały motyw.</div><div class="m">12:00 → 18:30 → 22:00</div></div>
+        <div class="pole zasady"><h4>Ruch i zasady</h4><ul>
+          <li>Pierwszy ekran „przykleja się”, a przewijanie zmienia porę dnia: obraz, zegar, tekst i pasek czasu.</li>
+          <li>Trzy kroki zamiast ściany tekstu: południe → drogi wieczór → dom z magazynu.</li>
+          <li>Po historii: jasne sekcje z cenami, dotacją PME2, falownikami i kontaktem – jak w v6.</li>
+          <li>Na telefonie to samo w pionie – kadry 3D renderuję drugi raz w 9:16.</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+  <div class="jasne">
+    <div class="wrap" style="padding:70px 32px 90px">
+      <div class="opis" style="padding-top:0"><div class="lit" style="color:#097068;opacity:1">Dalej – jasne sekcje informacyjne</div><h2>Jasne ceny. <span style="color:#097068">Z montażem i po dotacji</span><span class="kropka">.</span></h2></div>
+      <div class="elem">
+        <div class="karta"><img src="img/oprawa/home16.png" alt="Sluxer Home 16"><b>Home 16</b><span>od [X] zł po dotacji</span></div>
+        <div class="karta"><img src="img/oprawa/home16.png" alt="Sluxer Home 30"><b>Home 30</b><span>od [X] zł po dotacji</span></div>
+        <div class="pole" style="max-width:420px"><span class="pl"><img src="img/polska.svg" alt="">Polski produkt</span><p style="margin-top:10px;line-height:1.6;color:#3C4A55">Projektujemy i produkujemy w Polsce. Spełnia wymogi programu PME2 według deklaracji producenta – dotacja 30% kosztu, maks. 800 zł/kWh, wniosek po montażu.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  // zakładki
+  const btns = document.querySelectorAll("#wybor button");
+  function pokaz(k){
+    document.querySelectorAll(".kier").forEach(s => s.classList.toggle("on", s.id === k));
+    btns.forEach(b => b.classList.toggle("on", b.dataset.k === k));
+    try { localStorage.setItem("oprawa-k", k); } catch(e) {}
+    window.scrollTo(0,0); obserwuj();
+  }
+  btns.forEach(b => b.addEventListener("click", () => pokaz(b.dataset.k)));
+
+  // słowa – opóźnienia
+  document.querySelectorAll(".slowa").forEach(h => h.querySelectorAll(".w").forEach((w,i) => w.style.transitionDelay = (0.15 + i*0.07)+"s"));
+  // długości linii (B)
+  document.querySelectorAll("#B polyline").forEach((p,i) => {
+    const pts = p.getAttribute("points").trim().split(/\s+/).map(s => s.split(",").map(Number));
+    let L = 0; for (let j=1;j<pts.length;j++) L += Math.hypot(pts[j][0]-pts[j-1][0], pts[j][1]-pts[j-1][1]);
+    p.style.setProperty("--L", L); p.style.transitionDelay = (0.25 + i*0.35)+"s";
+  });
+  document.querySelectorAll("#B .pt").forEach((e,i) => e.style.transitionDelay = (0.1 + i*0.35)+"s");
+  document.querySelectorAll("#B .et").forEach((e,i) => e.style.transitionDelay = (0.6 + i*0.35)+"s");
+
+  // wejścia przy przewijaniu
+  let io;
+  function obserwuj(){
+    if (io) io.disconnect();
+    io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("in");
+      const n = e.target.querySelector("[data-licz]") || (e.target.dataset.licz ? e.target : null);
+      if (n && !n.dataset.zrobione) { n.dataset.zrobione = 1; licz(n); }
+      io.unobserve(e.target);
+    }), { threshold: 0.2 });
+    document.querySelectorAll(".kier.on .rv, .kier.on .slowa, .kier.on .rozklad, .kier.on [data-licz]").forEach(el => io.observe(el));
+  }
+  function licz(n){
+    const cel = +n.dataset.licz, mal = n.querySelector("small").outerHTML, t0 = performance.now();
+    (function k(t){ const u = Math.min(1,(t-t0)/1400), e = 1-Math.pow(1-u,3);
+      n.innerHTML = Math.round(cel*e) + mal; if (u<1) requestAnimationFrame(k); })(t0);
+  }
+
+  // C: przewijanie = pora dnia
+  const C = document.getElementById("C"), sc = document.getElementById("C-scena");
+  const i1 = document.getElementById("C-i1"), i2 = document.getElementById("C-i2"), i3 = document.getElementById("C-i3");
+  const godz = document.getElementById("C-godz"), etapy = C.querySelectorAll(".etap");
+  const sm = (a,b,x) => { const u = Math.max(0,Math.min(1,(x-a)/(b-a))); return u*u*(3-2*u); };
+  function dzien(){
+    if (!C.classList.contains("on")) return;
+    const r = sc.getBoundingClientRect(), max = sc.offsetHeight - innerHeight;
+    const p = Math.max(0, Math.min(1, -r.top / max));
+    C.style.setProperty("--p", p.toFixed(3));
+    const a = sm(.28,.42,p), b = sm(.62,.76,p);
+    i2.style.opacity = a; i3.style.opacity = b; i1.style.opacity = 1 - a;
+    const h = 12 + p * 10, hh = Math.floor(h), mm = Math.floor((h-hh)*60/5)*5;
+    godz.textContent = String(hh).padStart(2,"0") + ":" + String(mm).padStart(2,"0");
+    const e = p < .35 ? 0 : p < .69 ? 1 : 2;
+    etapy.forEach(x => x.classList.toggle("on", +x.dataset.e === e));
+  }
+  addEventListener("scroll", dzien, { passive: true });
+
+  let start = "C"; try { start = localStorage.getItem("oprawa-k") || "C"; } catch(e) {}
+  pokaz(start); dzien();
+})();
+</script>
+</body>
+</html>

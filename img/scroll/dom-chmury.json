@@ -1,0 +1,33 @@
+[
+  {
+    "created_at": "2026-11-23T08:20:42.504635Z",
+    "display_name": "GPT Image 2.6",
+    "id": "cf16ddfc-8ee6-493a-8ac0-871b23c90a72",
+    "job_type": "gpt_image_2_6",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3MCwqu1jbLfcYbNKhrXInBTOxck/hf_20261123_082042_cf16ddfc-8ee6-493a-8ac0-871b23c90a72_min.webp",
+    "params": {
+      "aspect_ratio": "16:9",
+      "height": 1520,
+      "medias": [
+        {
+          "data": {
+            "id": "86d566b5-12a6-4c90-9cbe-0ce66b505765",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3MCwqu1jbLfcYbNKhrXInBTOxck/86d566b5-12a6-4c90-9cbe-0ce66b505765_resize.jpg"
+          },
+          "role": "image"
+        }
+      ],
+      "model": "aurora-img-alpha",
+      "output_format": "png",
+      "prompt": "Same scene under a heavy overcast grey sky, thick soft clouds, diffuse flat light, no shadows, solar panels look dull grey. Keep the exact same house, camera angle, composition, trees, lawn, terrace and every architectural detail identical; only change the weather and lighting. Photorealistic, no people, no text.",
+      "quality": "low",
+      "reference_elements": [],
+      "remove_bg": false,
+      "resolution": "2k",
+      "width": 2688
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3MCwqu1jbLfcYbNKhrXInBTOxck/hf_20261123_082042_cf16ddfc-8ee6-493a-8ac0-871b23c90a72.png",
+    "status": "completed"
+  }
+]

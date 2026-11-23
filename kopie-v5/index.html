@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sluxer – polski magazyn energii z dotacją (makieta v4)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="notes-toggle" onclick="document.body.classList.toggle('show-notes')">Pokaż / ukryj uwagi z audytu</button>
+
+<div class="promo"><span class="pl-flag"></span><b>Polski produkt objęty dotacją</b> „Przydomowe Magazyny Energii” 2026: do <span class="todo">[kwota]</span> zł zwrotu. <a href="kalkulator.html">Sprawdź, ile dostaniesz →</a></div>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="index.html"><img class="logo" src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/sluxer-logo.png.webp" alt="Sluxer"></a>
+    <ul>
+      <li><a href="#produkty">Magazyny</a></li>
+      <li><a href="ems.html">Sluxer EMS</a></li>
+      <li><a href="#dotacja">Dotacja 2026</a></li>
+      <li><a href="#firma">Dla firm</a></li>
+      <li><a href="instalator.html">Dla instalatorów</a></li>
+    </ul>
+    <div class="right">
+      <a class="phone" href="tel:+48500600900"><svg><use href="icons.svg#i-phone"/></svg>+48 500 600 900</a>
+      <a class="btn btn-primary btn-sm" href="kalkulator.html">Policz magazyn</a>
+    </div>
+    <button class="burger" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"><img src="https://images.unsplash.com/photo-1781344334963-264f725d668b?w=2200&q=80&auto=format&fit=crop" alt="Dom oświetlony o zmierzchu"></div>
+  <div class="wrap grid">
+    <div>
+      <div class="note"><b>Audyt, s. 9 i 26:</b> jedna obietnica, przykładowy rachunek, dwa przyciski. <b>Audyt, s. 10:</b> hasło o polskim produkcie trzeba potwierdzić dokumentami przed publikacją.</div>
+      <div class="rv"><span class="badge-pl"><span class="pl-flag"></span>Polski produkt<span class="sep"></span><span class="sub">Objęty dotacją PME 2026</span></span></div>
+      <h1 class="rv d1">Prąd z Twojego dachu.<br><span class="grad">Także po zmroku.</span></h1>
+      <p class="lead rv d2">Polski magazyn energii z systemem EMS. Zatrzymuje nadwyżkę z fotowoltaiki i oddaje ją wieczorem, gdy prąd z sieci jest najdroższy. Bez abonamentu.</p>
+      <div class="ctas rv d3">
+        <a class="btn btn-primary" href="kalkulator.html">Policz oszczędność i dotację <svg><use href="icons.svg#i-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="tel:+48500600900"><svg><use href="icons.svg#i-phone"/></svg>Zadzwoń do doradcy</a>
+      </div>
+    </div>
+    <div class="hero-visual rv d2">
+      <div class="floor"></div>
+      <img class="unit u1" src="img/magazyn-pionowy.png" alt="Magazyn energii Sluxer Home">
+      <div class="bill glass">
+        <div class="tag">Przykładowy dom</div>
+        <h3>PV 8 kWp + Sluxer Home 16</h3>
+        <div class="row"><span>Rachunek bez magazynu</span><b><span class="todo">[—]</span> zł/mies.</b></div>
+        <div class="row"><span>Z magazynem i EMS</span><b><span class="todo">[—]</span> zł/mies.</b></div>
+        <div class="row"><span>Dotacja PME</span><b>− <span class="todo">[—]</span> zł</b></div>
+        <p class="fine">4 osoby, net-billing, G11. Do zatwierdzenia przez Sluxer.</p>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint"></div>
+</section>
+
+<div class="trust">
+  <div class="wrap glass">
+    <div class="item"><span class="pl-flag"></span><span><b>Polski produkt</b>polska marka i serwis</span></div>
+    <div class="item"><svg><use href="icons.svg#i-coin"/></svg><span><b>Objęty dotacją</b>program PME 2026</span></div>
+    <div class="item"><svg><use href="icons.svg#i-shield"/></svg><span><b>10 lat gwarancji</b>min. 70% pojemności</span></div>
+    <div class="item"><svg><use href="icons.svg#i-zero"/></svg><span><b>0 zł abonamentu</b>EMS bez opłat</span></div>
+    <div class="item"><svg><use href="icons.svg#i-users"/></svg><span><b>Instalatorzy</b>w całej Polsce</span></div>
+  </div>
+</div>
+
+<div class="wrap quick-paths">
+  <a class="qp rv" href="#produkty"><svg><use href="icons.svg#i-home"/></svg><span><b>Mam dom z fotowoltaiką</b>Magazyny 14–32 kWh</span><svg class="ar"><use href="icons.svg#i-arrow"/></svg></a>
+  <a class="qp rv d1" href="#firma"><svg><use href="icons.svg#i-bolt"/></svg><span><b>Mam firmę</b>Magazyny komercyjne</span><svg class="ar"><use href="icons.svg#i-arrow"/></svg></a>
+  <a class="qp rv d2" href="instalator.html"><svg><use href="icons.svg#i-wrench"/></svg><span><b>Jestem instalatorem</b>Osobna strona dla partnerów</span><svg class="ar"><use href="icons.svg#i-arrow"/></svg></a>
+</div>
+
+<!-- POLSKI PRODUKT + DOTACJA (skrócone, jedno zdjęcie) -->
+<section id="dotacja" style="overflow:hidden">
+  <div class="bgblur"><img src="https://images.unsplash.com/photo-1637417494521-78b4d1d33029?w=1200&q=60&auto=format&fit=crop" alt=""></div>
+  <div class="glow g-teal" style="width:600px;height:600px;left:-200px;top:0"></div>
+  <div class="wrap pl-grid">
+    <div class="photo-stack rv" style="height:540px">
+      <div class="ph p1" style="width:100%;height:100%"><img src="https://images.unsplash.com/photo-1660330589243-4c640d878052?w=1400&q=80&auto=format&fit=crop" alt="Monterzy instalują panele na dachu domu"></div>
+      <div class="stamp glass"><span class="pl-flag"></span><div><b>Robione przez ludzi, dla ludzi</b><span>Polski zespół, polski serwis, montaż w Twojej okolicy</span></div></div>
+    </div>
+    <div>
+      <div class="note"><b>Prośba Sluxer:</b> wyeksponować polski produkt i dotację. <b>Audyt, s. 10:</b> „polski produkt” wymaga potwierdzenia; bezpieczna wersja: „polska marka, polski serwis”.</div>
+      <div class="eyebrow rv">Polski produkt · polska dotacja</div>
+      <h2 class="rv d1">Polski magazyn energii. <span class="grad">Z dotacją do <span class="todo">[X]</span> zł.</span></h2>
+      <p class="lead rv d2">Sluxer to polska marka z serwisem w Polsce. Magazyn z EMS spełnia wymogi programu „Przydomowe Magazyny Energii”, a my pomagamy z wnioskiem.</p>
+      <div class="subsidy rv d3" style="margin-top:28px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;position:relative">
+          <div><div style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#BFEDEA;font-weight:600">Dotacja PME 2026</div><div class="amount">do <span class="todo">[X]</span> zł</div><div style="color:#D4ECEC;font-size:14px">na magazyn energii i system EMS</div></div>
+          <a class="btn btn-primary" href="kalkulator.html" style="background:#fff;color:#0B1E2D">Sprawdź swoją dotację <svg><use href="icons.svg#i-arrow"/></svg></a>
+        </div>
+        <div style="font-size:12.5px;color:#BFD8DA;position:relative;margin-top:18px">Nabór: <span class="todo">[daty naboru]</span> · Warunki według regulaminu NFOŚiGW</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="energy-line"></div>
+
+<!-- PRODUKTY -->
+<section id="produkty" style="overflow:hidden">
+  <div class="bgblur"><img src="https://images.unsplash.com/photo-1781344334963-264f725d668b?w=1200&q=60&auto=format&fit=crop" alt=""></div>
+  <div class="panels-bg"></div>
+  <div class="glow g-blue" style="width:700px;height:500px;left:50%;margin-left:-350px;top:10%"></div>
+  <span id="firma" style="position:absolute;top:0"></span>
+  <div class="wrap center">
+    <div class="note"><b>Audyt, s. 9 i 14:</b> ceny „od”, po dotacji i w ratach. Przekreślona cena = przed dotacją. Link „Dla firm” w menu otwiera od razu trzecią zakładkę.</div>
+    <div class="eyebrow rv">Magazyny energii</div>
+    <h2 class="rv d1">Dobierz pojemność do swojego dachu</h2>
+    <p class="lead rv d2">Ceny z montażem i po dotacji. Każdy magazyn z EMS w zestawie i 10-letnią gwarancją.</p>
+    <div class="tabs rv d2" role="tablist"><span class="pill" id="pill"></span>
+      <button class="on" data-g="g1">Dom · 14–16 kWh</button>
+      <button data-g="g2">Duży dom · 28–32 kWh</button>
+      <button data-g="g3">Dla firm i EMS</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="pstack rv">
+      <div class="pgroup on" id="g1">
+        <div class="pcard"><span class="badge alt">PV do ok. <span class="todo">[X]</span> kWp</span><span class="plb"><span class="pl-flag"></span>Polski produkt</span>
+          <div class="stage"><img src="img/magazyn-pionowy.png" alt="Sluxer Home 14"></div>
+          <h3>Sluxer Home 14</h3><p class="sub">Kompaktowy, do mniejszego domu</p>
+          <div class="specs"><div><b>14</b><span>kWh</span></div><div><b>LFP</b><span>ogniwa</span></div><div><b>10</b><span>lat gwar.</span></div></div>
+          <div class="price"><div><div class="old">Przed dotacją <s><span class="todo">[—]</span> zł</s></div><div class="new">od <b><span class="todo">[—]</span> zł</b><span class="dot-sub">po dotacji PME</span></div></div><div class="rata"><span class="todo">[—]</span> zł/mies.</div></div>
+          <a class="btn btn-ghost btn-sm" href="kalkulator.html">Policz dla mojego domu</a></div>
+        <div class="pcard"><span class="badge">Najczęściej wybierany</span><span class="plb"><span class="pl-flag"></span>Polski produkt</span>
+          <div class="stage"><img src="img/magazyn-pionowy.png" alt="Sluxer Home 16"></div>
+          <h3>Sluxer Home 16</h3><p class="sub">Złoty środek dla domu z PV 6–10 kWp</p>
+          <div class="specs"><div><b>16</b><span>kWh</span></div><div><b>LFP</b><span>ogniwa</span></div><div><b>10</b><span>lat gwar.</span></div></div>
+          <div class="price"><div><div class="old">Przed dotacją <s><span class="todo">[—]</span> zł</s></div><div class="new">od <b><span class="todo">[—]</span> zł</b><span class="dot-sub">po dotacji PME</span></div></div><div class="rata"><span class="todo">[—]</span> zł/mies.</div></div>
+          <a class="btn btn-primary btn-sm" href="kalkulator.html">Policz dla mojego domu</a></div>
+        <div class="pcard"><span class="badge alt">Montaż naścienny</span><span class="plb"><span class="pl-flag"></span>Polski produkt</span>
+          <div class="stage"><img src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/produkt-home-15.webp" alt="Sluxer Home 15" style="max-height:220px"></div>
+          <h3>Sluxer Home 15</h3><p class="sub">Oszczędza miejsce w kotłowni</p>
+          <div class="specs"><div><b>15</b><span>kWh</span></div><div><b>LFP</b><span>ogniwa</span></div><div><b>10</b><span>lat gwar.</span></div></div>
+          <div class="price"><div><div class="old">Przed dotacją <s><span class="todo">[—]</span> zł</s></div><div class="new">od <b><span class="todo">[—]</span> zł</b><span class="dot-sub">po dotacji PME</span></div></div><div class="rata"><span class="todo">[—]</span> zł/mies.</div></div>
+          <a class="btn btn-ghost btn-sm" href="kalkulator.html">Policz dla mojego domu</a></div>
+      </div>
+      <div class="pgroup" id="g2">
+        <div class="pcard"><span class="badge alt">Pompa ciepła</span><span class="plb"><span class="pl-flag"></span>Polski produkt</span>
+          <div class="stage"><img src="img/magazyn-szeroki.png" alt="Sluxer Home 28"></div>
+          <h3>Sluxer Home 28</h3><p class="sub">Dom z pompą ciepła lub autem elektrycznym</p>
+          <div class="specs"><div><b>28</b><span>kWh</span></div><div><b>LFP</b><span>ogniwa</span></div><div><b>10</b><span>lat gwar.</span></div></div>
+          <div class="price"><div><div class="old">Przed dotacją <s><span class="todo">[—]</span> zł</s></div><div class="new">od <b><span class="todo">[—]</span> zł</b><span class="dot-sub">po dotacji PME</span></div></div><div class="rata"><span class="todo">[—]</span> zł/mies.</div></div>
+          <a class="btn btn-ghost btn-sm" href="kalkulator.html">Policz dla mojego domu</a></div>
+        <div class="pcard"><span class="badge">Najwięcej energii</span><span class="plb"><span class="pl-flag"></span>Polski produkt</span>
+          <div class="stage"><img src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/produkt-home-32.webp" alt="Sluxer Home 32" style="max-height:200px"></div>
+          <h3>Sluxer Home 32</h3><p class="sub">Duży dom, wysoka autokonsumpcja</p>
+          <div class="specs"><div><b>32</b><span>kWh</span></div><div><b>LFP</b><span>ogniwa</span></div><div><b>10</b><span>lat gwar.</span></div></div>
+          <div class="price"><div><div class="old">Przed dotacją <s><span class="todo">[—]</span> zł</s></div><div class="new">od <b><span class="todo">[—]</span> zł</b><span class="dot-sub">po dotacji PME</span></div></div><div class="rata"><span class="todo">[—]</span> zł/mies.</div></div>
+          <a class="btn btn-primary btn-sm" href="kalkulator.html">Policz dla mojego domu</a></div>
+        <div class="pcard"><span class="badge alt">Gospodarstwo</span><span class="plb"><span class="pl-flag"></span>Polski produkt</span>
+          <div class="stage"><img src="img/magazyn-szeroki.png" alt="Sluxer Home 30"></div>
+          <h3>Sluxer Home 30</h3><p class="sub">Dom z budynkiem gospodarczym</p>
+          <div class="specs"><div><b>30</b><span>kWh</span></div><div><b>LFP</b><span>ogniwa</span></div><div><b>10</b><span>lat gwar.</span></div></div>
+          <div class="price"><div><div class="old">Przed dotacją <s><span class="todo">[—]</span> zł</s></div><div class="new">od <b><span class="todo">[—]</span> zł</b><span class="dot-sub">po dotacji PME</span></div></div><div class="rata"><span class="todo">[—]</span> zł/mies.</div></div>
+          <a class="btn btn-ghost btn-sm" href="kalkulator.html">Policz dla mojego domu</a></div>
+      </div>
+      <div class="pgroup" id="g3">
+        <div class="pcard"><span class="badge alt">Modułowy</span><span class="plb"><span class="pl-flag"></span>Polski produkt</span>
+          <div class="stage"><img src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/09/produkt-tower-3.webp" alt="Sluxer Tower"></div>
+          <h3>Sluxer Tower</h3><p class="sub">Rozbudowa modułami, gdy rośnie zużycie</p>
+          <div class="specs"><div><b><span class="todo">[X]</span></b><span>kWh</span></div><div><b>LFP</b><span>ogniwa</span></div><div><b>10</b><span>lat gwar.</span></div></div>
+          <div class="price"><div><div class="new">od <b><span class="todo">[—]</span> zł</b></div></div></div>
+          <a class="btn btn-ghost btn-sm" href="kalkulator.html?typ=firma">Zapytaj o konfigurację</a></div>
+        <div class="pcard"><span class="badge">Dla firm</span><span class="plb"><span class="pl-flag"></span>Polski produkt</span>
+          <div class="stage"><img src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/produkt-commercial.png" alt="Magazyn komercyjny Sluxer"></div>
+          <h3>Sluxer Commercial</h3><p class="sub">Magazyn dla firm i rolnictwa</p>
+          <div class="specs"><div><b><span class="todo">[X]</span></b><span>kWh</span></div><div><b>LFP</b><span>ogniwa</span></div><div><b>B2B</b><span>wycena</span></div></div>
+          <div class="price"><div><div class="new">Wycena w <b><span class="todo">[X]</span> h</b></div></div></div>
+          <a class="btn btn-primary btn-sm" href="kalkulator.html?typ=firma">Poproś o wycenę</a></div>
+        <div class="pcard"><span class="badge alt">Do każdego magazynu</span><span class="plb"><span class="pl-flag"></span>Polski produkt</span>
+          <div class="stage"><img src="https://sluxer2.brandperspective.pl/wp-content/themes/brand-perspective-sluxer/assets/img/ems3/ems-urzadzenie.webp" alt="Sterownik Sluxer EMS"></div>
+          <h3>Sluxer EMS</h3><p class="sub">Mózg instalacji, także do istniejącego magazynu</p>
+          <div class="specs"><div><b>0 zł</b><span>abonament</span></div><div><b>3 km</b><span>LoRa</span></div><div><b>353</b><span>taryfy</span></div></div>
+          <div class="price"><div><div class="new">od <b><span class="todo">[—]</span> zł</b><span class="dot-sub">zgodny z PME</span></div></div></div>
+          <a class="btn btn-ghost btn-sm" href="ems.html">Zobacz, jak działa</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="energy-line"></div>
+
+<!-- EMS – krótka zapowiedź, szczegóły na osobnej stronie -->
+<section style="overflow:hidden">
+  <div class="bgblur"><img src="https://sluxer2.brandperspective.pl/wp-content/themes/brand-perspective-sluxer/assets/img/ems3/odbiorniki-start.webp" alt=""></div>
+  <div class="glow g-teal" style="width:520px;height:520px;right:-180px;top:5%"></div>
+  <div class="wrap ems-teaser">
+    <div>
+      <div class="eyebrow rv">Sluxer EMS</div>
+      <h2 class="rv d1">Sam ładuje, gdy prąd jest tani. <span class="grad">Oddaje wieczorem.</span></h2>
+      <p class="lead rv d2">EMS rozdziela energię tam, gdzie w danej chwili jest najwięcej warta: do magazynu, bojlera, auta albo do sieci. Bez abonamentu, także bez internetu.</p>
+      <div class="decisions">
+        <div class="decision rv"><svg><use href="icons.svg#i-battery"/></svg>Ładowanie magazynu</div>
+        <div class="decision rv d1"><svg><use href="icons.svg#i-car"/></svg>Ładowanie samochodu</div>
+        <div class="decision rv d2"><svg><use href="icons.svg#i-drop"/></svg>Grzanie wody</div>
+        <div class="decision rv d3"><svg><use href="icons.svg#i-home"/></svg>Zasilanie domu wieczorem</div>
+      </div>
+      <a class="link-more rv" href="ems.html">Zobacz, jak działa EMS <svg><use href="icons.svg#i-arrow"/></svg></a>
+    </div>
+    <div class="video-frame rv d2">
+      <video autoplay muted loop playsinline poster="https://sluxer2.brandperspective.pl/wp-content/themes/brand-perspective-sluxer/assets/img/ems3/odbiorniki-start.webp">
+        <source src="https://sluxer2.brandperspective.pl/wp-content/themes/brand-perspective-sluxer/assets/img/ems3/odbiorniki-1280.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- DLACZEGO (skrócone do 6) -->
+<section style="padding-top:40px">
+  <div class="wrap">
+    <div class="note"><b>Audyt, s. 4 i 21:</b> konkrety zamiast ogólników. Każde hasło wymaga potwierdzenia dokumentem.</div>
+    <div class="eyebrow rv">Dlaczego Sluxer</div>
+    <h2 class="rv d1">Konkrety, <span class="grad">nie ogólniki</span></h2>
+    <div class="why">
+      <div class="w big rv"><div class="big-num grad">0 zł</div><div><h3>Abonamentu za EMS. Nigdy.</h3><p>U konkurencji nawet 49 zł/mies., czyli ok. 5 880 zł przez 10 lat.</p></div></div>
+      <div class="w rv d1"><div class="ic"><span class="pl-flag"></span></div><h3>Polski produkt</h3><p>Polska marka, serwis i wsparcie po polsku.</p></div>
+      <div class="w rv d2"><div class="ic"><svg><use href="icons.svg#i-coin"/></svg></div><h3>Objęty dotacją</h3><p>Spełnia wymogi programu PME.</p></div>
+      <div class="w rv"><div class="ic"><svg><use href="icons.svg#i-wifi-off"/></svg></div><h3>Działa bez internetu</h3><p>Steruje lokalnie, dane zostają w domu.</p></div>
+      <div class="w rv d1"><div class="ic"><svg><use href="icons.svg#i-radio"/></svg></div><h3>Bez kucia ścian</h3><p>Łączność radiowa LoRa do 3 km.</p></div>
+      <div class="w rv d2" style="grid-column:span 2"><div class="ic"><svg><use href="icons.svg#i-shield"/></svg></div><h3>10 lat gwarancji</h3><p>Min. 70% pojemności po 10 latach. <a href="../manuals/Sluxer_Home_Gwarancja.pdf" style="color:var(--mint)">Karta gwarancyjna (PDF)</a></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- REALIZACJE (domy, bez ludzi) -->
+<section style="overflow:hidden">
+  <div class="bgblur"><img src="https://images.unsplash.com/photo-1761472823286-9f6093ed6663?w=1200&q=60&auto=format&fit=crop" alt=""></div>
+  <div class="glow g-warm" style="width:600px;height:500px;right:-200px;top:20%"></div>
+  <div class="wrap">
+    <div class="note"><b>Audyt, s. 31:</b> realizacje z danymi z EMS. Zdjęcia poglądowe – podmienić na prawdziwe realizacje.</div>
+    <div class="eyebrow rv">Realizacje</div>
+    <h2 class="rv d1">Prawdziwe domy, <span class="warm">prawdziwe rachunki</span></h2>
+    <div class="refs">
+      <div class="ref rv"><img src="https://images.unsplash.com/photo-1637417494521-78b4d1d33029?w=1400&q=80&auto=format&fit=crop" alt=""><div class="kv"><span><span class="todo">[miasto]</span></span><span>PV <span class="todo">[X]</span> kWp</span><span>Home 16</span></div><blockquote>„<span class="todo">[opinia klienta z imieniem]</span>”</blockquote><div class="saving">Rachunek: <span class="todo">[X]</span> zł → <span class="todo">[X]</span> zł/mies.</div></div>
+      <div class="ref rv d1"><img src="https://images.unsplash.com/photo-1730807908064-c087959dd52c?w=1000&q=80&auto=format&fit=crop" alt=""><div class="kv"><span><span class="todo">[miasto]</span></span><span>Home 30</span></div><blockquote>„<span class="todo">[opinia klienta]</span>”</blockquote><div class="saving">Autokonsumpcja <span class="todo">[X]</span>%</div></div>
+      <div class="ref rv d2"><img src="https://images.unsplash.com/photo-1761472823286-9f6093ed6663?w=1000&q=80&auto=format&fit=crop" alt=""><div class="kv"><span>Google: <span class="todo">[X,X]</span> / 5</span><span><span class="todo">[X]</span> opinii</span></div><blockquote>Zobacz wszystkie opinie klientów</blockquote><div class="saving">Google →</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ (4 pytania) -->
+<section style="padding-top:40px">
+  <div class="wrap center">
+    <div class="eyebrow rv">FAQ</div>
+    <h2 class="rv d1">Najczęstsze pytania</h2>
+  </div>
+  <div class="wrap">
+    <div class="faq">
+      <details class="rv" open><summary>Ile dotacji dostanę?</summary><div class="ans"><div><p>Sluxer jest objęty programem „Przydomowe Magazyny Energii”. Kwota zależy od konfiguracji: <span class="todo">[warunki PME 2026]</span>. Pokażemy ją w ofercie i pomożemy z wnioskiem. <a href="kalkulator.html">Policz swoją dotację →</a></p></div></div></details>
+      <details class="rv"><summary>Czy Sluxer to polski produkt?</summary><div class="ans"><div><p>Tak, Sluxer to polska marka: <span class="todo">[nazwa spółki]</span>, KRS 0001177532. Serwis, części i wsparcie są w Polsce.</p></div></div></details>
+      <details class="rv"><summary>Czy zadziała z moim falownikiem?</summary><div class="ans"><div><p>Współpracujemy m.in. z Deye, Hoymiles, Growatt, SMA, Sungrow, Solis, Sofar, Solax, Victron i Afore. <a href="../manuals/compatibility/index.html">Pełna lista zgodności →</a></p></div></div></details>
+      <details class="rv"><summary>Czy to się opłaca?</summary><div class="ans"><div><p>Liczymy na Twoich danych, w wariancie ostrożnym. Jeśli się nie opłaca, mówimy to wprost. <a href="kalkulator.html">Policz w kalkulatorze →</a></p></div></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA końcowe -->
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="final rv">
+      <img src="https://images.unsplash.com/photo-1781344334963-264f725d668b?w=2000&q=80&auto=format&fit=crop" alt="Dom wieczorem">
+      <div>
+        <span class="badge-pl"><span class="pl-flag"></span>Polski produkt<span class="sep"></span><span class="sub">z dotacją PME</span></span>
+        <h2 style="margin-top:18px">Sprawdź, ile zaoszczędzisz <span class="warm">i ile dostaniesz dotacji.</span></h2>
+        <p>Zajmie to minutę. Bez akwizytora i bez zobowiązań.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:26px">
+          <a class="btn btn-primary" href="kalkulator.html">Policz magazyn i dotację <svg><use href="icons.svg#i-arrow"/></svg></a>
+          <a class="btn btn-ghost" href="tel:+48500600900"><svg><use href="icons.svg#i-phone"/></svg>+48 500 600 900</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap cols">
+    <div>
+      <img class="logo" src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/sluxer-logo.png.webp" alt="Sluxer">
+      <p><span class="todo">[pełna nazwa spółki]</span><br>KRS 0001177532 · NIP <span class="todo">[—]</span><br><span class="todo">[adres siedziby]</span></p>
+      <div class="made"><span class="pl-flag"></span>Polska marka · polski serwis</div>
+    </div>
+    <div><h4>Produkty</h4><ul><li><a href="#produkty">Magazyny domowe</a></li><li><a href="#firma">Dla firm</a></li><li><a href="ems.html">Sluxer EMS</a></li><li><a href="kalkulator.html">Kalkulator dotacji</a></li></ul></div>
+    <div><h4>Wsparcie</h4><ul><li><a href="../manuals/index.html">Instrukcje i dokumenty</a></li><li><a href="../manuals/compatibility/index.html">Zgodność falowników</a></li><li><a href="../manuals/Sluxer_Home_Gwarancja.pdf">Gwarancja</a></li><li><a href="../manuals/privacy-policy/index.html">Polityka prywatności</a></li></ul></div>
+    <div><h4>Kontakt</h4><ul><li>+48 500 600 900</li><li>biuro@sluxer.com</li><li><a href="instalator.html">Dla instalatorów</a></li></ul></div>
+  </div>
+  <div class="wrap credit">Makieta: zdjęcia z Unsplash są poglądowe – docelowo prawdziwe zdjęcia zespołu i realizacji.</div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

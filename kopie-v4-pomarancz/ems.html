@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sluxer EMS – jak działa (makieta)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="notes-toggle" onclick="document.body.classList.toggle('show-notes')">Pokaż / ukryj uwagi z audytu</button>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="index.html"><img class="logo" src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/sluxer-logo.png.webp" alt="Sluxer"></a>
+    <ul>
+      <li><a href="index.html#produkty">Magazyny</a></li>
+      <li><a href="ems.html" class="active">Sluxer EMS</a></li>
+      <li><a href="index.html#dotacja">Dotacja 2026</a></li>
+      <li><a href="index.html#firma">Dla firm</a></li>
+      <li><a href="instalator.html">Dla instalatorów</a></li>
+    </ul>
+    <div class="right">
+      <a class="phone" href="tel:+48500600900"><svg><use href="icons.svg#i-phone"/></svg>+48 500 600 900</a>
+      <a class="btn btn-primary btn-sm" href="kalkulator.html">Policz magazyn</a>
+    </div>
+    <button class="burger" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="bgimg"><img src="https://sluxer2.brandperspective.pl/wp-content/themes/brand-perspective-sluxer/assets/img/ems2-wideo-kadr.webp" alt=""></div>
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">Strona główna</a> / Sluxer EMS</div>
+    <div class="note"><b>Treść ze strony ems-zmiany</b>, przeniesiona z głównej strony, żeby ją skrócić. Szczegóły techniczne dla zainteresowanych.</div>
+    <span class="badge-pl rv"><span class="pl-flag"></span>Polski system EMS<span class="sep"></span><span class="sub">Zgodny z wymogami dotacji PME</span></span>
+    <h1 class="rv d1" style="margin-top:20px">Sluxer EMS. <span class="grad">Idealny pod dotację.</span></h1>
+    <p class="lead rv d2">Spełnia kryteria cyberbezpieczeństwa (NIS2, CRA, RED DA, ETSI EN 303 645) oraz wymogi analizy pogodowej i ekonomicznej. Nie musisz przebudowywać istniejącej instalacji.</p>
+  </div>
+</section>
+
+<!-- Dzień z życia -->
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="day rv" style="margin-top:0">
+      <div>
+        <div class="note"><b>Audyt, s. 30:</b> tarcza doby (0,19 zł w południe, 1,13 zł wieczorem). Ceny pośrednie są przykładowe.</div>
+        <div class="scene" id="scene">
+          <div class="sky sky-night"></div><div class="sky sky-dawn" id="s-dawn"></div><div class="sky sky-day" id="s-day"></div><div class="sky sky-dusk" id="s-dusk"></div>
+          <div class="stars" id="stars"></div><div class="orb sun" id="sun"></div><div class="orb moon" id="moon"></div>
+          <div class="flowtxt glass" id="flowtxt">☀️ Dach → magazyn</div>
+          <svg class="house" viewBox="0 0 600 230" preserveAspectRatio="xMidYMax meet">
+            <defs><linearGradient id="pv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B4A6B"/><stop offset=".5" stop-color="#2E78A8"/><stop offset="1" stop-color="#14354D"/></linearGradient></defs>
+            <path d="M0 230 Q 150 200 300 214 T 600 206 V230Z" fill="#0A1E16" opacity=".9"/>
+            <path d="M150 230V128L300 52l150 76v102z" fill="#1E1B18"/>
+            <path d="M130 134L300 46l170 88" fill="none" stroke="#D9581C" stroke-width="3"/>
+            <g transform="translate(318 70) skewY(27)"><rect width="120" height="44" fill="url(#pv)" stroke="#F07A3E" stroke-width="1"/><path d="M30 0v44M60 0v44M90 0v44M0 22h120" stroke="#0B2233" stroke-width="1.5"/></g>
+            <rect class="win" id="w1" x="180" y="150" width="46" height="36" rx="3" fill="#2A2520"/>
+            <rect class="win" id="w2" x="374" y="150" width="46" height="36" rx="3" fill="#2A2520"/>
+            <rect class="win" id="w3" x="278" y="104" width="44" height="32" rx="3" fill="#2A2520"/>
+            <rect x="276" y="166" width="48" height="64" rx="3" fill="#2E2722"/>
+            <rect x="470" y="168" width="34" height="62" rx="5" fill="#E8EEF1" stroke="#9FB3BF"/><rect x="480" y="180" width="14" height="8" rx="2" fill="#1E1B18"/>
+            <path id="pathDay" d="M380 110 C 470 110, 490 140, 487 170" fill="none" stroke="rgba(255,166,110,.25)" stroke-width="2"/>
+            <path id="pathEve" d="M470 200 C 430 200, 420 175, 420 170" fill="none" stroke="rgba(255,166,110,.25)" stroke-width="2"/>
+            <g class="flow-dots" id="dots"></g>
+            <rect x="70" y="190" width="56" height="26" rx="8" fill="#3A322B"/><circle cx="84" cy="218" r="7" fill="#1E1B18"/><circle cx="112" cy="218" r="7" fill="#1E1B18"/>
+            <g opacity=".85"><path d="M20 230v-60" stroke="#0E2A20" stroke-width="5"/><circle cx="20" cy="160" r="22" fill="#0E2A20"/><path d="M570 230v-70" stroke="#0E2A20" stroke-width="5"/><circle cx="570" cy="150" r="26" fill="#0E2A20"/></g>
+          </svg>
+        </div>
+        <input class="range" id="hour" type="range" min="0" max="23.75" step=".25" value="12" aria-label="Godzina">
+        <div class="hours"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+      </div>
+      <div class="day-info">
+        <div class="eyebrow">Dzień z życia magazynu</div>
+        <div class="time" id="tm">12:00</div>
+        <div class="price-now"><div><b id="pr">0,19 zł</b><span>cena prądu teraz (kWh)</span></div><div><b id="soc">64%</b><span>naładowanie magazynu</span></div></div>
+        <div class="action"><svg><use href="icons.svg#i-bolt"/></svg><span id="act" class="fade-swap"></span></div>
+        <button class="btn btn-ghost btn-sm" id="play" style="margin-top:16px">▶ Odtwórz cały dzień</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 źródeł danych -->
+<section>
+  <div class="wrap center">
+    <div class="eyebrow rv">Analiza i decyzja bez Twojego udziału</div>
+    <h2 class="rv d1">Pięć źródeł danych, <span class="grad">jedna decyzja</span></h2>
+    <div class="flow">
+      <svg class="lines" viewBox="0 0 1000 420" preserveAspectRatio="none"><path d="M340 70 C 430 70, 430 210, 500 210"/><path d="M340 210 L 500 210"/><path d="M340 350 C 430 350, 430 210, 500 210"/><path d="M660 140 C 570 140, 570 210, 500 210"/><path d="M660 280 C 570 280, 570 210, 500 210"/></svg>
+      <div class="col">
+        <div class="src rv"><div class="ic"><svg><use href="icons.svg#i-chart"/></svg></div><div><b>Prognoza zużycia</b><span>uczy się nawyków domowników</span></div></div>
+        <div class="src rv d1"><div class="ic"><svg><use href="icons.svg#i-cloud"/></svg></div><div><b>Odczyt pogody</b><span>zachmurzenie na najbliższe dni</span></div></div>
+        <div class="src rv d2"><div class="ic"><svg><use href="icons.svg#i-sun"/></svg></div><div><b>Prognoza produkcji</b><span>ile da Twój dach jutro</span></div></div>
+      </div>
+      <div class="core rv d1"><div class="halo"></div><div class="halo"></div><div class="halo"></div><img src="https://sluxer2.brandperspective.pl/wp-content/themes/brand-perspective-sluxer/assets/img/ems3/ems-urzadzenie.webp" alt="Sluxer EMS"></div>
+      <div class="col">
+        <div class="src rv d2"><div class="ic"><svg><use href="icons.svg#i-battery"/></svg></div><div><b>Nadwyżki i niedobory</b><span>bilans domu w czasie rzeczywistym</span></div></div>
+        <div class="src rv d3"><div class="ic"><svg><use href="icons.svg#i-bolt"/></svg></div><div><b>Ceny giełdowe</b><span>RCE i taryfy dynamiczne</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="energy-line"></div>
+
+<!-- LoRa + kwadrans + fazy -->
+<section style="overflow:hidden">
+  <div class="glow g-blue" style="width:600px;height:600px;right:-200px;top:0"></div>
+  <div class="wrap lora">
+    <div class="lora-img rv"><img src="https://sluxer2.brandperspective.pl/wp-content/themes/brand-perspective-sluxer/assets/img/ems3/lora-teren.webp" alt="Dom i budynek gospodarczy połączone łącznością LoRa"><span class="wave"></span><span class="wave"></span><span class="wave"></span></div>
+    <div>
+      <div class="eyebrow rv">Łączność LoRa</div>
+      <h2 class="rv d1">Bezprzewodowo, <span class="grad">nawet do 3 km</span></h2>
+      <p class="lead rv d2">Nadajnik z licznikiem trafia do rozdzielni, a odbiornik do magazynu i pozostałych urządzeń.</p>
+      <div class="stat-row">
+        <div class="rv"><b class="grad" data-count="5">5</b><span>ścian w budynku</span></div>
+        <div class="rv d1"><b class="grad"><span data-count="3">3</span> km</b><span>w otwartym terenie</span></div>
+        <div class="rv d2"><b class="grad" data-count="433">433</b><span>MHz, pasmo LoRa</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap duo">
+    <div class="panel rv">
+      <div class="eyebrow">Saldo kwadransa</div>
+      <h3 style="font-size:26px">Pilnuje wyniku każdego kwadransa</h3>
+      <p style="color:var(--muted)">Operator rozlicza każde 15 minut osobno. EMS koryguje pobór pracą magazynu.</p>
+      <div class="qbar" id="qbar"><div class="zero"></div></div>
+      <div class="qlegend"><span>0 min</span><span>5</span><span>10</span><span>15 min</span></div>
+      <div class="saldo"><b class="grad">0,00</b><span style="color:var(--muted)">kWh na koniec kwadransa</span></div>
+    </div>
+    <div class="panel rv d1">
+      <div class="eyebrow">Trzy fazy, jeden wynik</div>
+      <h3 style="font-size:26px">Bilans faz zawsze na zero</h3>
+      <p style="color:var(--muted)">EMS równoważy nagły wzrost poboru na jednej fazie.</p>
+      <div class="phases">
+        <div class="phase p1"><div class="meter"><i></i></div><b>+2,2</b><span>L1 · kW</span></div>
+        <div class="phase p2"><div class="meter"><i></i></div><b>−3,2</b><span>L2 · kW</span></div>
+        <div class="phase p3"><div class="meter"><i></i></div><b>+1,0</b><span>L3 · kW</span></div>
+        <div class="phase ps"><div class="meter"><i></i></div><b class="grad">0,0</b><span>Saldo</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Taryfy + chmura (bez telefonu) -->
+<section>
+  <div class="wrap center">
+    <div class="eyebrow rv">Aplikacja Sluxer</div>
+    <h2 class="rv d1">Wszystkie polskie taryfy <span class="grad">w aplikacji</span></h2>
+    <div class="tariffs rv d2" style="justify-content:center"><div class="big grad" data-count="353">353</div><div style="color:var(--muted);text-align:left">taryfy zakupu<br>dopuszczone przez URE<br>+ cena dynamiczna z giełdy</div></div>
+    <p class="lead rv d3">Konfiguracja w 5 krokach: kod QR, falownik, magazyn, taryfa, lokalizacja. Potem tryb automatyczny albo własne ustawienia.</p>
+  </div>
+  <div class="wrap center" style="margin-top:110px">
+    <div class="eyebrow rv">Prywatność</div>
+    <h2 class="rv d1">Chmura jest wygodna. <span class="grad">Nie jest obowiązkowa.</span></h2>
+    <div class="modes">
+      <div class="mode rv"><div class="n">01</div><h3>W chmurze</h3><ul><li>Wysyłanie danych<span class="yes">tak</span></li><li>Aplikacja z każdego miejsca<span class="yes">tak</span></li><li>Decyzje z pogody i cen<span class="yes">tak</span></li></ul></div>
+      <div class="mode rv d1" style="border-color:rgba(240,122,62,.4)"><div class="n">02</div><h3>Bez chmury</h3><ul><li>Wysyłanie danych<span class="no">nie</span></li><li>Zarządzanie lokalne<span class="yes">tak</span></li><li>Decyzje z pogody i cen<span class="yes">tak</span></li></ul></div>
+      <div class="mode rv d2"><div class="n">03</div><h3>Bez internetu</h3><ul><li>Wysyłanie danych<span class="no">nie</span></li><li>Zarządzanie lokalne<span class="yes">tak</span></li><li>Decyzje z ustawień własnych<span class="yes">tak</span></li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="final rv">
+      <img src="https://sluxer2.brandperspective.pl/wp-content/themes/brand-perspective-sluxer/assets/img/ems3/odbiorniki-start.webp" alt="">
+      <div>
+        <h2>EMS w zestawie z każdym magazynem. <span class="grad">0 zł abonamentu.</span></h2>
+        <p>Sprawdź, ile zaoszczędzisz i ile dostaniesz dotacji.</p>
+        <a class="btn btn-primary" href="kalkulator.html" style="margin-top:20px">Policz magazyn i dotację <svg><use href="icons.svg#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="padding-top:60px">
+  <div class="wrap cols">
+    <div><img class="logo" src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/sluxer-logo.png.webp" alt="Sluxer"><div class="made"><span class="pl-flag"></span>Polska marka · polski serwis</div></div>
+    <div><h4>Produkty</h4><ul><li><a href="index.html#produkty">Magazyny domowe</a></li><li><a href="index.html#firma">Dla firm</a></li></ul></div>
+    <div><h4>Dokumenty EMS</h4><ul><li><a href="../manuals/EMS/Sluxer_EMS.pdf">Sluxer EMS (PDF)</a></li><li><a href="../manuals/security/index.html">Bezpieczeństwo</a></li></ul></div>
+    <div><h4>Kontakt</h4><ul><li>+48 500 600 900</li><li>biuro@sluxer.com</li><li><a href="instalator.html">Dla instalatorów</a></li></ul></div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <a class="btn btn-ghost" href="tel:+48500600900"><svg><use href="icons.svg#i-phone"/></svg>Zadzwoń</a>
+  <a class="btn btn-primary" href="kalkulator.html">Policz magazyn</a>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

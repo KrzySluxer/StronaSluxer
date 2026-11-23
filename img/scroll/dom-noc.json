@@ -1,0 +1,33 @@
+[
+  {
+    "created_at": "2026-11-23T08:20:42.178379Z",
+    "display_name": "GPT Image 2.6",
+    "id": "28b066fc-9c62-4747-be10-b0578e691fcf",
+    "job_type": "gpt_image_2_6",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3MCwqu1jbLfcYbNKhrXInBTOxck/hf_20261123_082042_28b066fc-9c62-4747-be10-b0578e691fcf_min.webp",
+    "params": {
+      "aspect_ratio": "16:9",
+      "height": 1520,
+      "medias": [
+        {
+          "data": {
+            "id": "6aba4960-2e79-4ba3-80d4-a9f5de500348",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3MCwqu1jbLfcYbNKhrXInBTOxck/6aba4960-2e79-4ba3-80d4-a9f5de500348_resize.jpg"
+          },
+          "role": "image"
+        }
+      ],
+      "model": "aurora-img-alpha",
+      "output_format": "png",
+      "prompt": "Same scene late at night: dark navy starry sky, moonlight, house mostly dark with only a few dim warm lights, subtle garden lights, calm and quiet. Keep the exact same house, camera angle, composition, trees, lawn, terrace and every architectural detail identical; only change the weather and lighting. Photorealistic, no people, no text.",
+      "quality": "low",
+      "reference_elements": [],
+      "remove_bg": false,
+      "resolution": "2k",
+      "width": 2688
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3MCwqu1jbLfcYbNKhrXInBTOxck/hf_20261123_082042_28b066fc-9c62-4747-be10-b0578e691fcf.png",
+    "status": "completed"
+  }
+]

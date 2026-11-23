@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sluxer – makieta strony głównej</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B1E2D; --navy-2:#13293B; --ink:#1E293B; --muted:#5B6B7A;
+  --turq:#4FDBD4; --turq-2:#2CB8B4; --teal-dark:#0E7C78;
+  --bg:#FFFFFF; --bg-soft:#F3F7F8; --line:#E2E8EC;
+  --todo-bg:#FFF4C2; --todo-ink:#7A5B00;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Poppins,system-ui,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;font-size:16px}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+h1,h2,h3{line-height:1.15;margin:0 0 .5em;color:var(--navy)}
+h2{font-size:clamp(26px,3.2vw,38px)}
+h3{font-size:19px}
+p{margin:0 0 1em}
+.lead{font-size:18px;color:var(--muted);max-width:640px}
+section{padding:80px 0}
+.soft{background:var(--bg-soft)}
+.dark{background:var(--navy);color:#DCE6EC}
+.dark h2,.dark h3{color:#fff}
+.center{text-align:center}
+.center .lead{margin-left:auto;margin-right:auto}
+
+/* znacznik "do uzupełnienia" */
+.todo{background:var(--todo-bg);color:var(--todo-ink);border-radius:6px;padding:0 6px;font-weight:600;white-space:nowrap}
+
+/* uwagi z audytu */
+.note{display:none;margin:0 0 18px;padding:10px 14px;border-left:4px solid #E0A100;background:#FFFBEA;color:#5C4500;font-size:13.5px;border-radius:0 8px 8px 0;text-align:left}
+.note b{color:#3F2F00}
+body.show-notes .note{display:block}
+.notes-toggle{position:fixed;left:16px;bottom:16px;z-index:60;background:#E0A100;color:#1d1400;border:0;border-radius:999px;padding:10px 16px;font:600 13px Poppins,sans-serif;box-shadow:0 6px 18px rgba(0,0,0,.18);cursor:pointer}
+
+/* przyciski: kontrast >= 4.5:1 (granat na turkusie ~10:1) */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:10px;font-weight:600;text-decoration:none;font-size:16px;border:2px solid transparent;cursor:pointer;font-family:inherit}
+.btn-primary{background:linear-gradient(135deg,var(--turq),#3FCFC8);color:var(--navy)}
+.btn-primary:hover{filter:brightness(.95)}
+.btn-ghost{border-color:currentColor;color:var(--navy);background:transparent}
+.dark .btn-ghost,.hero .btn-ghost{color:#fff}
+.btn-sm{padding:10px 16px;font-size:14.5px}
+
+/* pasek dotacji */
+.promo{background:var(--teal-dark);color:#fff;font-size:14.5px;text-align:center;padding:9px 16px}
+.promo a{font-weight:600;color:#fff}
+
+/* nagłówek */
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:28px;height:72px}
+.nav img{height:38px;width:auto}
+.nav ul{display:flex;gap:24px;list-style:none;margin:0 0 0 12px;padding:0;font-size:15px;font-weight:500}
+.nav ul a{text-decoration:none;white-space:nowrap}
+.nav ul a:hover{color:var(--teal-dark)}
+.nav .right{margin-left:auto;display:flex;align-items:center;gap:16px}
+.nav .phone{font-weight:600;text-decoration:none;color:var(--navy);white-space:nowrap}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:8px;width:42px;height:42px;font-size:20px}
+
+/* pasek zaufania */
+.trust{background:var(--bg-soft);border-bottom:1px solid var(--line);font-size:14px;font-weight:500;color:var(--navy)}
+.trust .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+.trust span::before{content:"✓";color:var(--teal-dark);font-weight:700;margin-right:8px}
+
+/* hero */
+.hero{background:radial-gradient(1200px 500px at 80% 20%,#143A4D 0%,var(--navy) 60%);color:#DCE6EC;padding:72px 0 80px}
+.hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero h1{color:#fff;font-size:clamp(36px,5vw,60px);letter-spacing:-.5px}
+.hero h1 em{font-style:normal;color:var(--turq)}
+.hero .lead{color:#B9CAD4}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin:28px 0 22px}
+.hero .small{font-size:14px;color:#9FB3BF}
+.bill{background:#fff;color:var(--ink);border-radius:18px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.35);position:relative}
+.bill .tag{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-dark)}
+.bill h3{margin:6px 0 14px}
+.bill .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.bill .row b{color:var(--navy)}
+.bill .total{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px}
+.bill .total strong{font-size:30px;color:var(--teal-dark)}
+.bill img{position:absolute;right:-20px;top:-95px;width:230px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.4))}
+.bill .fine{font-size:12px;color:var(--muted);margin-top:12px}
+
+/* ścieżki */
+.paths{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.path{border:1px solid var(--line);border-radius:var(--radius);padding:28px;text-decoration:none;display:flex;flex-direction:column;gap:8px;transition:.15s;background:#fff}
+.path:hover{border-color:var(--turq-2);box-shadow:0 10px 30px rgba(11,30,45,.08);transform:translateY(-2px)}
+.path .ico{font-size:30px}
+.path span.more{margin-top:auto;font-weight:600;color:var(--teal-dark)}
+
+/* produkty */
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column}
+.card .img{background:var(--bg-soft);border-radius:10px;height:190px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.card .img img{max-height:170px;width:auto}
+.card .badge{align-self:flex-start;font-size:12px;font-weight:600;background:#E3F7F6;color:var(--teal-dark);padding:4px 10px;border-radius:999px;margin-bottom:8px}
+.card ul{list-style:none;padding:0;margin:0 0 16px;font-size:14.5px;color:var(--muted)}
+.card ul li{padding:3px 0}
+.price{margin-top:auto;border-top:1px solid var(--line);padding-top:14px}
+.price .old{font-size:14px;color:var(--muted)}
+.price .old s{margin-left:4px}
+.price .new{font-size:15px;color:var(--navy)}
+.price .new b{font-size:24px}
+.price .rata{font-size:13.5px;color:var(--muted)}
+.card .btn{margin-top:14px;justify-content:center}
+
+/* dzień z życia */
+.day{margin-top:36px;background:#fff;border-radius:var(--radius);border:1px solid var(--line);padding:28px}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);border-radius:10px;overflow:hidden;margin:18px 0}
+.timeline div{padding:18px 16px;font-size:14.5px}
+.timeline div b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.t1{background:#E8F1F4}.t2{background:#FFF1C9}.t3{background:#FFD9C2}.t4{background:#DDE3F0}
+.prices{display:flex;gap:32px;flex-wrap:wrap}
+.prices .p strong{font-size:30px;color:var(--navy);display:block}
+.prices .p span{font-size:14px;color:var(--muted)}
+
+/* dlaczego */
+.why{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:36px}
+.why div{background:var(--navy-2);border-radius:var(--radius);padding:22px}
+.why .ico{font-size:24px;margin-bottom:8px}
+.why h3{font-size:17px}
+.why p{font-size:14.5px;color:#AFC2CD;margin:0}
+
+/* liczby */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:36px;text-align:center}
+.stats strong{display:block;font-size:42px;color:var(--navy);line-height:1.1}
+.stats span{color:var(--muted);font-size:15px}
+
+/* dokumenty */
+.docs{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px}
+.doc{border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;font-size:14px;background:#fff}
+.doc b{display:block;color:var(--navy);font-size:15px;margin-bottom:4px}
+.doc a{color:var(--teal-dark);font-weight:600;font-size:13.5px}
+
+/* realizacje + opinie */
+.refs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px}
+.ref{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.ref .ph{height:160px;background:repeating-linear-gradient(45deg,#E8EEF1,#E8EEF1 12px,#F2F6F8 12px,#F2F6F8 24px);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px}
+.ref .body{padding:18px}
+.ref .kv{display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px;color:var(--muted);margin-bottom:10px}
+.ref blockquote{margin:0;font-size:15px}
+
+/* kroki */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:36px;counter-reset:s}
+.step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;position:relative}
+.step::before{counter-increment:s;content:counter(s);display:inline-flex;width:34px;height:34px;border-radius:50%;background:var(--navy);color:var(--turq);font-weight:700;align-items:center;justify-content:center;margin-bottom:10px}
+.step h3{font-size:16px;margin-bottom:4px}
+.step p{font-size:14px;color:var(--muted);margin:0}
+.step .when{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:600;color:var(--teal-dark)}
+.promise{margin-top:24px;display:flex;gap:24px;flex-wrap:wrap;justify-content:center;font-weight:500;color:var(--navy)}
+.promise span::before{content:"✓ ";color:var(--teal-dark);font-weight:700}
+
+/* formularz */
+.form-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start}
+form.calc{background:#fff;border-radius:18px;padding:28px;color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.calc fieldset{border:0;padding:0;margin:0 0 18px}
+.calc legend,.calc label.l{font-weight:600;font-size:14.5px;margin-bottom:8px;display:block;color:var(--navy)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips label{border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips input:checked+span{color:var(--teal-dark);font-weight:600}
+.chips label:has(input:checked){border-color:var(--turq-2);background:#EAFBFA}
+.calc .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.calc input[type=text],.calc input[type=tel],.calc select{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font:15px Poppins,sans-serif;background:#fff}
+.calc .btn{width:100%;justify-content:center;margin-top:6px}
+.calc .fine{font-size:12.5px;color:var(--muted);margin-top:12px}
+.contact-list{list-style:none;padding:0;margin:24px 0 0}
+.contact-list li{padding:8px 0;border-bottom:1px solid #22394B}
+
+/* faq */
+.faq{max-width:860px;margin:32px auto 0}
+.faq details{border-bottom:1px solid var(--line);padding:18px 0}
+.faq summary{font-weight:600;font-size:17px;cursor:pointer;color:var(--navy);list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::after{content:"+";font-size:22px;color:var(--teal-dark)}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin:10px 0 0;color:var(--muted)}
+
+/* poradniki */
+.blog{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px}
+.post{border:1px solid var(--line);border-radius:var(--radius);padding:22px;text-decoration:none;background:#fff}
+.post small{color:var(--teal-dark);font-weight:600}
+.post h3{font-size:17px;margin-top:6px}
+
+/* stopka */
+footer{background:#071520;color:#9FB3BF;padding:56px 0 100px;font-size:14.5px}
+footer .cols{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px}
+footer h4{color:#fff;margin:0 0 12px;font-size:15px}
+footer ul{list-style:none;padding:0;margin:0}
+footer li{padding:4px 0}
+footer a{text-decoration:none}
+footer img{height:36px;width:auto;margin-bottom:14px;filter:brightness(0) invert(1)}
+
+/* przyklejony pasek na telefonie */
+.sticky-cta{display:none}
+
+@media (max-width:1150px){.nav ul{display:none}}
+@media (max-width:980px){
+  .nav ul,.nav .right .phone{display:none}
+  .hero .grid,.form-grid{grid-template-columns:1fr}
+  .bill img{display:none}
+  .paths,.products,.refs,.blog{grid-template-columns:1fr}
+  .why,.stats{grid-template-columns:1fr 1fr}
+  .docs{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr}
+  .timeline{grid-template-columns:1fr 1fr}
+  footer .cols{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  section{padding:56px 0}
+  .nav .right .btn{display:none}
+  .burger{display:block}
+  .trust .wrap{justify-content:flex-start;gap:6px 18px;font-size:13px}
+  .calc .two{grid-template-columns:1fr}
+  .why,.stats{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  footer .cols{grid-template-columns:1fr}
+  .sticky-cta{display:grid;grid-template-columns:1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:70;background:#fff;border-top:1px solid var(--line);padding:10px 12px;gap:10px;box-shadow:0 -6px 20px rgba(0,0,0,.08)}
+  .sticky-cta .btn{justify-content:center;padding:12px}
+  .notes-toggle{bottom:84px}
+}
+</style>
+</head>
+<body>
+
+<button class="notes-toggle" onclick="document.body.classList.toggle('show-notes')">Pokaż / ukryj uwagi z audytu</button>
+
+<!-- 1. Pasek dotacji (wzór: pasek promocji Minisforum) -->
+<div class="promo">Dotacja „Przydomowe Magazyny Energii” 2026: do <span class="todo">[kwota]</span> zł na magazyn i EMS. <a href="#kalkulator">Sprawdź, ile dostaniesz →</a></div>
+
+<!-- 2. Nagłówek -->
+<header>
+  <div class="wrap nav">
+    <img src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/sluxer-logo.png.webp" alt="Sluxer">
+    <ul>
+      <li><a href="#dla-domu">Dla domu</a></li>
+      <li><a href="#dla-firm">Dla firm</a></li>
+      <li><a href="#ems">EMS</a></li>
+      <li><a href="#dotacja">Dotacja 2026</a></li>
+      <li><a href="#instalatorzy">Dla instalatorów</a></li>
+      <li><a href="#poradniki">Poradniki</a></li>
+    </ul>
+    <div class="right">
+      <a class="phone" href="tel:+48500600900">📞 +48 500 600 900</a>
+      <a class="btn btn-primary btn-sm" href="#kalkulator">Policz magazyn</a>
+    </div>
+    <button class="burger" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<!-- 3. Pasek zaufania (wzór: Free shipping / Returns / Guarantee u Minisforum) -->
+<div class="trust"><div class="wrap">
+  <span>Gwarancja 10 lat na magazyn</span>
+  <span>Serwis i części w Polsce</span>
+  <span>EMS bez abonamentu: 0 zł/mies.</span>
+  <span>Montaż przez certyfikowanych instalatorów</span>
+</div></div>
+
+<!-- 4. Hero -->
+<section class="hero">
+  <div class="wrap grid">
+    <div>
+      <div class="note"><b>Audyt, s. 9 i 26:</b> jedna obietnica zamiast slidera z hasłami, przykładowy rachunek domu, dwa jasne przyciski. Usunięte hasło „wyprodukowane w Polsce” do czasu potwierdzenia.</div>
+      <h1>Prąd z Twojego dachu.<br><em>Także po zmroku.</em></h1>
+      <p class="lead">Magazyn energii Sluxer zatrzymuje nadwyżkę z fotowoltaiki i oddaje ją wieczorem, gdy prąd z sieci jest najdroższy. System EMS robi to sam, bez abonamentu i nawet bez internetu.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#kalkulator">Policz oszczędność w 60 s</a>
+        <a class="btn btn-ghost" href="tel:+48500600900">Zadzwoń do doradcy</a>
+      </div>
+      <p class="small">Odpowiadamy w ciągu <span class="todo">[X] h</span> w dni robocze · Dzwonimy raz, o wybranej przez Ciebie porze</p>
+    </div>
+    <div class="bill">
+      <img src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/produkt-home-30-768x434.webp" alt="Magazyn Sluxer">
+      <div class="tag">Przykładowy dom</div>
+      <h3>Fotowoltaika 8 kWp + Sluxer Home 16</h3>
+      <div class="row"><span>Rachunek za prąd bez magazynu</span><b><span class="todo">[—]</span> zł/mies.</b></div>
+      <div class="row"><span>Rachunek z magazynem i EMS</span><b><span class="todo">[—]</span> zł/mies.</b></div>
+      <div class="row"><span>Koszt po dotacji</span><b><span class="todo">[—]</span> zł</b></div>
+      <div class="total"><span>Oszczędność rocznie</span><strong><span class="todo">[—] zł</span></strong></div>
+      <p class="fine">Wyliczenie dla 4-osobowego domu, net-billing, taryfa G11. Dane do zatwierdzenia przez Sluxer przed publikacją.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Ścieżki (wzór: "For Your Workspace / For Gaming / For Creators") -->
+<section>
+  <div class="wrap center">
+    <div class="note"><b>Audyt, s. 9 i 12:</b> menu miesza klienta domowego i instalatora. Każdy dostaje własną ścieżkę zamiast kafelków „Dowiedz się więcej”.</div>
+    <h2>Od czego zaczynasz?</h2>
+    <p class="lead">Wybierz swoją sytuację, a pokażemy tylko to, co Cię dotyczy.</p>
+    <div class="paths">
+      <a class="path" id="dla-domu" href="#produkty"><span class="ico">🏠</span><h3>Mam dom i fotowoltaikę</h3><p>Chcę zużywać własny prąd wieczorem i skorzystać z dotacji.</p><span class="more">Magazyny dla domu →</span></a>
+      <a class="path" id="dla-firm" href="#"><span class="ico">🏭</span><h3>Prowadzę firmę</h3><p>Szukam magazynu komercyjnego i obniżenia kosztów mocy.</p><span class="more">Rozwiązania dla firm →</span></a>
+      <a class="path" id="instalatorzy" href="#"><span class="ico">🛠️</span><h3>Jestem instalatorem</h3><p>Chcę montować Sluxer i dostawać zapytania z mojej okolicy.</p><span class="more">Program partnerski →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Produkty z cenami (wzór: karty z ceną i przekreśloną ceną regularną) -->
+<section class="soft" id="produkty">
+  <div class="wrap">
+    <div class="note"><b>Audyt, s. 9, 14 i 30:</b> brak cen i pojemności to problem krytyczny; Nexbe wygrywa jawnością cen. Cena „od”, cena po dotacji i rata. Przekreślona cena = przed dotacją.</div>
+    <h2>Magazyny dla domu</h2>
+    <p class="lead">Ceny z montażem. Dobierz pojemność do mocy swojej fotowoltaiki.</p>
+    <div class="products">
+      <div class="card">
+        <span class="badge">PV do ok. <span class="todo">[X]</span> kWp</span>
+        <div class="img"><img src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/produkt-home-15-300x152.webp" alt="Sluxer Home 15"></div>
+        <h3>Sluxer Home 15</h3>
+        <ul><li>Pojemność 15 kWh · LFP</li><li>Gwarancja 10 lat</li><li>EMS w zestawie, 0 zł abonamentu</li></ul>
+        <div class="price">
+          <div class="old">Przed dotacją: <s><span class="todo">[—]</span> zł</s></div>
+          <div class="new">Po dotacji od <b><span class="todo">[—]</span> zł</b></div>
+          <div class="rata">lub <span class="todo">[—]</span> zł/mies. w ratach</div>
+        </div>
+        <a class="btn btn-ghost btn-sm" href="#kalkulator">Policz dla mojego domu</a>
+      </div>
+      <div class="card">
+        <span class="badge">Najczęściej wybierany</span>
+        <div class="img"><img src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/produkt-home-16-300x152.webp" alt="Sluxer Home 16"></div>
+        <h3>Sluxer Home 16</h3>
+        <ul><li>Pojemność 16 kWh · LFP</li><li>Gwarancja 10 lat</li><li>EMS w zestawie, 0 zł abonamentu</li></ul>
+        <div class="price">
+          <div class="old">Przed dotacją: <s><span class="todo">[—]</span> zł</s></div>
+          <div class="new">Po dotacji od <b><span class="todo">[—]</span> zł</b></div>
+          <div class="rata">lub <span class="todo">[—]</span> zł/mies. w ratach</div>
+        </div>
+        <a class="btn btn-primary btn-sm" href="#kalkulator">Policz dla mojego domu</a>
+      </div>
+      <div class="card">
+        <span class="badge">Duży dom / pompa ciepła</span>
+        <div class="img"><img src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/produkt-home-30-768x434.webp" alt="Sluxer Home 30"></div>
+        <h3>Sluxer Home 30</h3>
+        <ul><li>Pojemność 30 kWh · LFP</li><li>Gwarancja 10 lat</li><li>EMS w zestawie, 0 zł abonamentu</li></ul>
+        <div class="price">
+          <div class="old">Przed dotacją: <s><span class="todo">[—]</span> zł</s></div>
+          <div class="new">Po dotacji od <b><span class="todo">[—]</span> zł</b></div>
+          <div class="rata">lub <span class="todo">[—]</span> zł/mies. w ratach</div>
+        </div>
+        <a class="btn btn-ghost btn-sm" href="#kalkulator">Policz dla mojego domu</a>
+      </div>
+    </div>
+    <p style="margin-top:20px;font-size:14.5px;color:var(--muted)">Dostępne też: Home 14 (14 kWh), Home 28 (28 kWh), Home 32 (32 kWh) i magazyny komercyjne. <a href="#">Zobacz wszystkie →</a></p>
+
+    <!-- Dzień z życia magazynu -->
+    <div class="day" id="ems">
+      <div class="note"><b>Audyt, s. 30:</b> „Dane zamiast obietnic”: tarcza doby z cenami i dzień z życia magazynu. Prosto: „Sam ładuje, gdy prąd tani, oddaje wieczorem”.</div>
+      <h3>Dzień z życia magazynu Sluxer</h3>
+      <div class="timeline">
+        <div class="t1"><b>Noc</b>Dom zasila się z magazynu albo z taniej taryfy nocnej.</div>
+        <div class="t2"><b>Południe</b>Nadwyżka z dachu ładuje magazyn i grzeje wodę.</div>
+        <div class="t3"><b>Wieczór</b>Magazyn oddaje energię, gdy prąd z sieci jest najdroższy.</div>
+        <div class="t4"><b>Cały czas</b>EMS patrzy na pogodę, ceny giełdowe i Twoją taryfę.</div>
+      </div>
+      <div class="prices">
+        <div class="p"><strong>0,19 zł</strong><span>cena prądu w południe (RCE)</span></div>
+        <div class="p"><strong>1,13 zł</strong><span>cena prądu wieczorem</span></div>
+        <div class="p"><strong>353</strong><span>taryfy w aplikacji, z listy URE</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Dlaczego Sluxer: konkrety (wzór: "Why choose Minisforum", 8 punktów) -->
+<section class="dark">
+  <div class="wrap">
+    <div class="note"><b>Audyt, s. 4 i 21:</b> „Dlaczego Sluxer?” to dziś cztery ogólniki. Konkrety, w których Sluxer wygrywa z Zeronest/Nexbe. Wymagają potwierdzenia dokumentami.</div>
+    <h2>Dlaczego Sluxer</h2>
+    <p class="lead" style="color:#AFC2CD">Konkrety zamiast ogólników.</p>
+    <div class="why">
+      <div><div class="ico">💸</div><h3>0 zł abonamentu</h3><p>EMS bez opłat miesięcznych, zapisane w umowie. U konkurencji nawet 49 zł/mies.</p></div>
+      <div><div class="ico">📴</div><h3>Działa bez internetu</h3><p>Steruje lokalnie, także gdy padnie sieć lub Wi-Fi.</p></div>
+      <div><div class="ico">🔒</div><h3>Dane zostają w domu</h3><p>Chmura jest wygodna, ale nie obowiązkowa.</p></div>
+      <div><div class="ico">📡</div><h3>Bez kucia ścian</h3><p>EMS łączy się z magazynem radiowo (LoRa), do 3 km.</p></div>
+      <div><div class="ico">🌦️</div><h3>Decyzje z prognozy</h3><p>Pogoda, ceny giełdowe i taryfa. EMS wybiera najtańszy moment.</p></div>
+      <div><div class="ico">⏱️</div><h3>Pilnuje każdego kwadransa</h3><p>Bilansuje trzy fazy, żeby saldo rozliczeniowe wyszło na zero.</p></div>
+      <div><div class="ico">✅</div><h3>Zgodny z dotacją</h3><p>Spełnia wymagania programu Przydomowe Magazyny Energii.</p></div>
+      <div><div class="ico">🔧</div><h3>Serwis w Polsce</h3><p>Reakcja w <span class="todo">[X] h</span>, części na miejscu w <span class="todo">[miasto]</span>.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Liczby (wzór: 4M+ / 100+ / 10+ u Minisforum) -->
+<section>
+  <div class="wrap center">
+    <div class="note"><b>Audyt, s. 36, pyt. 16 i 20:</b> tylko prawdziwe, potwierdzone liczby. Jeśli są małe, lepiej pokazać realizacje niż słabe liczby.</div>
+    <h2>Sluxer w liczbach</h2>
+    <div class="stats">
+      <div><strong class="todo">[X]</strong><span>działających instalacji w Polsce</span></div>
+      <div><strong class="todo">[X]</strong><span>instalatorów partnerskich</span></div>
+      <div><strong>10 lat</strong><span>gwarancji na magazyn</span></div>
+      <div><strong>6000</strong><span>cykli ładowania LFP <span class="todo">[potwierdzić: 6000 czy 8000?]</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Dokumenty i certyfikaty (wzór: nagrody i recenzje u Minisforum) -->
+<section class="soft">
+  <div class="wrap center">
+    <div class="note"><b>Audyt, s. 17 i 23:</b> Zeronest pokazuje deklaracje UE i NIS2/CRA, Sluxer nie. Obiekcje zbijamy dowodem, nie zapewnieniem: dokumenty do pobrania jednym kliknięciem.</div>
+    <h2>Dokumenty, nie zapewnienia</h2>
+    <p class="lead">Wszystko, co obiecujemy, możesz sprawdzić przed rozmową z doradcą.</p>
+    <div class="docs">
+      <div class="doc"><b>Deklaracja CE</b>Home 16<br><a href="../manuals/Home16/CE_Sluxer_Home_16.pdf">Pobierz PDF</a></div>
+      <div class="doc"><b>Karta gwarancyjna</b>10 lat, min. 70% pojemności<br><a href="../manuals/Sluxer_Home_Gwarancja.pdf">Pobierz PDF</a></div>
+      <div class="doc"><b>ETSI EN 303 645</b>Cyberbezpieczeństwo EMS<br><span class="todo">[link]</span></div>
+      <div class="doc"><b>NIS2 / CRA / RED DA</b>Zgodność EMS<br><span class="todo">[link]</span></div>
+      <div class="doc"><b>Instrukcja Home 16</b>PL / EN<br><a href="../manuals/Home16/instrukcja_home_16.pdf">Pobierz PDF</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. Realizacje i opinie -->
+<section>
+  <div class="wrap">
+    <div class="note"><b>Audyt, s. 9 i 31:</b> zero opinii i realizacji. Realizacje z danymi z EMS (Nexbe ma 105 realizacji z kwotami). Cel: 5 realizacji i 30+ opinii w 90 dni.</div>
+    <h2>Realizacje z prawdziwymi danymi</h2>
+    <p class="lead">Ile kosztowało, ile oszczędza: odczyty z aplikacji EMS, za zgodą właścicieli.</p>
+    <div class="refs">
+      <div class="ref"><div class="ph">[zdjęcie realizacji]</div><div class="body"><div class="kv"><span>📍 <span class="todo">[miasto]</span></span><span>PV <span class="todo">[X]</span> kWp</span><span>Home 16</span></div><blockquote>„<span class="todo">[opinia klienta z imieniem]</span>”</blockquote></div></div>
+      <div class="ref"><div class="ph">[zdjęcie realizacji]</div><div class="body"><div class="kv"><span>📍 <span class="todo">[miasto]</span></span><span>PV <span class="todo">[X]</span> kWp</span><span>Home 30</span></div><blockquote>„<span class="todo">[opinia klienta z imieniem]</span>”</blockquote></div></div>
+      <div class="ref"><div class="ph">[wykres z aplikacji EMS]</div><div class="body"><div class="kv"><span>⭐ <span class="todo">[X,X]</span> w Google</span><span><span class="todo">[X]</span> opinii</span></div><blockquote><a href="#">Zobacz wszystkie opinie w Google →</a></blockquote></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. Jak to wygląda: 5 kroków z terminami -->
+<section class="soft" id="dotacja">
+  <div class="wrap center">
+    <div class="note"><b>Audyt, s. 26 i 31:</b> obawa przed akwizytorem. Pięć kroków z terminami i zasady kontaktu „bez akwizytora”. Wniosek o dotację za klienta (do potwierdzenia, pyt. 19).</div>
+    <h2>Od zapytania do montażu</h2>
+    <p class="lead">Wiesz, co się wydarzy i kiedy. Bez nachodzenia i bez presji.</p>
+    <div class="steps">
+      <div class="step"><h3>Kalkulator</h3><p>Odpowiadasz na 5 pytań o dom i instalację PV.</p><span class="when">60 sekund</span></div>
+      <div class="step"><h3>Telefon doradcy</h3><p>Jedna rozmowa o wybranej porze. Sprawdzamy falownik.</p><span class="when">w ciągu <span class="todo">[X] h</span></span></div>
+      <div class="step"><h3>Oferta na piśmie</h3><p>Konfiguracja, dotacja, koszt netto, rata, gwarancja.</p><span class="when">w <span class="todo">[X] h</span></span></div>
+      <div class="step"><h3>Wniosek o dotację</h3><p>Przygotowujemy dokumenty do programu PME.</p><span class="when"><span class="todo">[czy za klienta?]</span></span></div>
+      <div class="step"><h3>Montaż i aplikacja</h3><p>Instalator z Twojej okolicy, konfiguracja EMS na miejscu.</p><span class="when">do <span class="todo">[X]</span> dni</span></div>
+    </div>
+    <div class="promise"><span>Dzwonimy raz, o wybranej porze</span><span>Nie przekazujemy danych dalej</span><span>Jeśli się nie opłaca, mówimy wprost</span></div>
+  </div>
+</section>
+
+<!-- 12. Kalkulator / formularz kwalifikujący -->
+<section class="dark" id="kalkulator">
+  <div class="wrap form-grid">
+    <div>
+      <div class="note"><b>Audyt, s. 9, 12 i 33:</b> jeden formularz na cztery sprawy, bez pytań o PV i kod pocztowy. Kalkulator kwalifikuje leady (A/B/C) i od razu pokazuje koszt po dotacji.</div>
+      <h2>Policz magazyn dla swojego domu</h2>
+      <p class="lead" style="color:#AFC2CD">Pokażemy pojemność, koszt po dotacji i przybliżoną oszczędność. Bez zobowiązań.</p>
+      <ul class="contact-list">
+        <li>📞 <a href="tel:+48500600900">+48 500 600 900</a> · pn–pt <span class="todo">[godziny]</span></li>
+        <li>✉️ biuro@sluxer.com</li>
+        <li>📍 <span class="todo">[adres firmy / serwisu]</span></li>
+      </ul>
+    </div>
+    <form class="calc" onsubmit="event.preventDefault();alert('Makieta: tu pojawi się wynik kalkulatora.')">
+      <fieldset><legend>Czy masz fotowoltaikę?</legend>
+        <div class="chips">
+          <label><input type="radio" name="pv" checked><span>Tak</span></label>
+          <label><input type="radio" name="pv"><span>Planuję</span></label>
+          <label><input type="radio" name="pv"><span>Nie</span></label>
+        </div>
+      </fieldset>
+      <div class="two">
+        <div><label class="l" for="kwp">Moc instalacji (kWp)</label><input id="kwp" type="text" placeholder="np. 8"></div>
+        <div><label class="l" for="fal">Falownik</label>
+          <select id="fal"><option>Deye</option><option>Hoymiles</option><option>Huawei</option><option>Fronius</option><option>Inny / nie wiem</option></select></div>
+      </div>
+      <fieldset style="margin-top:18px"><legend>Jak się rozliczasz?</legend>
+        <div class="chips">
+          <label><input type="radio" name="roz" checked><span>Net-billing</span></label>
+          <label><input type="radio" name="roz"><span>Net-metering</span></label>
+          <label><input type="radio" name="roz"><span>Nie wiem</span></label>
+        </div>
+      </fieldset>
+      <div class="two">
+        <div><label class="l" for="kod">Kod pocztowy</label><input id="kod" type="text" placeholder="00-000"></div>
+        <div><label class="l" for="tel">Telefon</label><input id="tel" type="tel" placeholder="500 600 900"></div>
+      </div>
+      <fieldset style="margin-top:18px"><legend>Kiedy możemy zadzwonić?</legend>
+        <div class="chips">
+          <label><input type="radio" name="pora" checked><span>Rano</span></label>
+          <label><input type="radio" name="pora"><span>Po południu</span></label>
+          <label><input type="radio" name="pora"><span>Wieczorem</span></label>
+        </div>
+      </fieldset>
+      <button class="btn btn-primary" type="submit">Pokaż wynik i koszt po dotacji</button>
+      <p class="fine">Nie wiesz, jaki masz falownik? Wyślij zdjęcie tabliczki znamionowej, a powiemy w 2 minuty. Dane przetwarzamy zgodnie z <a href="../manuals/privacy-policy/index.html">polityką prywatności</a>.</p>
+    </form>
+  </div>
+</section>
+
+<!-- 13. FAQ: obiekcje -->
+<section>
+  <div class="wrap">
+    <div class="note" style="max-width:860px;margin:0 auto 18px"><b>Audyt, s. 23–24 i 26:</b> sześć najsilniejszych obiekcji z odpowiedzią i dowodem.</div>
+    <h2 class="center">Pytania, które słyszymy najczęściej</h2>
+    <div class="faq">
+      <details><summary>Czy to się opłaca? Kiedy się zwróci?</summary><p>Liczymy na Twoich danych, w wariancie ostrożnym. Jeśli magazyn się nie opłaca, powiemy to wprost. <a href="#kalkulator">Policz w kalkulatorze →</a></p></details>
+      <details><summary>Ile dotacji dostanę i kiedy?</summary><p>Kwota zależy od konfiguracji: <span class="todo">[warunki PME 2026 wg regulaminu NFOŚiGW]</span>. Pokażemy ją w ofercie, zanim cokolwiek podpiszesz.</p></details>
+      <details><summary>Nie znam marki Sluxer. Kto za nią stoi?</summary><p><span class="todo">[nazwa spółki]</span>, KRS 0001177532, <span class="todo">[adres]</span>. Serwis i części w Polsce. <a href="#">Poznaj nasz zespół →</a></p></details>
+      <details><summary>Czy zadziała z moim falownikiem?</summary><p>Współpracujemy m.in. z Deye i Hoymiles. Wyślij zdjęcie tabliczki znamionowej, odpowiemy w 2 minuty. <a href="../manuals/compatibility/index.html">Lista zgodności →</a></p></details>
+      <details><summary>Czy bateria się nie zapali?</summary><p>Ogniwa LFP to najbezpieczniejsza chemia litowa. Magazyn ma BMS i jest montowany zgodnie z wytycznymi. <span class="todo">[certyfikaty bezpieczeństwa]</span></p></details>
+      <details><summary>Co po 10 latach? Kto naprawi, gdy coś się zepsuje?</summary><p>Gwarancja: min. 70% pojemności przez 10 lat. Serwis w Polsce, czas reakcji zapisany w umowie. <a href="../manuals/Sluxer_Home_Gwarancja.pdf">Karta gwarancyjna (PDF) →</a></p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 14. Poradniki (wzór: Latest News u Minisforum) -->
+<section class="soft" id="poradniki">
+  <div class="wrap">
+    <div class="note"><b>Audyt, s. 11:</b> Nexbe ma w Google 820 stron, Sluxer 14. Poradniki odpowiadają na to, o co ludzie pytają w Google.</div>
+    <h2>Poradniki</h2>
+    <div class="blog">
+      <a class="post" href="#"><small>Koszty</small><h3>Ile kosztuje magazyn energii w 2026 roku?</h3><p style="color:var(--muted);font-size:14.5px">Ceny z montażem, po dotacji i w ratach.</p></a>
+      <a class="post" href="#"><small>Dotacja</small><h3>Dotacja na magazyn energii 2026: warunki krok po kroku</h3><p style="color:var(--muted);font-size:14.5px">Kto może dostać, ile i jakich dokumentów potrzeba.</p></a>
+      <a class="post" href="#"><small>Zgodność</small><h3>Jaki magazyn do falownika Deye i Hoymiles?</h3><p style="color:var(--muted);font-size:14.5px">Sprawdź, czy Twój falownik współpracuje ze Sluxer.</p></a>
+    </div>
+  </div>
+</section>
+
+<!-- 15. Stopka z pełnymi danymi -->
+<footer>
+  <div class="wrap cols">
+    <div>
+      <img src="https://sluxer2.brandperspective.pl/wp-content/uploads/2026/08/sluxer-logo.png.webp" alt="Sluxer">
+      <p><span class="todo">[pełna nazwa spółki]</span><br>KRS 0001177532 · NIP <span class="todo">[—]</span><br><span class="todo">[adres siedziby]</span></p>
+    </div>
+    <div><h4>Produkty</h4><ul><li><a href="#">Magazyny domowe</a></li><li><a href="#">Magazyny komercyjne</a></li><li><a href="#">Sluxer EMS</a></li><li><a href="#">Integrator</a></li></ul></div>
+    <div><h4>Wsparcie</h4><ul><li><a href="../manuals/index.html">Instrukcje i dokumenty</a></li><li><a href="../manuals/compatibility/index.html">Zgodność falowników</a></li><li><a href="#">Serwis i gwarancja</a></li><li><a href="../manuals/privacy-policy/index.html">Polityka prywatności</a></li></ul></div>
+    <div><h4>Kontakt</h4><ul><li>+48 500 600 900</li><li>biuro@sluxer.com</li><li><a href="#">Znajdź instalatora</a></li><li><a href="#">Zostań partnerem</a></li></ul></div>
+  </div>
+</footer>
+
+<!-- 16. Przyklejony pasek na telefonie (audyt s. 10 i 26) -->
+<div class="sticky-cta">
+  <a class="btn btn-ghost" href="tel:+48500600900">📞 Zadzwoń</a>
+  <a class="btn btn-primary" href="#kalkulator">Policz magazyn</a>
+</div>
+
+</body>
+</html>

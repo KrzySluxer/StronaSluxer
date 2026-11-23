@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sluxer EMS – jak działa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--txt:#F2F6F8;--muted:rgba(232,241,244,.6);--turq:#4FDBD4;--orange:#EC6A32;--ease:cubic-bezier(.2,.8,.2,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:#000;color:var(--txt);font-family:Poppins,system-ui,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+.screen{position:relative;height:100vh;display:grid;grid-template-columns:minmax(320px,44%) 1fr;align-items:center;
+  background:radial-gradient(38% 55% at 66% 52%,#141C21 0%,#07090B 55%,#000 100%)}
+.grain{position:fixed;inset:-50%;pointer-events:none;opacity:.06;z-index:5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain .9s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+
+.copy{padding-left:7vw;position:relative;z-index:2}
+.k{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--turq)}
+h1{font-size:clamp(40px,5.2vw,84px);font-weight:500;letter-spacing:-.03em;line-height:1;margin:18px 0 22px}
+h1 i{font-style:normal;color:var(--orange)}
+.copy p{color:var(--muted);font-size:16px;line-height:1.65;max-width:400px}
+.go{all:unset;cursor:pointer;margin-top:34px;display:inline-flex;align-items:center;gap:14px;font-size:14px;padding:15px 22px;
+  border:1px solid rgba(255,255,255,.22);border-radius:3px;background:rgba(255,255,255,.06);backdrop-filter:blur(12px);transition:.4s var(--ease)}
+.go:hover{background:var(--turq);color:#02130F;border-color:var(--turq)}
+.go b{font-weight:400;transition:transform .4s var(--ease)}
+.go:hover b{transform:translateX(5px)}
+
+/* EMS z boku – najechanie: powiększenie + rozsunięcie obudowy (klatki z Blendera) */
+.ems{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;cursor:zoom-in}
+.ems .float{animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(-10px)}50%{transform:translateY(10px)}}
+.ems canvas{height:80vh;width:auto;display:block;transition:transform 1s var(--ease);filter:drop-shadow(0 60px 80px rgba(0,0,0,.9))}
+.ems.open canvas{transform:scale(1.14)}
+.ems .glow{position:absolute;left:50%;top:50%;width:38vh;height:38vh;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(closest-side,rgba(79,219,212,.13),transparent);opacity:0;transition:opacity 1s;pointer-events:none}
+.ems.open .glow{opacity:1}
+.hint{position:absolute;left:50%;bottom:5vh;transform:translateX(-50%);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);transition:opacity .6s}
+.ems.open .hint{opacity:0}
+
+@media (max-width:900px){
+  body{overflow:auto}
+  .screen{grid-template-columns:1fr;grid-template-rows:auto 70vh;height:auto;min-height:100vh}
+  .copy{padding:48px 20px 0}
+  .ems{height:70vh}.ems canvas{height:64vh}
+}
+</style>
+</head>
+<body>
+<main class="screen">
+  <div class="copy">
+    <div class="k">Sluxer EMS</div>
+    <h1>Jak działa<br>EMS<i>.</i></h1>
+    <p>Mały sterownik w rozdzielni, który co 15 minut sam decyduje, co zrobić z energią w Twoim domu.</p>
+    <a class="go" href="ems-jak-dziala.html">Zobacz, jak działa <b>→</b></a>
+  </div>
+  <div class="ems" id="ems" aria-label="Sluxer EMS – najedź, aby zajrzeć do środka">
+    <div class="glow"></div>
+    <div class="float"><canvas id="cv" width="643" height="1083"></canvas></div>
+    <div class="hint">Najedź, aby zajrzeć do środka</div>
+  </div>
+</main>
+<div class="grain"></div>
+
+<script>
+(()=>{
+const N=24, src=i=>`img/ems-rozsuw/k_${String(i).padStart(4,'0')}.webp`;
+const frames=[];let loaded=0;
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),box=document.getElementById('ems');
+for(let i=1;i<=N;i++){const im=new Image();im.onload=()=>{if(++loaded===1)draw(0)};im.src=src(i);frames.push(im)}
+let cur=0,target=0,last=0;
+function draw(f){const im=frames[Math.round(f)];if(im&&im.complete){ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(im,0,0,cv.width,cv.height)}}
+function loop(t){
+  const dt=Math.min(50,t-(last||t));last=t;
+  const speed=N/700*dt;                     // całe rozsunięcie ~0,7 s
+  if(cur<target)cur=Math.min(target,cur+speed);else if(cur>target)cur=Math.max(target,cur-speed);
+  draw(cur);requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+const open=v=>{target=v?N-1:0;box.classList.toggle('open',v)};
+box.addEventListener('mouseenter',()=>open(true));
+box.addEventListener('mouseleave',()=>open(false));
+box.addEventListener('click',()=>open(!box.classList.contains('open')));   // telefon: dotknięcie
+})();
+</script>
+</body>
+</html>
