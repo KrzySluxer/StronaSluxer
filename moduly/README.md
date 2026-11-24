@@ -38,11 +38,11 @@ W edytorze strony WordPress dodaj blok **„Własny HTML”** (w Elementorze wid
 <sluxer-historia src="https://ADRES-SERWERA/moduly/ems/historia.json"></sluxer-historia>
 ```
 
-`ADRES-SERWERA` to domena, pod którą działa folder `/moduly` na home.pl. Kolejny moduł na tej samej stronie to kolejna linijka `<sluxer-historia src="…/moduly/<nazwa>/historia.json">` (skrypt wystarczy wkleić raz). Moduł ma własne style zamknięte w sobie, więc motyw WordPressa ich nie popsuje.
+`ADRES-SERWERA` to domena, pod którą działa folder `/moduly` na home.pl. Na razie działa adres techniczny serwera **`serwer2440890.home.pl`**, czyli np. `https://serwer2440890.home.pl/moduly/silnik/sluxer-historia.js` i `https://serwer2440890.home.pl/moduly/ems/historia.json`. Docelowo zamień go na domenę firmy. Kolejny moduł na tej samej stronie to kolejna linijka `<sluxer-historia src="…/moduly/<nazwa>/historia.json">` (skrypt wystarczy wkleić raz). Moduł ma własne style zamknięte w sobie, więc motyw WordPressa ich nie popsuje.
 
 ## Strona testowa
 
-`https://ADRES-SERWERA/moduly/` pokazuje wszystkie włączone moduły z `strona.json`. Dopisek `?telefon=1` pokazuje na komputerze zachowanie z telefonu.
+`https://ADRES-SERWERA/moduly/` (teraz: https://serwer2440890.home.pl/moduly/) pokazuje wszystkie włączone moduły z `strona.json`. Dopisek `?telefon=1` pokazuje na komputerze zachowanie z telefonu.
 
 ## Wgrywanie na home.pl
 
