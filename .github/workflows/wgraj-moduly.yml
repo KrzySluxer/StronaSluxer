@@ -1,0 +1,38 @@
+name: Wgraj moduły na home.pl
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "moduly/**"
+      - ".github/workflows/wgraj-moduly.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: wgraj-moduly
+  cancel-in-progress: false
+
+jobs:
+  wgraj:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Pobierz repozytorium
+        uses: actions/checkout@v4
+
+      - name: Sprawdź pliki JSON
+        run: |
+          find moduly -name "*.json" -print0 | while IFS= read -r -d '' f; do
+            node -e "JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'))" "$f" || { echo "Błędny JSON: $f"; exit 1; }
+          done
+
+      - name: Wgraj folder moduly/ na serwer (FTPS)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: serwer2440890.home.pl
+          username: krzysiek@serwer2440890.home.pl
+          password: ${{ secrets.FTP_HASLO }}
+          protocol: ftps-legacy
+          port: 990
+          local-dir: ./moduly/
+          server-dir: /moduly/

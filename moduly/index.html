@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sluxer – strona testowa modułów</title>
+  <style>
+    /* Strona testowa: składa się z modułów wymienionych w strona.json (w tej samej kolejności). */
+    html, body { margin: 0; background: #020508; color: #9fb3bd; font: 15px/1.6 "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif; }
+    .koniec { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 20px; color: #4b5f69; border-top: 1px dashed #14242c; }
+    .blad { padding: 24px; color: #FFC56B; }
+  </style>
+  <script type="module" src="silnik/sluxer-historia.js"></script>
+</head>
+<body>
+  <main id="strona"></main>
+  <div class="koniec">Koniec strony testowej. Kolejne moduły dodaje się w pliku strona.json.</div>
+
+  <script>
+    (async () => {
+      const strona = document.getElementById('strona');
+      try {
+        const odp = await fetch('strona.json', { cache: 'no-store' });
+        if (!odp.ok) throw new Error('Brak pliku strona.json');
+        const lista = await odp.json();
+        const telefon = new URLSearchParams(location.search).has('telefon');   // ?telefon=1 pokazuje na komputerze zachowanie z telefonu
+        for (const m of lista.moduly || []) {
+          if (m.wlaczony === false) continue;
+          const el = document.createElement('sluxer-historia');
+          el.id = 'modul-' + m.id;
+          el.setAttribute('src', m.historia);
+          if (telefon) el.setAttribute('wymus-telefon', '');
+          strona.appendChild(el);
+        }
+      } catch (e) {
+        console.error(e);
+        strona.innerHTML = '<div class="blad">Nie udało się wczytać listy modułów (strona.json).</div>';
+      }
+    })();
+  </script>
+</body>
+</html>

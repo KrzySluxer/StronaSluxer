@@ -1,0 +1,69 @@
+{
+  "wersja": 1,
+  "sceny": [
+    {
+      "id": "ems",
+      "typ": "ems-bohater",
+      "opis": "Sterownik Sluxer EMS. Najedź, aby zajrzeć do środka.",
+
+      "napis": {
+        "tekst": "Jak działa EMS",
+        "znacznik": "h2",
+        "x": 0.585,
+        "y": 0.5,
+        "wielkosc": 0.085,
+        "znikaPrzyRozczepieniu": true
+      },
+
+      "klatki": {
+        "folder": "klatki",
+        "wzor": "ems_{nr}.webp",
+        "liczba": 48,
+        "gesto": {
+          "wzor": "spoczynek_{nr}.webp",
+          "liczba": 41,
+          "doPostepu": 0.170213,
+          "wycinek": { "x": 0.292188, "y": 0.183333, "szer": 0.45, "wys": 0.816667 }
+        },
+        "zestawy": [
+          { "nazwa": "1280", "szerokosc": 1280, "wysokosc": 720 },
+          { "nazwa": "1920", "szerokosc": 1920, "wysokosc": 1080 }
+        ]
+      },
+
+      "kadr": {
+        "tryb": "ekran",
+        "minWysokosc": 360,
+        "srodekX": 0.5,
+        "srodekY": 0.5,
+        "margines": 0.03,
+        "waskiPonizejProporcji": 1.15
+      },
+
+      "strefa": {
+        "zlozony":   { "x": 0.2807, "y": 0.1073, "szer": 0.2392, "wys": 0.8232 },
+        "rozlozony": { "x": 0.2807, "y": 0.1073, "szer": 0.4352, "wys": 0.8232 }
+      },
+
+      "spoczynek": {
+        "wlaczony": true,
+        "zakres": 0.1277,
+        "czas": 2.6,
+        "przerwa": 0.4
+      },
+
+      "najechanie": {
+        "powiekszenie": 1.07,
+        "powiekszenieWaski": 1.04,
+        "czas": 0.9,
+        "srodekX": 0.45,
+        "srodekY": 0.52
+      },
+
+      "telefon": {
+        "tryb": "przewijanie",
+        "pasSrodka": 0.3
+      }
+    }
+  ]
+}

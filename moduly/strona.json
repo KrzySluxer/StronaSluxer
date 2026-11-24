@@ -1,0 +1,11 @@
+{
+  "opis": "Lista modułów na stronie testowej, w kolejności od góry. Żeby dodać moduł: dopisz wpis. Żeby ukryć: wlaczony = false. Żeby zmienić kolejność: przestaw wpisy.",
+  "moduly": [
+    {
+      "id": "ems",
+      "nazwa": "Scena 1: EMS na środku ekranu",
+      "historia": "ems/historia.json",
+      "wlaczony": true
+    }
+  ]
+}
